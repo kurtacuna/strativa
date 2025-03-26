@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:strativa_frontend/src/login/login_screen.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:strativa_frontend/src/login/landing_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter _router = GoRouter(
   navigatorKey: navigatorKey,
-  initialLocation: '/',
+  initialLocation: AppRoutes.kSplashScreen,
   routes: [
     GoRoute(
-      path: '/',
+      path: AppRoutes.kSplashScreen,
       builder: (context, state) => const Splashscreen(),
     ),
     GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginScreen(),
+      path: AppRoutes.kLandingScreen,
+      builder: (context, state) => const LandingScreen(),
     ),
   ],
 );

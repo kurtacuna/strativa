@@ -4,10 +4,10 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 
 ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme.light(
-    surface: KcolorsLight.kBackground,
-    // background: KcolorsLight.kBackground,
+    surface: ColorsLight.kWhite,
+    // background: ColorsLight.kWhite,
   ),
-  scaffoldBackgroundColor: KcolorsLight.kBackground,
+  scaffoldBackgroundColor: ColorsLight.kWhite,
   textTheme: GoogleFonts.poppinsTextTheme(
     ThemeData.light().textTheme,
   ),
@@ -15,10 +15,10 @@ ThemeData lightMode = ThemeData(
 
 ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
-    surface: KcolorsDark.testColor,
-    // background: KcolorsDark.testColor,
+    surface: ColorsDark.testColor,
+    // background: ColorsDark.testColor,
   ),
-  scaffoldBackgroundColor: KcolorsDark.testColor,
+  scaffoldBackgroundColor: ColorsDark.testColor,
   textTheme: GoogleFonts.poppinsTextTheme(
     ThemeData.dark().textTheme,
   ),

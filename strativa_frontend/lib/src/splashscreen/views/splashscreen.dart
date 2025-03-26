@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
-import 'package:strativa_frontend/common/widgets/logo_widget.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:strativa_frontend/common/widgets/app_logo_widget.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -19,17 +20,17 @@ class _SplashscreenState extends State<Splashscreen> {
 
   _navigator() async {
     await Future.delayed(const Duration(seconds: 3), () {
-      GoRouter.of(context).go('/login');
+      GoRouter.of(context).go(AppRoutes.kLandingScreen);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: KcolorsCommon.kAccentL2,
+      backgroundColor: ColorsCommon.kAccentL2,
       body: Align(
         alignment: Alignment(-0.5, 0),
-        child: LogoWidget(color: KcolorsLight.kBackground),
+        child: AppLogoWidget(color: ColorsCommon.kWhite),
       ),
     );
   }
