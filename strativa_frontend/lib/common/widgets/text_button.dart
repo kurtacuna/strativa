@@ -8,6 +8,8 @@ class AppTextButton extends StatelessWidget {
     required this.onPressed,
     this.style,
     this.overlayColor,
+    this.prefixIcon,
+    this.spacing,
     super.key,
   });
 
@@ -15,6 +17,8 @@ class AppTextButton extends StatelessWidget {
   final void Function() onPressed;
   final TextStyle? style;
   final Color? overlayColor;
+  final Icon? prefixIcon;
+  final double? spacing;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,19 @@ class AppTextButton extends StatelessWidget {
       style: TextButton.styleFrom(
         overlayColor: overlayColor ?? ColorsCommon.kPrimaryL4,
       ),
-      child: Text(
-        text,
-        style: style ?? CustomTextStyles(context).textButtonStyle,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: spacing ?? 0,
+        children: [
+          SizedBox(
+            child: prefixIcon,
+          ),
+          Text(
+            text,
+            style: style ?? CustomTextStyles(context).textButtonStyle,
+          ),
+        ]
       ),
     );
   }

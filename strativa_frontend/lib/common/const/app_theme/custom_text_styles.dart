@@ -13,12 +13,12 @@ class CustomTextStyles {
   TextStyle get appButtonTextStyle => Theme.of(context).textTheme.titleMedium!.copyWith(
     fontSize: 16,
     color: ColorsCommon.kWhite,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w900,
   );
 
   TextStyle get textButtonStyle => Theme.of(context).textTheme.titleSmall!.copyWith(
     fontSize: 14,
     color: ColorsCommon.kPrimaryL4,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
   );
 }

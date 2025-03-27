@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kconstants.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -36,10 +37,10 @@ class AppButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Ink(
-        width: width ?? ScreenUtil().screenWidth / 1.1,
+        width: width ?? ScreenUtil().screenWidth,
         height: height ?? 50.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? 10),
+          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
           gradient: LinearGradient(
             colors: [
               firstColor ?? ColorsCommon.kPrimaryL1,
@@ -47,7 +48,7 @@ class AppButton extends StatelessWidget {
             ],
           ),
           border: Border.all(
-            width: 2.h,
+            width: AppConstants.kAppBorderWidth,
             // color: KcolorsCommon.kPrimaryL4,
             color: showBorder ?? false
             ? ColorsCommon.kPrimaryL4

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/utils/app_routes.dart';
 import 'package:strativa_frontend/common/const/app_theme/app_theme_notifier.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 
 void main() {
@@ -12,6 +14,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AppThemeNotifier()),
+      ChangeNotifierProvider(create: (_) => BottomNavNotifier()),
     ],
     child: const MyApp(),
   ));
@@ -39,12 +42,18 @@ class MyApp extends StatelessWidget {
             return Scaffold(
               body: child,
               // TODO: remove when change theme in settings is implemented
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  context.read<AppThemeNotifier>().toggleTheme();
-                },
-                child: Icon(
-                  Icons.switch_left_rounded,
+              floatingActionButton: Align(
+                alignment: Alignment(1, 0.85),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    context.read<AppThemeNotifier>().toggleTheme();
+                  },
+                  backgroundColor: Theme.of(context).brightness == Brightness.light
+                    ? ColorsCommon.kDark
+                    : ColorsCommon.kWhite,
+                  child: Icon(
+                    Icons.switch_left_rounded,
+                  ),
                 ),
               ),
             );
