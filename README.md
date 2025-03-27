@@ -13,3 +13,11 @@ To install the dependencies needed in Django, change directory to strativa_backe
     <code>pip install -r requirements.txt</code><br>
 alternatively:<br>
     <code>pip install -r path/to/requirements.txt</code>
+
+
+Steps for pushing:
+1. Fork this repository to your own account.
+2. Clone that repository in your account.
+3. Create feature branch before commiting.
+4. Push to your own repository.
+5. Create a pull request to this repository.
