@@ -21,3 +21,5 @@ Steps for pushing:
 3. Create feature branch before commiting.
 4. Push to your own repository.
 5. Create a pull request to this repository.
+
+Also, create a <code>.gitignore</code> file inside <code>strativa_frontend</code> and <code>strativa_backend</code> and then copy the the contents of each folder's <code>gitignore.txt</code> file into its respective <code>.gitignore</code> file.
