@@ -5,7 +5,9 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/utils/app_routes.dart';
 import 'package:strativa_frontend/common/const/app_theme/app_theme_notifier.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
+import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 
 void main() {
@@ -15,6 +17,8 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => AppThemeNotifier()),
       ChangeNotifierProvider(create: (_) => BottomNavNotifier()),
+      ChangeNotifierProvider(create: (_) => PasswordNotifier()),
+      ChangeNotifierProvider(create: (_) => BalanceNotifier()),
     ],
     child: const MyApp(),
   ));

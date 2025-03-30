@@ -18,7 +18,7 @@ class PeekBalanceWidget extends StatelessWidget {
             //TODO: handle peek
           },
           prefixIcon: Icon(
-            AppIcons.kPasswordFieldEyeOpenIcon.icon,
+            AppIcons.kEyeOpenIcon.icon,
             size: 35,
             color: ColorsCommon.kPrimaryL4,
           ),

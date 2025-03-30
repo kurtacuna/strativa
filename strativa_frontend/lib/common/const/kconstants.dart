@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppConstants {
-  static const double kAppBorderRadius = 10;
-  static double kAppBorderWidth = 2.h;
-  static EdgeInsets kAppPadding = EdgeInsets.symmetric(horizontal: 20.h);
+  static double get kAppBorderRadius => 10;
+  static double get kCardRadius => 20;
+  static double get kAppBorderWidth => 2;
+  static EdgeInsets get kAppPadding => EdgeInsets.all(20);
+  static EdgeInsets get kIconPadding => EdgeInsets.all(5);
+  static double get kIconSize => 25.h;
+  static EdgeInsets get kCardPadding => kAppPadding * 1.5;
 }

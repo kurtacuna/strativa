@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/invest/views/invest_screen.dart';
@@ -60,34 +62,85 @@ class Entrypoint extends StatelessWidget {
                       currentIndex: bottomNavNotifier.getIndex,
                       selectedItemColor: ColorsCommon.kAccentL2,
                       unselectedItemColor: ColorsCommon.kGray,
+                      selectedFontSize: CustomTextStyles(context).smallerStyle.fontSize!,
                       items: [
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Ionicons.at_circle,
+                          icon: AppIcons.kBottomNavBarMyAccountsIcon(
+                            colorFilter: bottomNavNotifier.getIndex == 0
+                            ? ColorFilter.mode(
+                              ColorsCommon.kAccentL2,
+                              BlendMode.srcIn,
+                            )
+                            : Theme.of(context).brightness == Brightness.dark
+                            ? ColorFilter.mode(
+                              ColorsCommon.kWhite,
+                                BlendMode.srcIn,
+                              )
+                              : null,
                           ),
                           label: AppText.kBottomNavBarMyAccounts,
                         ),
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Ionicons.at_circle,
+                          icon: AppIcons.kBottomNavBarTransferIcon(
+                            colorFilter: bottomNavNotifier.getIndex == 1
+                            ? ColorFilter.mode(
+                              ColorsCommon.kAccentL2,
+                              BlendMode.srcIn,
+                            )
+                            : Theme.of(context).brightness == Brightness.dark
+                            ? ColorFilter.mode(
+                              ColorsCommon.kWhite,
+                                BlendMode.srcIn,
+                              )
+                              : null,
                           ),
                           label: AppText.kBottomNavBarTransfer,
                         ),
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Ionicons.at_circle,
+                          icon: AppIcons.kBottomNavBarPayLoadIcon(
+                            colorFilter: bottomNavNotifier.getIndex == 2
+                            ? ColorFilter.mode(
+                              ColorsCommon.kAccentL2,
+                              BlendMode.srcIn,
+                            )
+                            : Theme.of(context).brightness == Brightness.dark
+                            ? ColorFilter.mode(
+                              ColorsCommon.kWhite,
+                                BlendMode.srcIn,
+                              )
+                              : null,
                           ),
                           label: AppText.kBottomNavBaPayLoad,
                         ),
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Ionicons.at_circle,
+                          icon: AppIcons.kBottomNavBarInvestIcon(
+                            colorFilter: bottomNavNotifier.getIndex == 3
+                            ? ColorFilter.mode(
+                              ColorsCommon.kAccentL2,
+                              BlendMode.srcIn,
+                            )
+                            : Theme.of(context).brightness == Brightness.dark
+                            ? ColorFilter.mode(
+                              ColorsCommon.kWhite,
+                                BlendMode.srcIn,
+                              )
+                              : null,
                           ),
                           label: AppText.kBottomNavBarInvest,
                         ),
                         BottomNavigationBarItem(
-                          icon: Icon(
-                            Ionicons.at_circle,
+                          icon: AppIcons.kBottomNavBarProfileIcon(
+                            colorFilter: bottomNavNotifier.getIndex == 4
+                            ? ColorFilter.mode(
+                              ColorsCommon.kAccentL2,
+                              BlendMode.srcIn,
+                            )
+                            : Theme.of(context).brightness == Brightness.dark
+                            ? ColorFilter.mode(
+                              ColorsCommon.kWhite,
+                                BlendMode.srcIn,
+                              )
+                              : null,
                           ),
                           label: AppText.kBottomNavBarProfile,
                         ),

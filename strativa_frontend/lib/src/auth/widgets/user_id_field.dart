@@ -2,39 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+class UserIdField extends StatelessWidget {
+  const UserIdField({
     this.hintText,
     this.prefixIcon,
     this.focusedBorderColor,
+    this.enabledBorderColor,
     this.width,
     this.suffixIcon,
     this.radius,
     this.obscureText,
+    this.onEditingComplete,
+    required this.controller,
     super.key,
   });
 
   final String? hintText;
   final Icon? prefixIcon;
   final Color? focusedBorderColor;
+  final Color? enabledBorderColor;
   final double? width;
   final Icon? suffixIcon;
   final double? radius;
   final bool? obscureText;
+  final Function()? onEditingComplete;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obscureText ?? false,
+      textInputAction: TextInputAction.next,
+      onEditingComplete: onEditingComplete,
+      controller: controller,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Please enter your user id.";
+        } else {
+          return null;
+        }
+      },
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
 
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: (width ?? AppConstants.kAppBorderWidth) - 1,
-            color: focusedBorderColor ?? ColorsCommon.kGray,
+            color: enabledBorderColor ?? ColorsCommon.kGray,
           ),
           borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
         ),
@@ -42,6 +56,20 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(
             width: width ?? AppConstants.kAppBorderWidth,
             color: focusedBorderColor ?? ColorsCommon.kPrimaryL4,
+          ),
+          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: width ?? AppConstants.kAppBorderWidth,
+            color: ColorsCommon.kRed,
+          ),
+          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: width ?? AppConstants.kAppBorderWidth,
+            color: ColorsCommon.kRed,
           ),
           borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
         ),

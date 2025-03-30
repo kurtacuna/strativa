@@ -12,4 +12,10 @@ class AppText {
   static const kBottomNavBaPayLoad = "Pay/Load";
   static const kBottomNavBarInvest = "Invest";
   static const kBottomNavBarProfile = "Profile";
+  static const kWalletCardsHeader = "Wallet Cards";
+  static const kTransactionHeader = "Transaction";
+  static const kCardBalance = "Balance";
+  static const kMyStrativaCard = "My Strativa Card";
+  static const kMyOnlineCard = "My Online Card";
+  static const kActivateNow = "Activate Now";
 }

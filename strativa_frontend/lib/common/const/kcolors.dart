@@ -20,4 +20,6 @@ class ColorsCommon {
   static const Color kWhite = Color(0xFFF8F9FA);
   static const Color kDark = Color(0xFF1C1C1E);
   static const Color kGray = Color(0xFFD6D6D6);
+  static const Color kDarkerGray = Color(0xFF808080);
+  static const Color kRed = Color(0xFFFF0000);
 }
