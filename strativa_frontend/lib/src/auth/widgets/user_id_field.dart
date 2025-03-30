@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 
@@ -9,7 +10,6 @@ class UserIdField extends StatelessWidget {
     this.focusedBorderColor,
     this.enabledBorderColor,
     this.width,
-    this.suffixIcon,
     this.radius,
     this.obscureText,
     this.onEditingComplete,
@@ -18,11 +18,10 @@ class UserIdField extends StatelessWidget {
   });
 
   final String? hintText;
-  final Icon? prefixIcon;
+  final Widget? prefixIcon;
   final Color? focusedBorderColor;
   final Color? enabledBorderColor;
   final double? width;
-  final Icon? suffixIcon;
   final double? radius;
   final bool? obscureText;
   final Function()? onEditingComplete;
@@ -43,7 +42,17 @@ class UserIdField extends StatelessWidget {
       },
       decoration: InputDecoration(
         hintText: hintText,
-        prefixIcon: prefixIcon,
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: prefixIcon
+          ),
+        prefixIconConstraints: BoxConstraints(
+            maxHeight: 40.sp,
+            maxWidth: 40.sp,
+          ),
+
 
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
@@ -44,7 +45,12 @@ class PasswordField extends StatelessWidget {
           },
           decoration: InputDecoration(
             hintText: AppText.kHintPassword,
-            prefixIcon: AppIcons.kPasswordFieldIcon,
+            prefixIcon: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              child: AppIcons.kPasswordFieldIcon()
+              ),
             suffixIcon: GestureDetector(
               onTap: () {
                 passwordNotifier.toggleObscurePassword();
@@ -52,6 +58,10 @@ class PasswordField extends StatelessWidget {
               child: passwordNotifier.getObscurePassword
               ? AppIcons.kEyeCloseIcon
               : AppIcons.kEyeOpenIcon,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              maxHeight: 40.sp,
+              maxWidth: 40.sp,
             ),
 
             enabledBorder: OutlineInputBorder(

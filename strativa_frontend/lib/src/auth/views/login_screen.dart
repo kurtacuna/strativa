@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         
               UserIdField(
                 hintText: AppText.kHintUserId,
-                prefixIcon: AppIcons.kUserIdFieldIcon,
+                prefixIcon: AppIcons.kUserIdFieldIcon(),
                 controller: _userIdController,
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(_passwordNode);

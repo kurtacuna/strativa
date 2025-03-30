@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/utils/currency.dart';
+import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 
 class TransactionHistoryWidget extends StatelessWidget {
   const TransactionHistoryWidget({super.key});
@@ -50,7 +52,9 @@ class TransactionHistoryWidget extends StatelessWidget {
               spacing: 2,
               children: [
                 Text(
-                  "₱${addCommaToPrice(double.parse(userData['transactions'][index]['resulting_balance']))}",
+                  context.watch<BalanceNotifier>().getShowBalance
+                  ? "₱ ${addCommaToPrice(double.parse(userData['transactions'][index]['resulting_balance']))}"
+                  : "₱ •••••",
                   style: CustomTextStyles(context).currencyStyle.copyWith(
                     fontSize: CustomTextStyles(context).smallStyle.fontSize,
                     fontWeight: FontWeight.w900,

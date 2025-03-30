@@ -34,11 +34,24 @@ class AppIcons {
     width: 20.sp,
     colorFilter: colorFilter
   );
-  static const Icon kUserIdFieldIcon = Icon(
-    Ionicons.mail_outline,
+  // static const Icon kUserIdFieldIcon = Icon(
+  //   Ionicons.mail_outline,
+  // );
+  static SvgPicture kUserIdFieldIcon({ColorFilter? colorFilter}) => SvgPicture.asset(
+    'assets/icons/close_mail_icon.svg',
+    height: 20.sp,
+    width: 20.sp,
+    colorFilter: colorFilter,
   );
-  static const Icon kPasswordFieldIcon = Icon(
-    Ionicons.lock_open,
+  // static const Icon kPasswordFieldIcon = Icon(
+  //   Ionicons.lock_open,
+  // );
+  static SvgPicture kPasswordFieldIcon({ColorFilter? colorFilter}) => SvgPicture.asset(
+    'assets/icons/open_lock_icon.svg',
+    height: 25.sp,
+    width: 25.sp,
+    colorFilter: colorFilter,
+    fit: BoxFit.contain,
   );
   static const Icon kEyeOpenIcon = Icon(
     Feather.eye,
