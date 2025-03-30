@@ -17,7 +17,7 @@ alternatively:<br>
 
 Steps for pushing:
 1. Fork this repository to your own account.
-2. Clone that repository in your account.
+2. Clone the repository in your account.
 3. Create feature branch before commiting.
 4. Push to your own repository.
 5. Create a pull request to this repository.
