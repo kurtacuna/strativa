@@ -148,7 +148,13 @@ class MyAccountsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
                       child: Ink(
                         padding: AppConstants.kIconPadding,
-                        child: AppIcons.kExpandIcon,
+                        child: Theme.of(context).brightness == Brightness.dark
+                        ? Image(
+                          image: AppIcons.kExpandIcon.image,
+                          height: AppIcons.kExpandIcon.height,
+                          color: ColorsCommon.kWhite,
+                        )
+                        : AppIcons.kExpandIcon,
                       ),
                     ),
                   ]
