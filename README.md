@@ -23,3 +23,14 @@ Steps for pushing:
 5. Create a pull request to this repository.
 
 Also, create a <code>.gitignore</code> file inside <code>strativa_frontend</code> and <code>strativa_backend</code> and then copy the the contents of each folder's <code>gitignore.txt</code> file into its respective <code>.gitignore</code> file.
+
+Steps for forking:
+1. Go to this repository and fork it.
+2. Execute <code>git remote -v</code>. This should show this repository's link.
+3. Execute <code>git remote set-url origin <your_forked_repository></code>.
+4. Now, when you pull or push, it should be to your forked repository.
+
+Steps for creating a pull request:
+1. Go to your forked repository.
+2. Navigate to the pull request tab, and create a new pull request.
+3. Specify the title and details. Then, create pull request.
