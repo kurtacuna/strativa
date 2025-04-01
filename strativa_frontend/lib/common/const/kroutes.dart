@@ -8,4 +8,5 @@ class AppRoutes {
   static const String kPayLoad = '/pay_load';
   static const String kInvest = '/invest';
   static const String kProfile = '/profile';
+  static const String kTransactionHistoryScreen = '/transaction_history';
 }

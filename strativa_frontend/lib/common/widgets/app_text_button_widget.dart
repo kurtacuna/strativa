@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 
-class AppTextButton extends StatelessWidget {
-  const AppTextButton({
+class AppTextButtonWidget extends StatelessWidget {
+  const AppTextButtonWidget({
     required this.text,
     required this.onPressed,
     this.style,

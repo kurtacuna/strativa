@@ -10,14 +10,19 @@ import 'package:strativa_frontend/common/utils/currency.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 
 class TransactionHistoryWidget extends StatelessWidget {
-  const TransactionHistoryWidget({super.key});
+  const TransactionHistoryWidget({
+    this.length,
+    super.key,
+  });
+
+  final int? length;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       spacing: 5.h,
       children: [
-        ...List.generate(userData['transactions'].sublist(0, 3).length, (index) {
+        ...List.generate(userData['transactions'].sublist(0, length).length, (index) {
           return ListTile(
             onTap: () {
               // TODO: go to specific transaction details

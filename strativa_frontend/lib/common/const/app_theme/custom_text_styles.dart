@@ -24,6 +24,15 @@ class CustomTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  TextStyle get screenHeaderStyle => Theme.of(context).textTheme.labelMedium!.copyWith(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w900,
+  );
+
+  TextStyle get bigStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
+    fontSize: 18.sp,
+  );
+
   TextStyle get defaultStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
     fontSize: 16.sp,
   );

@@ -3,7 +3,7 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/widgets/text_button.dart';
+import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 
 class PeekBalanceWidget extends StatelessWidget {
   const PeekBalanceWidget({super.key});
@@ -13,7 +13,7 @@ class PeekBalanceWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AppTextButton(
+        AppTextButtonWidget(
           onPressed: () {
             //TODO: handle peek
           },

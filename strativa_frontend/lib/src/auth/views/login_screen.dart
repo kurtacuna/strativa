@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
+import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/widgets/app_button.dart';
+import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_logo_widget.dart';
-import 'package:strativa_frontend/src/auth/widgets/user_id_field.dart';
-import 'package:strativa_frontend/src/auth/widgets/password_field.dart';
-import 'package:strativa_frontend/common/widgets/text_button.dart';
+import 'package:strativa_frontend/src/auth/widgets/user_id_field_widget.dart';
+import 'package:strativa_frontend/src/auth/widgets/password_field_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 import 'package:strativa_frontend/src/auth/widgets/peek_balance_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -53,21 +54,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
         
-              UserIdField(
+              UserIdFieldWidget(
                 hintText: AppText.kHintUserId,
-                prefixIcon: AppIcons.kUserIdFieldIcon(),
+                prefixIcon: Theme.of(context).brightness == Brightness.dark 
+                ? AppIcons.kUserIdFieldIcon(
+                  colorFilter: ColorFilter.mode(
+                    ColorsCommon.kWhite,
+                    BlendMode.srcIn,
+                  ),
+                )
+                : AppIcons.kUserIdFieldIcon(),
                 controller: _userIdController,
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(_passwordNode);
                 },
               ),
               
-              PasswordField(
+              PasswordFieldWidget(
                 controller: _passwordController,
                 focusNode: _passwordNode,
               ),
 
-              AppButton(
+              AppButtonWidget(
                 text: AppText.kLoginButtonText,
                 onTap: () {
                   // if (_formKey.currentState!.validate()) {
@@ -78,9 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   // }
                   context.go(AppRoutes.kEntrypoint);
                 },
+                firstColor: ColorsCommon.kPrimaryL1,
+                secondColor: ColorsCommon.kPrimaryL4,
               ),
         
-              AppTextButton(
+              AppTextButtonWidget(
                 text: AppText.kForgotMyUserIdOrPassword,
                 onPressed: () {
                   // TODO: handle forgot password

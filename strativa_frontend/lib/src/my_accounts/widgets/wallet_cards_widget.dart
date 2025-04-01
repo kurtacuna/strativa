@@ -5,6 +5,7 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
+import 'package:strativa_frontend/common/const/kresources.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
@@ -40,6 +41,14 @@ class WalletCardsWidget extends StatelessWidget {
                           width: 180.w,
                           height: 120.h,
                           secondColor: ColorsCommon.kDark,
+                        ),
+                        
+                        Positioned(
+                          child: Image.asset(
+                            R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                            width: 180.w,
+                            height: 120.h,
+                          ),
                         ),
                         
                         Positioned(
@@ -85,6 +94,14 @@ class WalletCardsWidget extends StatelessWidget {
                           height: 120.h,
                           firstColor: ColorsCommon.kAccentL2,
                           secondColor: ColorsCommon.kDark,
+                        ),
+
+                        Positioned(
+                          child: Image.asset(
+                            R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                            width: 180.w,
+                            height: 120.h,
+                          ),
                         ),
                         
                         userData['online_card_details'].isEmpty

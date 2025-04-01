@@ -43,7 +43,7 @@ class TopBarWidget extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  // TODO: handge qr generator
+                  // TODO: handle qr generator
                 },
                 borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
                 child: Ink(

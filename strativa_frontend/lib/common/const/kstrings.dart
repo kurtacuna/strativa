@@ -14,6 +14,7 @@ class AppText {
   static const kBottomNavBarProfile = "Profile";
   static const kWalletCardsHeader = "Wallet Cards";
   static const kTransactionHeader = "Transaction";
+  static const kTransactionHistoryHeader = "Transaction History";
   static const kCardBalance = "Balance";
   static const kMyStrativaCard = "My Strativa Card";
   static const kMyOnlineCard = "My Online Card";

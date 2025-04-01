@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 
-class UserIdField extends StatelessWidget {
-  const UserIdField({
+class UserIdFieldWidget extends StatelessWidget {
+  const UserIdFieldWidget({
     this.hintText,
     this.prefixIcon,
     this.focusedBorderColor,

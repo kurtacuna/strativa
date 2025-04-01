@@ -7,8 +7,8 @@ import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 
-class PasswordField extends StatelessWidget {
-  const PasswordField({
+class PasswordFieldWidget extends StatelessWidget {
+  const PasswordFieldWidget({
     this.focusedBorderColor,
     this.width,
     this.radius,
@@ -49,7 +49,14 @@ class PasswordField extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 10,
               ),
-              child: AppIcons.kPasswordFieldIcon()
+              child: Theme.of(context).brightness == Brightness.dark
+              ? AppIcons.kPasswordFieldIcon(
+                colorFilter: ColorFilter.mode(
+                  ColorsCommon.kWhite,
+                  BlendMode.srcIn,
+                ),
+              )
+              : AppIcons.kPasswordFieldIcon(),
               ),
             suffixIcon: GestureDetector(
               onTap: () {

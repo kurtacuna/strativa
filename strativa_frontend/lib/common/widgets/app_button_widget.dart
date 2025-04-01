@@ -4,8 +4,8 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 
-class AppButton extends StatelessWidget {
-  const AppButton({
+class AppButtonWidget extends StatelessWidget {
+  const AppButtonWidget({
     this.onTap,
     this.width,
     this.height,
@@ -43,8 +43,8 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
           gradient: LinearGradient(
             colors: [
-              firstColor ?? ColorsCommon.kPrimaryL1,
-              secondColor ?? ColorsCommon.kPrimaryL4,
+              firstColor ?? ColorsCommon.kPrimaryL3,
+              secondColor ?? ColorsCommon.kPrimaryL3,
             ],
           ),
           border: Border.all(

@@ -5,9 +5,9 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/widgets/app_button.dart';
+import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_logo_widget.dart';
-import 'package:strativa_frontend/common/widgets/text_button.dart';
+import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -33,14 +33,16 @@ class LandingScreen extends StatelessWidget {
               ),
             ),
         
-            AppButton(
+            AppButtonWidget(
               text: AppText.kOpenAccountButtonText,
               onTap: () {
                 // TODO: push to registration
               },
+              firstColor: ColorsCommon.kPrimaryL1,
+              secondColor: ColorsCommon.kPrimaryL4,
             ),
         
-            AppButton(
+            AppButtonWidget(
               text: AppText.kLoginButtonText,
               onTap: () {
                 context.push(AppRoutes.kLoginScreen);
@@ -52,7 +54,7 @@ class LandingScreen extends StatelessWidget {
               showBorder: true,
             ),
         
-            AppTextButton(
+            AppTextButtonWidget(
               text: AppText.kSignUpWithExistingAccount,
               onPressed: () {
                 // TODO: push to login?
