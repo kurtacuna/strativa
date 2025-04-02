@@ -79,4 +79,17 @@ class AppIcons {
     'assets/icons/free_icon.png',
     height: 60.sp,
   );
+  // Register screen icons
+  static Image get kBulbIcon => Image.asset(
+    'assets/icons/bulb_icon.png',
+    height: 30.sp,
+  );
+  static Image get kShieldStick => Image.asset(
+    'assets/icons/shieldStick.png',
+    height: 30.sp,
+  );
+  static Image get kRedIcon => Image.asset(
+    'assets/icons/redprofile.png',
+    height: 30.sp,
+  );
 }

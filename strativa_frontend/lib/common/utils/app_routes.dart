@@ -3,6 +3,8 @@ import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/src/auth/views/landing_screen.dart';
 import 'package:strativa_frontend/src/auth/views/login_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/register_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/selectID_screen.dart';
 import 'package:strativa_frontend/src/entrypoint/views/entrypoint.dart';
 import 'package:strativa_frontend/src/transaction_history/views/transaction_history_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
@@ -22,6 +24,14 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kLoginScreen,
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kRegisterScreen,
+      builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kValidId,
+      builder: (context, state) => const validID(),
     ),
     GoRoute(
       path: AppRoutes.kEntrypoint,

@@ -19,4 +19,6 @@ class AppText {
   static const kMyStrativaCard = "My Strativa Card";
   static const kMyOnlineCard = "My Online Card";
   static const kActivateNow = "Activate Now";
+  static const kRegisterScreen = "Register Account";
+  static const kValidId = "Select Valid ID";
 }
