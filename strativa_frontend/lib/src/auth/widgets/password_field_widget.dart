@@ -37,6 +37,8 @@ class PasswordFieldWidget extends StatelessWidget {
             }
           },
           decoration: InputDecoration(
+            // TODO: handle error messages
+            // errorText: ,
             hintText: AppText.kHintPassword,
             prefixIcon: Padding(
               padding: EdgeInsets.symmetric(

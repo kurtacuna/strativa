@@ -9,6 +9,7 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 SnackBar appSnackBarWidget({
   required BuildContext context,
   required String text,
+  Widget? icon,
 }) {
   return SnackBar(
     duration: AppConstants.kSnackBarDuration,
@@ -52,13 +53,14 @@ SnackBar appSnackBarWidget({
                   child: Column(
                     spacing: 5,
                     children: [
-                      AppIcons.kCheckIcon,
+                      icon ?? AppIcons.kCheckIcon,
                   
                       Text(
                         text,
                         style: CustomTextStyles(context).bigStyle.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                   
                       Text(

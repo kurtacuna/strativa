@@ -33,6 +33,8 @@ class UserIdFieldWidget extends StatelessWidget {
         }
       },
       decoration: InputDecoration(
+        // TODO: handle error messages
+        // errorText: ,
         hintText: hintText,
         prefixIcon: Padding(
           padding: EdgeInsets.symmetric(
