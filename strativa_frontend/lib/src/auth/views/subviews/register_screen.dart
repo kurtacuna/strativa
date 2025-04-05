@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
-import 'package:strativa_frontend/common/const/kcolors.dart';
-import 'package:strativa_frontend/common/const/kconstants.dart';
-import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
-import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -143,7 +140,9 @@ class RegisterScreen extends StatelessWidget {
                 ],
               ),
             ),
-            AppButtonWidget(text: 'asdasd'), //TODO -> CONFIRM BUTTON
+            AppButtonWidget(text: 'asdasd', onTap: (){
+              context.push(AppRoutes.kValidId);
+            },),
           ],
         ),
       ),
