@@ -10,9 +10,11 @@ class TransactionTabNotifier with ChangeNotifier {
 
   set setCurrentTabIndex(int index) {
     _currentTabIndex = index;
+    notifyListeners();
   }
 
   set setCurrentTab(String tab) {
     _currentTab = tab;
+    notifyListeners();
   }
 }

@@ -43,8 +43,8 @@ class Entrypoint extends StatelessWidget {
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: Theme.of(context).brightness == Brightness.light
-                        ? ColorsCommon.kGray
-                        : const Color.fromARGB(255, 57, 57, 57),
+                          ? ColorsCommon.kGray
+                          : ColorsCommon.kDarkGray,
                         blurRadius: 100,
                       )
                     ],
@@ -66,16 +66,16 @@ class Entrypoint extends StatelessWidget {
                         BottomNavigationBarItem(
                           icon: AppIcons.kBottomNavBarMyAccountsIcon(
                             colorFilter: bottomNavNotifier.getIndex == 0
-                            ? ColorFilter.mode(
-                              ColorsCommon.kAccentL2,
-                              BlendMode.srcIn,
-                            )
-                            : Theme.of(context).brightness == Brightness.dark
-                            ? ColorFilter.mode(
-                              ColorsCommon.kWhite,
+                              ? ColorFilter.mode(
+                                ColorsCommon.kAccentL2,
                                 BlendMode.srcIn,
                               )
-                              : null,
+                              : Theme.of(context).brightness == Brightness.dark
+                                ? ColorFilter.mode(
+                                  ColorsCommon.kWhite,
+                                    BlendMode.srcIn,
+                                  )
+                                : null,
                           ),
                           label: AppText.kBottomNavBarMyAccounts,
                         ),
@@ -87,8 +87,8 @@ class Entrypoint extends StatelessWidget {
                               BlendMode.srcIn,
                             )
                             : Theme.of(context).brightness == Brightness.dark
-                            ? ColorFilter.mode(
-                              ColorsCommon.kWhite,
+                              ? ColorFilter.mode(
+                                ColorsCommon.kWhite,
                                 BlendMode.srcIn,
                               )
                               : null,
@@ -98,32 +98,32 @@ class Entrypoint extends StatelessWidget {
                         BottomNavigationBarItem(
                           icon: AppIcons.kBottomNavBarPayLoadIcon(
                             colorFilter: bottomNavNotifier.getIndex == 2
-                            ? ColorFilter.mode(
-                              ColorsCommon.kAccentL2,
-                              BlendMode.srcIn,
-                            )
-                            : Theme.of(context).brightness == Brightness.dark
-                            ? ColorFilter.mode(
-                              ColorsCommon.kWhite,
+                              ? ColorFilter.mode(
+                                ColorsCommon.kAccentL2,
                                 BlendMode.srcIn,
                               )
-                              : null,
+                              : Theme.of(context).brightness == Brightness.dark
+                                ? ColorFilter.mode(
+                                  ColorsCommon.kWhite,
+                                  BlendMode.srcIn,
+                                )
+                                : null,
                           ),
                           label: AppText.kBottomNavBaPayLoad,
                         ),
                         BottomNavigationBarItem(
                           icon: AppIcons.kBottomNavBarInvestIcon(
                             colorFilter: bottomNavNotifier.getIndex == 3
-                            ? ColorFilter.mode(
-                              ColorsCommon.kAccentL2,
-                              BlendMode.srcIn,
-                            )
-                            : Theme.of(context).brightness == Brightness.dark
-                            ? ColorFilter.mode(
-                              ColorsCommon.kWhite,
+                              ? ColorFilter.mode(
+                                ColorsCommon.kAccentL2,
                                 BlendMode.srcIn,
                               )
-                              : null,
+                              : Theme.of(context).brightness == Brightness.dark
+                                ? ColorFilter.mode(
+                                  ColorsCommon.kWhite,
+                                  BlendMode.srcIn,
+                                )
+                                : null,
                           ),
                           label: AppText.kBottomNavBarInvest,
                         ),
@@ -135,8 +135,8 @@ class Entrypoint extends StatelessWidget {
                               BlendMode.srcIn,
                             )
                             : Theme.of(context).brightness == Brightness.dark
-                            ? ColorFilter.mode(
-                              ColorsCommon.kWhite,
+                              ? ColorFilter.mode(
+                                ColorsCommon.kWhite,
                                 BlendMode.srcIn,
                               )
                               : null,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:strativa_frontend/common/const/kcolors.dart';
 
 class AppIcons {
   static SvgPicture kBottomNavBarMyAccountsIcon({ColorFilter? colorFilter}) => SvgPicture.asset(
@@ -78,5 +79,27 @@ class AppIcons {
   static Image get kFreeIcon => Image.asset(
     'assets/icons/free_icon.png',
     height: 60.sp,
+  );
+  // TODO: change to final
+  static Icon get kCheckIcon => Icon(
+    Ionicons.checkbox,
+    size: 50,
+  );
+  // TODO: change to final
+  static Icon get kRightArrowIcon => Icon(
+    MaterialIcons.arrow_right,
+    size: 40,
+  );
+  // TODO: change to final
+  static Icon get kEditIcon => Icon(
+    MaterialIcons.edit,
+    color: ColorsCommon.kAccentL3,
+    size: 25.h,
+  );
+  // TODO: change to final
+  static Icon get kShareIcon => Icon(
+    MaterialIcons.share,
+    color: ColorsCommon.kAccentL3,
+    size: 25.h,
   );
 }

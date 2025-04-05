@@ -1,4 +1,9 @@
 class AppText {
+  static const kCurrencySign = "₱";
+  static const kCurrencyText = "PHP";
+  static const kAmountHintText = "0.00";
+  static const kPasswordFieldError = "Please enter your password.";
+  static const kUserIdFieldError ="Please eneter your user ID";
   static const kAppName = "Strativa";
   static const kOpenAccountButtonText = "Open an Account";
   static const kLoginButtonText = "Log In";
@@ -19,4 +24,17 @@ class AppText {
   static const kMyStrativaCard = "My Strativa Card";
   static const kMyOnlineCard = "My Online Card";
   static const kActivateNow = "Activate Now";
+  static const kScanQrCodeHeader = "Scan QR Code";
+  static const kUploadQrCode = "Upload QR Code";
+  static const kTapAnywhereToContinue = "Tap anywhere to continue";
+  static const kSnackBarQrCodeWasSuccessfullyScanned = "QR code was successfully scanned.";
+  static const kGenerateQrCode = "Generate QR Code";
+  static const kGenerateNewQrCode = "Generate New QR Code";
+  static const kGoToHome = "Go to Home";
+  static const kDepositTo = "Deposit To";
+  static const kRequestTheAmountOf = "Request the amount of";
+  static const kLabeledAmountFieldError = "Please enter a valid amount.";
+  static const kAmountRequested = "Amount Requested";
+  static const kEdit = "Edit";
+  static const kShare = "Share";
 }

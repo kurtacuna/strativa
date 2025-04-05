@@ -8,6 +8,7 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/qr_tab_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
 
@@ -21,6 +22,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => PasswordNotifier()),
       ChangeNotifierProvider(create: (_) => BalanceNotifier()),
       ChangeNotifierProvider(create: (_) => TransactionTabNotifier()),
+      ChangeNotifierProvider(create: (_) => QrTabNotifier()),
     ],
     child: const MyApp(),
   ));
@@ -46,21 +48,25 @@ class MyApp extends StatelessWidget {
           routerConfig: router,
           builder: (context, child) {
             return Scaffold(
-              body: child,
-              // TODO: remove when change theme in settings is implemented
-              floatingActionButton: Align(
-                alignment: Alignment(1, 0.85),
-                child: FloatingActionButton(
-                  onPressed: () {
-                    context.read<AppThemeNotifier>().toggleTheme();
-                  },
-                  backgroundColor: Theme.of(context).brightness == Brightness.light
-                    ? ColorsCommon.kDark
-                    : ColorsCommon.kWhite,
-                  child: Icon(
-                    Icons.switch_left_rounded,
+              body: Stack(
+                children: [
+                  child!,
+                  // TODO: remove when change theme in settings is implemented
+                  Align(
+                    alignment: Alignment(0.95, 0.80),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        context.read<AppThemeNotifier>().toggleTheme();
+                      },
+                      backgroundColor: Theme.of(context).brightness == Brightness.light
+                        ? ColorsCommon.kDark
+                        : ColorsCommon.kWhite,
+                      child: Icon(
+                        Icons.switch_left_rounded,
+                      ),
+                    ),
                   ),
-                ),
+                ]
               ),
             );
           }

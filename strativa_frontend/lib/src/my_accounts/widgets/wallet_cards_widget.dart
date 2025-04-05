@@ -23,7 +23,7 @@ class WalletCardsWidget extends StatelessWidget {
           children: [
             Text(
               AppText.kWalletCardsHeader.toUpperCase(),
-              style: CustomTextStyles(context).smallStyle.copyWith(
+              style: CustomTextStyles(context).defaultStyle.copyWith(
                 color: ColorsCommon.kDarkerGray,
               ),
             ),
@@ -62,9 +62,9 @@ class WalletCardsWidget extends StatelessWidget {
                           bottom: AppConstants.kCardPadding.bottom,
                           child: Text(
                             balanceNotifier.getShowBalance
-                            ? "@${userData['user_id']}"
-                            : "••••",
-                            style: CustomTextStyles(context).smallestStyle.copyWith(
+                              ? "@${userData['user_id']}"
+                              : "••••",
+                            style: CustomTextStyles(context).smallerStyle.copyWith(
                               color: ColorsCommon.kWhite,
                               fontWeight: FontWeight.w900,
                             ),
@@ -79,7 +79,7 @@ class WalletCardsWidget extends StatelessWidget {
         
                     Text(
                       AppText.kMyStrativaCard,
-                      style: CustomTextStyles(context).smallerStyle,
+                      style: CustomTextStyles(context).smallStyle,
                     ),
                   ],
                 ),
@@ -105,71 +105,71 @@ class WalletCardsWidget extends StatelessWidget {
                         ),
                         
                         userData['online_card_details'].isEmpty
-                        ? Stack(
-                          children: [    
-                            Positioned(
-                              child: Container(
-                                width: 180.w,
-                                height: 120.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(AppConstants.kCardRadius),
-                                  color: ColorsCommon.kWhite.withValues(alpha: 0.5)
-                                ),
-                                child: Center(
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // TODO: handle activate online card
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(ColorsCommon.kAccentL2),
-                                    ),
-                                    child: Text(
-                                      AppText.kActivateNow,
-                                      style: CustomTextStyles(context).smallestStyle.copyWith(
-                                        color: ColorsCommon.kWhite,
-                                        fontWeight: FontWeight.w900,
+                          ? Stack(
+                            children: [    
+                              Positioned(
+                                child: Container(
+                                  width: 180.w,
+                                  height: 120.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(AppConstants.kCardRadius),
+                                    color: ColorsCommon.kWhite.withValues(alpha: 0.5)
+                                  ),
+                                  child: Center(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        // TODO: handle activate online card
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(ColorsCommon.kAccentL2),
+                                      ),
+                                      child: Text(
+                                        AppText.kActivateNow,
+                                        style: CustomTextStyles(context).smallerStyle.copyWith(
+                                          color: ColorsCommon.kWhite,
+                                          fontWeight: FontWeight.w900,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-        
-                            Positioned(
-                              left: -3,
-                              top: -3,
-                              child: AppIcons.kFreeIcon,
-                            ),
-                          ],
-                        )
-                        : Positioned(
-                          left: AppConstants.kCardPadding.left,
-                          bottom: AppConstants.kCardPadding.bottom,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                balanceNotifier.getShowBalance
-                                ? "${userData['online_card_details']['online_card_number']}"
-                                : "•••• •••• •••• ••••",
-                                style: CustomTextStyles(context).smallestStyle.copyWith(
-                                  color: ColorsCommon.kWhite,
-                                  fontWeight: FontWeight.w900,
-                                ),
+          
+                              Positioned(
+                                left: -3,
+                                top: -3,
+                                child: AppIcons.kFreeIcon,
                               ),
-        
-                              Text(
-                                balanceNotifier.getShowBalance
-                                ? "@${userData['user_id']}"
-                                : "••••",
-                                style: CustomTextStyles(context).smallestStyle.copyWith(
-                                  color: ColorsCommon.kWhite,
-                                  fontWeight: FontWeight.w900,
+                            ],
+                          )
+                          : Positioned(
+                            left: AppConstants.kCardPadding.left,
+                            bottom: AppConstants.kCardPadding.bottom,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  balanceNotifier.getShowBalance
+                                    ? "${userData['online_card_details']['online_card_number']}"
+                                    : "•••• •••• •••• ••••",
+                                    style: CustomTextStyles(context).smallerStyle.copyWith(
+                                      color: ColorsCommon.kWhite,
+                                      fontWeight: FontWeight.w900,
+                                    ),
                                 ),
-                              ),
-                            ]
+          
+                                Text(
+                                  balanceNotifier.getShowBalance
+                                    ? "@${userData['user_id']}"
+                                    : "••••",
+                                    style: CustomTextStyles(context).smallerStyle.copyWith(
+                                      color: ColorsCommon.kWhite,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                ),
+                              ]
+                            ),
                           ),
-                        ),
                       ],
                     ),
         
@@ -179,7 +179,7 @@ class WalletCardsWidget extends StatelessWidget {
         
                     Text(
                       AppText.kMyOnlineCard,
-                      style: CustomTextStyles(context).smallerStyle,
+                      style: CustomTextStyles(context).smallStyle,
                     ),
                   ],
                 ),

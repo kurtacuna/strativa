@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 
-class TabWidget extends StatelessWidget {
-  const TabWidget({
+class TransactionTabWidget extends StatelessWidget {
+  const TransactionTabWidget({
     required this.text,
     super.key
   });

@@ -73,7 +73,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
 
             Text(
               AppText.kTransactionHistoryHeader,
-              style: CustomTextStyles(context).bigStyle.copyWith(
+              style: CustomTextStyles(context).biggerStyle.copyWith(
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -88,7 +88,6 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
 
             Expanded(
               child: SingleChildScrollView(
-                primary: false,
                 child: TransactionHistoryWidget(),
               ),
             ),

@@ -19,9 +19,9 @@ class CustomTextStyles {
   );
 
   TextStyle get textButtonStyle => Theme.of(context).textTheme.titleSmall!.copyWith(
-    fontSize: 14.sp,
-    color: ColorsCommon.kPrimaryL4,
-    fontWeight: FontWeight.w700,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w100,
+    color: ColorsCommon.kDarkerGray,
   );
 
   TextStyle get screenHeaderStyle => Theme.of(context).textTheme.labelMedium!.copyWith(
@@ -29,27 +29,36 @@ class CustomTextStyles {
     fontWeight: FontWeight.w900,
   );
 
-  TextStyle get bigStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
+  TextStyle get biggerStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
     fontSize: 18.sp,
   );
 
-  TextStyle get defaultStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
+  TextStyle get bigStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
     fontSize: 16.sp,
   );
 
-  TextStyle get smallStyle => Theme.of(context).textTheme.labelMedium!.copyWith(
+  TextStyle get defaultStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
     fontSize: 14.sp,
   );
 
-  TextStyle get smallerStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
+  TextStyle get smallStyle => Theme.of(context).textTheme.labelMedium!.copyWith(
     fontSize: 12.sp,
   );
 
-  TextStyle get smallestStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
+  TextStyle get smallerStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
     fontSize: 10.sp,
   );
+
+  TextStyle get smallestStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
+    fontSize: 8.sp,
+  );
   
-  TextStyle get currencyStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
+  TextStyle get numberStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
     fontFamily: GoogleFonts.notoSans().fontFamily,
+  );
+
+  TextStyle get amountStyle => Theme.of(context).textTheme.labelSmall!.copyWith(
+    fontFamily: GoogleFonts.orbit().fontFamily,
+    fontSize: 18.sp,
   );
 }

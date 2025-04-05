@@ -6,7 +6,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 
 class AppButtonWidget extends StatelessWidget {
   const AppButtonWidget({
-    this.onTap,
+    required this.onTap,
     this.width,
     this.height,
     required this.text,
@@ -17,6 +17,7 @@ class AppButtonWidget extends StatelessWidget {
     this.color,
     this.fontWeight,
     this.showBorder,
+    this.borderColor,
     super.key,
   });
 
@@ -31,16 +32,18 @@ class AppButtonWidget extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
   final bool? showBorder;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
       child: Ink(
         width: width ?? ScreenUtil().screenWidth,
         height: height ?? 50.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
+          borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
           gradient: LinearGradient(
             colors: [
               firstColor ?? ColorsCommon.kPrimaryL3,
@@ -49,10 +52,9 @@ class AppButtonWidget extends StatelessWidget {
           ),
           border: Border.all(
             width: AppConstants.kAppBorderWidth,
-            // color: KcolorsCommon.kPrimaryL4,
             color: showBorder ?? false
-            ? ColorsCommon.kPrimaryL4
-            : Colors.transparent,
+              ? borderColor ?? ColorsCommon.kPrimaryL3
+              : Colors.transparent,
           ),
         ),
         child: Center(

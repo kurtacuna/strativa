@@ -9,19 +9,12 @@ import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 
 class PasswordFieldWidget extends StatelessWidget {
   const PasswordFieldWidget({
-    this.focusedBorderColor,
-    this.width,
-    this.radius,
     required this.controller,
     this.onEditingComplete,
     required this.focusNode,
     super.key,
   });
 
-
-  final Color? focusedBorderColor;
-  final double? width;
-  final double? radius;
   final Function()? onEditingComplete;
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -38,7 +31,7 @@ class PasswordFieldWidget extends StatelessWidget {
           controller: controller,
           validator: (value) {
             if (value!.isEmpty) {
-              return "Please enter your password.";
+              return AppText.kPasswordFieldError;
             } else {
               return null;
             }
@@ -71,34 +64,10 @@ class PasswordFieldWidget extends StatelessWidget {
               maxWidth: 40.sp,
             ),
 
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: (width ?? AppConstants.kAppBorderWidth) - 1,
-                color: focusedBorderColor ?? ColorsCommon.kGray,
-              ),
-              borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: width ?? AppConstants.kAppBorderWidth,
-                color: focusedBorderColor ?? ColorsCommon.kPrimaryL4,
-              ),
-              borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: width ?? AppConstants.kAppBorderWidth,
-                color: ColorsCommon.kRed,
-              ),
-              borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: width ?? AppConstants.kAppBorderWidth,
-                color: ColorsCommon.kRed,
-              ),
-              borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-            ),
+            enabledBorder: AppConstants.kEnabledBorder,
+            focusedBorder: AppConstants.kFocusedBorder,
+            errorBorder: AppConstants.kErrorBorder,
+            focusedErrorBorder: AppConstants.kFocusedErrorBorder,
           ),
         );
       }

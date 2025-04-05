@@ -7,7 +7,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
-import 'package:strativa_frontend/common/utils/currency.dart';
+import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/card_widget.dart';
 
@@ -29,7 +29,7 @@ class DetailedCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     AppText.kCardBalance,
-                    style: CustomTextStyles(context).smallStyle.copyWith(
+                    style: CustomTextStyles(context).defaultStyle.copyWith(
                       color: ColorsCommon.kWhite,
                       fontWeight: FontWeight.w900,
                     )
@@ -40,13 +40,13 @@ class DetailedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         balanceNotifier.getShowBalance
-                        ? "₱ ${addCommaToPrice(double.parse(userData['balance']))}"
-                        : "₱ •••••",
-                        style: CustomTextStyles(context).currencyStyle.copyWith(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 35.sp,
-                          color: ColorsCommon.kWhite,
-                        ),
+                          ? "${AppText.kCurrencySign} ${addCommaToAmount(double.parse(userData['balance']))}"
+                          : "${AppText.kCurrencySign} •••••",
+                          style: CustomTextStyles(context).numberStyle.copyWith(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 35.sp,
+                            color: ColorsCommon.kWhite,
+                          ),
                       ),
                       
                       GestureDetector(
@@ -54,16 +54,16 @@ class DetailedCardWidget extends StatelessWidget {
                           balanceNotifier.toggleShowBalance();
                         },
                         child: balanceNotifier.getShowBalance
-                        ? Icon(
-                          AppIcons.kEyeOpenIcon.icon,
-                          color: ColorsCommon.kWhite,
-                          size: 30.sp,
-                        )
-                        : Icon(
-                          AppIcons.kEyeCloseIcon.icon,
-                          color: ColorsCommon.kWhite,
-                          size: 30.sp,
-                        ),
+                          ? Icon(
+                            AppIcons.kEyeOpenIcon.icon,
+                            color: ColorsCommon.kWhite,
+                            size: 30.sp,
+                          )
+                          : Icon(
+                            AppIcons.kEyeCloseIcon.icon,
+                            color: ColorsCommon.kWhite,
+                            size: 30.sp,
+                          ),
                       ),
                     ]
                   ),
@@ -72,22 +72,22 @@ class DetailedCardWidget extends StatelessWidget {
         
                   Text(
                     balanceNotifier.getShowBalance
-                    ? userData['strativa_card_number']
-                    : "•••• •••• •••• ••••",
-                    style: CustomTextStyles(context).smallStyle.copyWith(
-                      wordSpacing: 5,
-                      color: ColorsCommon.kWhite,
-                      fontWeight: FontWeight.w900,
-                    ),
+                      ? userData['strativa_card_number']
+                      : "•••• •••• •••• ••••",
+                      style: CustomTextStyles(context).defaultStyle.copyWith(
+                        wordSpacing: 5,
+                        color: ColorsCommon.kWhite,
+                        fontWeight: FontWeight.w900,
+                      ),
                   ),
         
                   Text(
                     balanceNotifier.getShowBalance
-                    ? userData['strativa_card_expiry']
-                    : "••••",
-                    style: CustomTextStyles(context).smallerStyle.copyWith(
-                      color: ColorsCommon.kWhite,
-                    ),
+                      ? userData['strativa_card_expiry']
+                      : "••••",
+                      style: CustomTextStyles(context).defaultStyle.copyWith(
+                        color: ColorsCommon.kWhite,
+                      ),
                   ),
                 ],
               ),

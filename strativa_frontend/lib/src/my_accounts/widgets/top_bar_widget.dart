@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
 
@@ -25,12 +27,12 @@ class TopBarWidget extends StatelessWidget {
             children: [
               Text(
                 greetUserByTimeOfDay(),
-                style: CustomTextStyles(context).defaultStyle,
+                style: CustomTextStyles(context).bigStyle,
               ),
 
               Text(
                 userData['first_name'],
-                style: CustomTextStyles(context).defaultStyle.copyWith(
+                style: CustomTextStyles(context).bigStyle.copyWith(
                   fontWeight: FontWeight.w900,
                   color: ColorsCommon.kAccentL1,
                 ),
@@ -43,11 +45,11 @@ class TopBarWidget extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  // TODO: handle qr generator
+                  context.push(AppRoutes.kQrScreen);
                 },
                 borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
                 child: Ink(
-                  padding: AppConstants.kIconPadding,
+                  padding: AppConstants.kSmallPadding,
                   child: AppIcons.kQrIcon
                 ),
               ),

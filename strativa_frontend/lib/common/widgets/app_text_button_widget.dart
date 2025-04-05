@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kconstants.dart';
 
 class AppTextButtonWidget extends StatelessWidget {
   const AppTextButtonWidget({
@@ -10,6 +11,7 @@ class AppTextButtonWidget extends StatelessWidget {
     this.overlayColor,
     this.prefixIcon,
     this.spacing,
+    this.color,
     super.key,
   });
 
@@ -17,6 +19,7 @@ class AppTextButtonWidget extends StatelessWidget {
   final void Function() onPressed;
   final TextStyle? style;
   final Color? overlayColor;
+  final Color? color;
   final Icon? prefixIcon;
   final double? spacing;
 
@@ -26,6 +29,9 @@ class AppTextButtonWidget extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         overlayColor: overlayColor ?? ColorsCommon.kPrimaryL4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius)
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -37,7 +43,9 @@ class AppTextButtonWidget extends StatelessWidget {
           ),
           Text(
             text,
-            style: style ?? CustomTextStyles(context).textButtonStyle,
+            style: style ?? CustomTextStyles(context).textButtonStyle.copyWith(
+              color: color,
+            ),
           ),
         ]
       ),

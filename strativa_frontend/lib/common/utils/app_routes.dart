@@ -2,13 +2,15 @@ import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/src/auth/views/landing_screen.dart';
-import 'package:strativa_frontend/src/auth/views/login_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/login_screen.dart';
 import 'package:strativa_frontend/src/entrypoint/views/entrypoint.dart';
+import 'package:strativa_frontend/src/qr/views/qr_screen.dart';
+import 'package:strativa_frontend/src/qr/views/subviews/generated_qr_subscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/views/transaction_history_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 
 final GoRouter _router = GoRouter(
-  navigatorKey: GlobalKeys.navigatorKey,
+  navigatorKey: AppGlobalKeys.navigatorKey,
   initialLocation: AppRoutes.kSplashScreen,
   routes: [
     GoRoute(
@@ -30,6 +32,14 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kTransactionHistoryScreen,
       builder: (context, state) => const TransactionHistoryScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kQrScreen,
+      builder: (context, state) => const QrScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kGeneratedQrSubscreen,
+      builder: (context, state) => const GeneratedQrSubscreen(),
     ),
   ],
 );

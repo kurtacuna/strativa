@@ -5,3 +5,8 @@ List<String> get transactionTabs => [
   "Transport",
   "Transportas;dkfja;sdlfja;sdjf;ajsdf",
 ];
+
+List<String> get qrTabs => [
+  "SCAN QR",
+  "GENERATE QR"
+];

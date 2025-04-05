@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kstrings.dart';
 
 class UserIdFieldWidget extends StatelessWidget {
   const UserIdFieldWidget({
     this.hintText,
     this.prefixIcon,
-    this.focusedBorderColor,
-    this.enabledBorderColor,
-    this.width,
-    this.radius,
     this.obscureText,
     this.onEditingComplete,
     required this.controller,
@@ -19,10 +15,6 @@ class UserIdFieldWidget extends StatelessWidget {
 
   final String? hintText;
   final Widget? prefixIcon;
-  final Color? focusedBorderColor;
-  final Color? enabledBorderColor;
-  final double? width;
-  final double? radius;
   final bool? obscureText;
   final Function()? onEditingComplete;
   final TextEditingController controller;
@@ -35,7 +27,7 @@ class UserIdFieldWidget extends StatelessWidget {
       controller: controller,
       validator: (value) {
         if (value!.isEmpty) {
-          return "Please enter your user id.";
+          return AppText.kUserIdFieldError;
         } else {
           return null;
         }
@@ -54,34 +46,10 @@ class UserIdFieldWidget extends StatelessWidget {
           ),
 
 
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: (width ?? AppConstants.kAppBorderWidth) - 1,
-            color: enabledBorderColor ?? ColorsCommon.kGray,
-          ),
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: width ?? AppConstants.kAppBorderWidth,
-            color: focusedBorderColor ?? ColorsCommon.kPrimaryL4,
-          ),
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: width ?? AppConstants.kAppBorderWidth,
-            color: ColorsCommon.kRed,
-          ),
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: width ?? AppConstants.kAppBorderWidth,
-            color: ColorsCommon.kRed,
-          ),
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kAppBorderRadius),
-        ),
+        enabledBorder: AppConstants.kEnabledBorder,
+        focusedBorder:AppConstants.kFocusedBorder,
+        errorBorder: AppConstants.kErrorBorder,
+        focusedErrorBorder: AppConstants.kFocusedErrorBorder,
       ),
     );
   }

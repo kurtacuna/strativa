@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
-import 'package:strativa_frontend/common/utils/currency.dart';
+import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 
 class TransactionHistoryWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class TransactionHistoryWidget extends StatelessWidget {
     return Column(
       spacing: 5.h,
       children: [
-        ...List.generate(userData['transactions'].sublist(0, length).length, (index) {
+        ...List.generate(transactions.sublist(0, length).length, (index) {
           return ListTile(
             onTap: () {
               // TODO: go to specific transaction details
@@ -40,13 +41,13 @@ class TransactionHistoryWidget extends StatelessWidget {
               ),
             ),
             title: Text(
-              userData['transactions'][index]['store'],
-              style: CustomTextStyles(context).smallStyle,
+              transactions[index]['store'],
+              style: CustomTextStyles(context).defaultStyle,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
-              "- ${userData['transactions'][index]['amount']}",
-              style: CustomTextStyles(context).smallerStyle.copyWith(
+              "- ${transactions[index]['amount']}",
+              style: CustomTextStyles(context).smallStyle.copyWith(
                 color: ColorsCommon.kDarkerGray,
               ),
             ),
@@ -58,16 +59,16 @@ class TransactionHistoryWidget extends StatelessWidget {
               children: [
                 Text(
                   context.watch<BalanceNotifier>().getShowBalance
-                  ? "₱ ${addCommaToPrice(double.parse(userData['transactions'][index]['resulting_balance']))}"
-                  : "₱ •••••",
-                  style: CustomTextStyles(context).currencyStyle.copyWith(
-                    fontSize: CustomTextStyles(context).smallStyle.fontSize,
+                    ? "${AppText.kCurrencySign} ${addCommaToAmount(double.parse(transactions[index]['resulting_balance']))}"
+                    : "${AppText.kCurrencySign} •••••",
+                  style: CustomTextStyles(context).numberStyle.copyWith(
+                    fontSize: CustomTextStyles(context).defaultStyle.fontSize,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
                 Text(
-                  DateFormat('MMM d, y H:m').format(DateTime.parse(userData['transactions'][index]['datetime'])),
-                  style: CustomTextStyles(context).smallerStyle.copyWith(
+                  DateFormat('MMM d, y H:m').format(DateTime.parse(transactions[index]['datetime'])),
+                  style: CustomTextStyles(context).smallStyle.copyWith(
                     color: ColorsCommon.kDarkerGray,
                   ),
                 ),

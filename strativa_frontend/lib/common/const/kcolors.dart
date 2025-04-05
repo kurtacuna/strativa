@@ -18,8 +18,12 @@ class ColorsCommon {
   static const Color kAccentL3 = Color(0xFFFF8A3D);
   static const Color kAccentL4 = Color(0xFFFDA064);
   static const Color kWhite = Color(0xFFF8F9FA);
+  static const Color kWhiter = Colors.white;
   static const Color kDark = Color(0xFF1C1C1E);
+  static const Color kLigherDark =  Color.fromARGB(255, 35, 35, 35);
   static const Color kGray = Color(0xFFD6D6D6);
   static const Color kDarkerGray = Color(0xFF808080);
+  static const Color kDarkGray = Color.fromARGB(255, 57, 57, 57);
+  static const Color kBlueGray = Color(0xFFE8EEEE);
   static const Color kRed = Color(0xFFFF0000);
 }

@@ -9,4 +9,6 @@ class AppRoutes {
   static const String kInvest = '/invest';
   static const String kProfile = '/profile';
   static const String kTransactionHistoryScreen = '/transaction_history';
+  static const String kQrScreen = '/qr';
+  static const String kGeneratedQrSubscreen = '/generated_qr';
 }

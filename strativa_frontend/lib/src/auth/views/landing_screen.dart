@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
@@ -40,6 +41,7 @@ class LandingScreen extends StatelessWidget {
               },
               firstColor: ColorsCommon.kPrimaryL1,
               secondColor: ColorsCommon.kPrimaryL4,
+              radius: AppConstants.kAppBorderRadius,
             ),
         
             AppButtonWidget(
@@ -52,10 +54,15 @@ class LandingScreen extends StatelessWidget {
               firstColor: Colors.transparent,
               secondColor: Colors.transparent,
               showBorder: true,
+              radius: AppConstants.kAppBorderRadius,
             ),
         
             AppTextButtonWidget(
               text: AppText.kSignUpWithExistingAccount,
+              style: CustomTextStyles(context).textButtonStyle.copyWith(
+                fontWeight: FontWeight.w900,
+                color: ColorsCommon.kPrimaryL4,
+              ),
               onPressed: () {
                 // TODO: push to login?
               }

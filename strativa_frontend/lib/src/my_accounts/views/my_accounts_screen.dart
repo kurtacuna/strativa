@@ -47,7 +47,7 @@ class MyAccountsScreen extends StatelessWidget {
                   children: [
                     Text(
                       AppText.kTransactionHeader,
-                      style: CustomTextStyles(context).smallStyle.copyWith(
+                      style: CustomTextStyles(context).defaultStyle.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -56,7 +56,7 @@ class MyAccountsScreen extends StatelessWidget {
       
                     Text(
                       daysPastSinceDate(DateTime.parse(userData['recent_transaction_date'])),
-                      style: CustomTextStyles(context).smallerStyle.copyWith(
+                      style: CustomTextStyles(context).defaultStyle.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -69,14 +69,14 @@ class MyAccountsScreen extends StatelessWidget {
                   },
                   borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
                   child: Ink(
-                    padding: AppConstants.kIconPadding,
+                    padding: AppConstants.kSmallPadding,
                     child: Theme.of(context).brightness == Brightness.dark
-                    ? Image(
-                      image: AppIcons.kExpandIcon.image,
-                      height: AppIcons.kExpandIcon.height,
-                      color: ColorsCommon.kWhite,
-                    )
-                    : AppIcons.kExpandIcon,
+                      ? Image(
+                        image: AppIcons.kExpandIcon.image,
+                        height: AppIcons.kExpandIcon.height,
+                        color: ColorsCommon.kWhite,
+                      )
+                      : AppIcons.kExpandIcon,
                   ),
                 ),
               ]

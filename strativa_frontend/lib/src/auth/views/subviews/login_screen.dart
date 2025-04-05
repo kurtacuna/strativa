@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
@@ -24,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _userIdController = TextEditingController();
   late final TextEditingController _passwordController = TextEditingController();
   final FocusNode _passwordNode = FocusNode();
-  final _formKey = GlobalKeys.loginFormKey;
+  final _formKey = AppGlobalKeys.loginFormKey;
 
   @override
   void dispose() {
@@ -57,17 +58,17 @@ class _LoginScreenState extends State<LoginScreen> {
               UserIdFieldWidget(
                 hintText: AppText.kHintUserId,
                 prefixIcon: Theme.of(context).brightness == Brightness.dark 
-                ? AppIcons.kUserIdFieldIcon(
-                  colorFilter: ColorFilter.mode(
-                    ColorsCommon.kWhite,
-                    BlendMode.srcIn,
-                  ),
-                )
-                : AppIcons.kUserIdFieldIcon(),
-                controller: _userIdController,
-                onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(_passwordNode);
-                },
+                  ? AppIcons.kUserIdFieldIcon(
+                    colorFilter: ColorFilter.mode(
+                      ColorsCommon.kWhite,
+                      BlendMode.srcIn,
+                    ),
+                  )
+                  : AppIcons.kUserIdFieldIcon(),
+                  controller: _userIdController,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordNode);
+                  },
               ),
               
               PasswordFieldWidget(
@@ -88,10 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 firstColor: ColorsCommon.kPrimaryL1,
                 secondColor: ColorsCommon.kPrimaryL4,
+                radius: AppConstants.kAppBorderRadius,
               ),
         
               AppTextButtonWidget(
                 text: AppText.kForgotMyUserIdOrPassword,
+                style: CustomTextStyles(context).textButtonStyle.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: ColorsCommon.kPrimaryL4,
+                ),
                 onPressed: () {
                   // TODO: handle forgot password
                 }
