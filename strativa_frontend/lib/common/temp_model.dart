@@ -1,7 +1,8 @@
 Map<String, dynamic> get userData => {
+  "user_id": "userid",
   "first_name": "First Name",
   "last_name": "Last Name",
-  "user_id": "userid",
+  
   "balance": "1231.00",
   "strativa_card_number": "1234 5678 9101 1121",
   "strativa_card_expiry": "02/27",

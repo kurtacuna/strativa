@@ -102,4 +102,10 @@ class AppIcons {
     color: ColorsCommon.kAccentL3,
     size: 25.h,
   );
+  // TODO: change to final
+  static Icon get kErrorIcon => Icon(
+    MaterialIcons.error,
+    color: ColorsCommon.kRed,
+    size: 25.h,
+  );
 }
