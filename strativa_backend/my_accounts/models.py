@@ -9,8 +9,9 @@ card_expiry_years = 3
 class UserData(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   first_name = models.CharField(max_length=255, blank=False)
-  middle_name = models.CharField(max_length=255)
+  middle_name = models.CharField(max_length=255, blank=True)
   last_name = models.CharField(max_length=255, blank=False)
+  user_card_details = models.ForeignKey('UserCardDetails', blank=False, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.user.username
@@ -25,28 +26,32 @@ class UserCardDetails(models.Model):
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
   strativa_card_number = models.CharField(max_length=19, blank=False)
-  strativa_card_created = models.DateField(default=timezone.now)
-  strativa_card_expiry = models.DateField(default=timezone.now().replace(year=timezone.now().year + card_expiry_years))
-  strativa_card_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-  strativa_card_cvv = models.IntegerField()
+  strativa_card_created = models.DateTimeField(blank=False)
+  strativa_card_expiry = models.DateTimeField(blank=False)
+  strativa_card_cvv = models.IntegerField(blank=False)
 
   is_online_card_active = models.BooleanField(default=False)
   online_card_number = models.CharField(max_length=19, blank=True, null=True)
-  online_card_created = models.DateField(blank=True, null=True)
-  online_card_expiry = models.DateField(blank=True, null=True)
+  online_card_created = models.DateTimeField(blank=True, null=True)
+  online_card_expiry = models.DateTimeField(blank=True, null=True)
   online_card_cvv = models.IntegerField(blank=True, null=True)
 
   def __str__(self):
     return self.user.username
+  
+  def create_strativa_card(self):
+    if not self.strativa_card_number:
+      self.strativa_card_number = self.generate_strativa_card_number()
+      self.strativa_card_created = timezone.now()
+      self.strativa_card_expiry = timezone.now().replace(year=timezone.now().year + card_expiry_years)
+      self.strativa_card_cvv = self.generate_cvv()
 
-  def save(self, *args, **kwargs):
+  def create_online_card(self):
     if self.is_online_card_active and not self.online_card_number:
       self.online_card_number = self.generate_online_card_number()
       self.online_card_created = timezone.now()
       self.online_card_expiry = timezone.now().replace(year=timezone.now().year + card_expiry_years)
       self.online_card_cvv = self.generate_cvv()
-    
-    super().save(*args, **kwargs)
 
   @staticmethod
   def generate_card_number():
@@ -69,7 +74,6 @@ class UserCardDetails(models.Model):
     
     return checksum % 10 == 0
     
-
   @staticmethod
   def generate_strativa_card_number():
     while True:

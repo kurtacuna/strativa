@@ -9,6 +9,7 @@ import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_logo_widget.dart';
 import 'package:strativa_frontend/src/auth/controllers/jwt_notifier.dart';
 import 'package:strativa_frontend/src/auth/models/login_model.dart';
@@ -80,12 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               context.watch<JwtNotifier>().getIsLoading
-                ? CircularProgressIndicator(
-                  backgroundColor: ColorsCommon.kPrimaryL4,
-                  valueColor: AlwaysStoppedAnimation(
-                    ColorsCommon.kWhite,
-                  )
-                )
+                ? AppCircularProgressIndicatorWidget()
                 : AppButtonWidget(
                   text: AppText.kLoginButtonText,
                   onTap: () async {

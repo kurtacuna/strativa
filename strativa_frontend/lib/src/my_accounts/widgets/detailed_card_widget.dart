@@ -6,9 +6,10 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
+import 'package:strativa_frontend/common/utils/date.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
+import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/card_widget.dart';
 
 class DetailedCardWidget extends StatelessWidget {
@@ -18,6 +19,8 @@ class DetailedCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BalanceNotifier> (
       builder: (context, balanceNotifier, child) {
+        var userCardDetails = context.read<UserDataNotifier>().getUserData!.userCardDetails;
+
         return Stack(
           children: [
             const CardWidget(shadow: true),
@@ -25,7 +28,6 @@ class DetailedCardWidget extends StatelessWidget {
               padding: AppConstants.kCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                // TODO: change data once backend is done
                 children: [
                   Text(
                     AppText.kCardBalance,
@@ -40,7 +42,7 @@ class DetailedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         balanceNotifier.getShowBalance
-                          ? "${AppText.kCurrencySign} ${addCommaToAmount(double.parse(userData['balance']))}"
+                          ? "${AppText.kCurrencySign} ${addCommaToAmount(double.parse(userCardDetails.balance))}"
                           : "${AppText.kCurrencySign} •••••",
                           style: CustomTextStyles(context).numberStyle.copyWith(
                             fontWeight: FontWeight.w800,
@@ -72,7 +74,7 @@ class DetailedCardWidget extends StatelessWidget {
         
                   Text(
                     balanceNotifier.getShowBalance
-                      ? userData['strativa_card_number']
+                      ? userCardDetails.strativaCardNumber
                       : "•••• •••• •••• ••••",
                       style: CustomTextStyles(context).defaultStyle.copyWith(
                         wordSpacing: 5,
@@ -83,7 +85,7 @@ class DetailedCardWidget extends StatelessWidget {
         
                   Text(
                     balanceNotifier.getShowBalance
-                      ? userData['strativa_card_expiry']
+                      ? getCardExpiry(userCardDetails.strativaCardExpiry)
                       : "••••",
                       style: CustomTextStyles(context).defaultStyle.copyWith(
                         color: ColorsCommon.kWhite,

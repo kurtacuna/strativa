@@ -1,9 +1,12 @@
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase, Client
+from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from my_accounts.models import UserCardDetails
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from . import views
+from . import models
 
 # class UserCardDetailsTest(TestCase):
 #     def test_online_card_activation(self):
@@ -29,7 +32,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserDataViewTest(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="securepass")
+        self.user = User.objects.create_user(username="testuser", password="pass")
+        self.userdata = models.UserData.objects.create(first_name="test", last_name="user", user_id=1)
+        
         self.client = APIClient()
 
         refresh = RefreshToken.for_user(self.user)
@@ -38,10 +43,7 @@ class UserDataViewTest(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_user_data_view(self):
-        url = "/api/my_accounts/me/"
+        url = reverse('user_data')
         response = self.client.get(url)
         
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK) 
-
-        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

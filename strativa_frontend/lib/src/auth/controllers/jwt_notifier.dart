@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
+import 'package:strativa_frontend/common/const/kurls.dart';
 import 'package:strativa_frontend/common/services/storage.dart';
-import 'package:strativa_frontend/common/utils/environment.dart';
 import 'package:http/http.dart' as http;
 import 'package:strativa_frontend/common/utils/error_model.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
@@ -24,7 +24,7 @@ class JwtNotifier with ChangeNotifier {
 
     // TODO: encrypt data
     try {
-      var url = Uri.parse("${Environment.apiBaseUrl}/auth/jwt/create");
+      var url = Uri.parse(ApiUrls.jwtCreateUrl);
       var response = await http.post(
         url,
         headers: {
@@ -38,9 +38,8 @@ class JwtNotifier with ChangeNotifier {
         String accessToken = model.access;
         String refreshToken = model.refresh;
 
-        Storage().setString('accessToken', accessToken);
-        Storage().setString('refreshToken', refreshToken);
-
+        Storage().setString(StorageKeys.accessTokenKey, accessToken);
+        Storage().setString(StorageKeys.refreshTokenKey, refreshToken);
         statusCode = response.statusCode;
       } else {
         if (context.mounted) {
@@ -56,11 +55,10 @@ class JwtNotifier with ChangeNotifier {
         }
       }
 
-      toggleLoading();
-
     } catch (e) {
-      toggleLoading();
       print(e);
+    } finally {
+      toggleLoading();
     }
 
     return statusCode;

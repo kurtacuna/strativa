@@ -9,22 +9,20 @@ class UserDataView(APIView):
 
   def get(self, request):
     user_id = request.user.id
-    
+
     if not user_id:
       return Response(
-        {"message": "A user ID is required."},
+        {"detail": "A user ID is required."},
         status=status.HTTP_400_BAD_REQUEST
       )
     
     try:
-      user_data = models.UserData.objects.get(id=user_id)
+      user_data = models.UserData.objects.get(user_id=user_id)
       serializer = serializers.UserDataSerializer(instance=user_data)
     except models.UserData.DoesNotExist:
       return Response(
-        {"message": "User not found"},
+        {"detail": "User not found"},
         status=status.HTTP_404_NOT_FOUND
       )
     
     return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    

@@ -11,6 +11,7 @@ import 'package:strativa_frontend/src/auth/controllers/jwt_notifier.dart';
 import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
+import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/qr/controllers/qr_tab_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
@@ -30,6 +31,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TransactionTabNotifier()),
       ChangeNotifierProvider(create: (_) => QrTabNotifier()),
       ChangeNotifierProvider(create: (_) => JwtNotifier()),
+      ChangeNotifierProvider(create: (_) => UserDataNotifier()),
     ],
     child: const MyApp(),
   ));

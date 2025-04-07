@@ -9,7 +9,7 @@ class Environment {
     return '.env.development';
   }
 
-  static String get apiBaseUrl {
+  static String get appBaseUrl {
     return dotenv.env['APP_BASE_URL'] ?? "APP_BASE_URL not found.";
   }
 }
