@@ -21,4 +21,6 @@ class AppText {
   static const kActivateNow = "Activate Now";
   static const kRegisterScreen = "Register Account";
   static const kValidId = "Select Valid ID";
+  static const kDataPrivacy = "Data Privacy";
+  static const kRegName = "Register Name";
 }

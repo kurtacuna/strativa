@@ -3,6 +3,8 @@ class AppRoutes {
   static const String kLandingScreen = '/landing';
   static const String kRegisterScreen = '/register';
   static const String kValidId = '/validID';
+  static const String kRegName = '/userName_reg';
+  static const String kDataPrivacy = '/data_privacy';
   static const String kLoginScreen = '/login';
   static const String kEntrypoint = '/entrypoint';
   static const String kMyAccounts = 'my_accounts';

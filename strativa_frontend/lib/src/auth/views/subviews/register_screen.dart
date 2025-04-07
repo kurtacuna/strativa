@@ -140,7 +140,9 @@ class RegisterScreen extends StatelessWidget {
                 ],
               ),
             ),
-            AppButtonWidget(text: 'asdasd', onTap: (){
+            SizedBox(height: 300),
+            
+            AppButtonWidget(text: 'Confirm', onTap: (){
               context.push(AppRoutes.kValidId);
             },),
           ],
