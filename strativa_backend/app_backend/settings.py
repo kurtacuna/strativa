@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'rest_framework.authtoken',
     'my_accounts',
+    'transaction',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,9 @@ STATICFILES_DIRS = [
   os.path.join(BASE_DIR, 'static')
 ]
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -151,8 +155,9 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     # TODO: check if final
     # "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=10),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=5),
+    # "REFRESH_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=1),
     "AUTH_HEADER_TYPES": ('Bearer',),
 }
 

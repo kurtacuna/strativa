@@ -91,7 +91,6 @@ class WalletCardsWidget extends StatelessWidget {
                     Column(
                       children: [
                         Stack(
-                          clipBehavior: Clip.none,
                           children: [
                             CardWidget(
                               width: 180.w,
@@ -100,16 +99,16 @@ class WalletCardsWidget extends StatelessWidget {
                               secondColor: ColorsCommon.kDark,
                             ),
             
-                            Positioned(
-                              child: Image.asset(
+                           Image.asset(
                                 R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
                                 width: 180.w,
                                 height: 120.h,
                               ),
-                            ),
+                           
                             
                             userCardDetails.isOnlineCardActive == false
                               ? Stack(
+                                clipBehavior: Clip.none,
                                 children: [    
                                   Positioned(
                                     child: Container(
@@ -117,7 +116,7 @@ class WalletCardsWidget extends StatelessWidget {
                                       height: 120.h,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(AppConstants.kCardRadius),
-                                        color: ColorsCommon.kWhite.withValues(alpha: 0.5)
+                                        color: ColorsCommon.kWhite.withValues(alpha: 0.5),
                                       ),
                                       child: Center(
                                         child: ElevatedButton(

@@ -37,4 +37,5 @@ class AppText {
   static const kAmountRequested = "Amount Requested";
   static const kEdit = "Edit";
   static const kShare = "Share";
+  static const kNoTransactionsYet = "No transactions yet";
 }

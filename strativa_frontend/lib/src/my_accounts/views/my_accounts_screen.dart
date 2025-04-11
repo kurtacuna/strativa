@@ -8,12 +8,12 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/detailed_card_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/top_bar_widget.dart';
+import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
 import 'package:strativa_frontend/src/transaction_history/widgets/transaction_history_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/wallet_cards_widget.dart';
 
@@ -22,13 +22,19 @@ class MyAccountsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      context.read<UserDataNotifier>().fetchUserData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserDataNotifier>().fetchUserData(context);
+      context.read<TransactionTabNotifier>().fetchUserTransactions(context);
     });
 
-    return Builder(
-      builder: (context) {
-        if (context.watch<UserDataNotifier>().getUserData == null) {
+    return Consumer<UserDataNotifier>(
+      builder: (context, userDataNotifier, child) {
+        TransactionTabNotifier transactionTabNotifier = Provider.of<TransactionTabNotifier>(
+          context,
+          listen: true
+        );
+        
+        if (userDataNotifier.getUserData == null || userDataNotifier.getIsLoading || transactionTabNotifier.getUserTransactions == null || transactionTabNotifier.getIsLoading) {
           // TODO: change to shimmers?
           return Scaffold(
             body: Center(
@@ -73,9 +79,9 @@ class MyAccountsScreen extends StatelessWidget {
                         SizedBox(height: 5.h),
           
                         Text(
-                          // TODO: change once backend is done
-                          // daysPastSinceDate(DateTime.parse(userData['recent_transaction_date'])),
-                          "placeholder",
+                          transactionTabNotifier.getUserTransactions!.transactions.isEmpty
+                            ? AppText.kNoTransactionsYet
+                            : daysPastSinceDate(transactionTabNotifier.getUserTransactions!.transactions[0].transaction.datetime),
                           style: CustomTextStyles(context).defaultStyle.copyWith(
                             fontWeight: FontWeight.w900,
                           ),
@@ -105,7 +111,9 @@ class MyAccountsScreen extends StatelessWidget {
                 SizedBox(height: 10.h),
           
                 TransactionHistoryWidget(
-                  length: 3,
+                  length: context.read<TransactionTabNotifier>().getUserTransactions!.transactions.length < 3
+                    ? context.read<TransactionTabNotifier>().getUserTransactions!.transactions.length
+                    : 3
                 ),
               ],
             ),

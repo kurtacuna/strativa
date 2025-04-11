@@ -56,6 +56,7 @@ class JwtNotifier with ChangeNotifier {
       }
 
     } catch (e) {
+      print("JwtNotifier");
       print(e);
     } finally {
       toggleLoading();

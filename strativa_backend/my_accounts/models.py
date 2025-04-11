@@ -2,19 +2,28 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import random
+import os
 
 card_expiry_years = 3
 
 # Create your models here.
 class UserData(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  def save_profile_picture_to(instance, filename):
+    return os.path.join('profile_pictures', f"{instance.id}_{instance.user.username}_{filename}")
+
+  user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
   first_name = models.CharField(max_length=255, blank=False)
   middle_name = models.CharField(max_length=255, blank=True)
   last_name = models.CharField(max_length=255, blank=False)
+  profile_picture = models.ImageField(upload_to=save_profile_picture_to, default='images/logo.png')
   user_card_details = models.ForeignKey('UserCardDetails', blank=False, null=False, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.user.username
+  
+  @property
+  def get_full_name(self):
+    return f"{self.first_name} {f"{self.middle_name} " if self.middle_name else ""}{self.last_name}"
 
   class Meta:
     verbose_name = "User Data"
@@ -22,22 +31,26 @@ class UserData(models.Model):
 
 
 class UserCardDetails(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-  strativa_card_number = models.CharField(max_length=19, blank=False)
-  strativa_card_created = models.DateTimeField(blank=False)
-  strativa_card_expiry = models.DateTimeField(blank=False)
-  strativa_card_cvv = models.IntegerField(blank=False)
+  strativa_card_number = models.CharField(max_length=16, unique=True)
+  strativa_card_created = models.DateTimeField()
+  strativa_card_expiry = models.DateTimeField()
+  strativa_card_cvv = models.CharField(max_length=3)
 
   is_online_card_active = models.BooleanField(default=False)
-  online_card_number = models.CharField(max_length=19, blank=True, null=True)
+  online_card_number = models.CharField(max_length=19, unique=True, blank=True, null=True)
   online_card_created = models.DateTimeField(blank=True, null=True)
   online_card_expiry = models.DateTimeField(blank=True, null=True)
-  online_card_cvv = models.IntegerField(blank=True, null=True)
+  online_card_cvv = models.CharField(max_length=3, blank=True, null=True)
 
   def __str__(self):
     return self.user.username
+  
+  def save(self, *args, **kwargs):
+    self.create_strativa_card()
+    super().save(*args, **kwargs)
   
   def create_strativa_card(self):
     if not self.strativa_card_number:
@@ -56,11 +69,10 @@ class UserCardDetails(models.Model):
   @staticmethod
   def generate_card_number():
     card_number = ''.join(str(random.randint(0, 9)) for _ in range(16))
-    return f'{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:16]}'
+    return card_number
   
   @staticmethod
   def luhn_check(card_number):
-    card_number = card_number.replace(" ", "")
     digits = [int(d) for d in card_number]
     checksum = 0
     reversed_card_number = digits[::-1]

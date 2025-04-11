@@ -9,6 +9,7 @@ class UserDataModel {
     String firstName;
     String middleName;
     String lastName;
+    String profilePicture;
     UserCardDetails userCardDetails;
 
     UserDataModel({
@@ -16,6 +17,7 @@ class UserDataModel {
         required this.firstName,
         required this.middleName,
         required this.lastName,
+        required this.profilePicture,
         required this.userCardDetails,
     });
 
@@ -24,6 +26,7 @@ class UserDataModel {
         firstName: json["first_name"],
         middleName: json["middle_name"],
         lastName: json["last_name"],
+        profilePicture: json["profile_picture"],
         userCardDetails: UserCardDetails.fromJson(json["user_card_details"]),
     );
 
@@ -32,6 +35,7 @@ class UserDataModel {
         "first_name": firstName,
         "middle_name": middleName,
         "last_name": lastName,
+        "profile_piocture": profilePicture,
         "user_card_details": userCardDetails.toJson(),
     };
 }
@@ -57,12 +61,12 @@ class UserCardDetails {
     String strativaCardNumber;
     DateTime strativaCardCreated;
     DateTime strativaCardExpiry;
-    int strativaCardCvv;
+    String strativaCardCvv;
     bool isOnlineCardActive;
     String? onlineCardNumber;
     DateTime? onlineCardCreated;
     DateTime? onlineCardExpiry;
-    int? onlineCardCvv;
+    String? onlineCardCvv;
 
     UserCardDetails({
         required this.balance,
@@ -91,7 +95,7 @@ class UserCardDetails {
         onlineCardExpiry: json["online_card_expiry"] != null
           ? DateTime.parse(json["online_card_expiry"])
           : null,
-        onlineCardCvv: json["online_card_cvv"],
+        onlineCardCvv: json["online_card_cvv"] ?? "",
     );
 
     Map<String, dynamic> toJson() => {
