@@ -4,6 +4,21 @@ import 'package:http/http.dart' as http;
 import 'package:strativa_frontend/common/utils/refresh/model/access_token_model.dart';
 import 'package:strativa_frontend/common/utils/refresh/model/refresh_access_token_model.dart';
 
+Future<void> refetch({
+  required Function() fetch,
+}) async {
+  int status = await refreshAccessToken();
+
+  if (status == -1) {
+    // TODO: log out the user; clear access and refresh from local
+    print('session expired');
+  } else {
+    await fetch();
+  }
+
+  return;
+}
+
 Future<int> refreshAccessToken() async {
   int statusCode = -1;
 
@@ -35,6 +50,7 @@ Future<int> refreshAccessToken() async {
     }
 
   } catch (e) {
+    print("refreshAccessToken:");
     print(e);
   }
 

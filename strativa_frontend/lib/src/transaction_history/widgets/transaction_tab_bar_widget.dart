@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
+import 'package:strativa_frontend/common/utils/string.dart';
 import 'package:strativa_frontend/src/transaction_history/widgets/transaction_tab_widget.dart';
 
 class TransactionTabBarWidget extends StatelessWidget {
@@ -37,10 +38,10 @@ class TransactionTabBarWidget extends StatelessWidget {
         overlayColor: WidgetStatePropertyAll(
           Colors.transparent
         ),
-        tabs: List.generate(transactionTabs.length, (index) {
+        tabs: List.generate(TransactionTypes.values.length, (index) {
           return Tab(
             child: TransactionTabWidget(
-              text: transactionTabs[index],
+              text: TransactionTypes.values[index].name.capitalize(),
             ),
           );
         }),

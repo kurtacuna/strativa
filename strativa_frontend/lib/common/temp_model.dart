@@ -1,13 +1,4 @@
-
 List<Map<String, dynamic>> get transactions => [
-  {
-    "id": "1",
-    "category": "shopping",
-    "store": "Alfamart Grocery Store",
-    "amount": "200.00",
-    "datetime": "2025-03-28 18:16:30.123456+00:00",
-    "resulting_balance": "1231.10"
-  },
   {
     "id": "2",
     "category": "shopping",
