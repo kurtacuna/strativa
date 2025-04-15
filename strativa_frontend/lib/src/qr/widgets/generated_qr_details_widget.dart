@@ -7,6 +7,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
+import 'package:strativa_frontend/common/utils/input_formatters.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_divider_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
@@ -21,7 +22,7 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.light
           ? ColorsCommon.kWhiter
-          : ColorsCommon.kLigherDark,
+          : ColorsCommon.kLightDark,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(AppConstants.kAppBorderRadius),
           bottomRight: Radius.circular(AppConstants.kAppBorderRadius)
@@ -70,7 +71,7 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
                 SizedBox(height: 10.h),
 
                 Text(
-                  otherAccounts[0]['number'],
+                  formatContactNumber(otherAccounts[0]['number']),
                   style: CustomTextStyles(context).bigStyle.copyWith(
                     color: ColorsCommon.kDarkerGray,
                   ),

@@ -4,45 +4,59 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
-import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/temp_model.dart';
-import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_divider_widget.dart';
 
-class AppTransferReceiveWidget extends StatelessWidget {
-  const AppTransferReceiveWidget({super.key});
+class AppTransferReceiveWidget extends StatefulWidget {
+  const AppTransferReceiveWidget({
+    this.bottomWidget,
+    required this.onTap,
+    required this.title,
+    super.key
+  });
 
+  // Display the content of the body dynamically
+  // by passing a widget to bottomWidget
+  final Widget? bottomWidget;
+  final Function() onTap;
+  final String title;
+
+  @override
+  State<AppTransferReceiveWidget> createState() => _AppTransferReceiveWidgetState();
+}
+
+class _AppTransferReceiveWidgetState extends State<AppTransferReceiveWidget> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
         color: Theme.of(context).brightness == Brightness.light
           ? ColorsCommon.kWhiter
-          : ColorsCommon.kLigherDark,
+          : ColorsCommon.kLightDark,
         boxShadow: Theme.of(context).brightness == Brightness.light
           ? AppConstants.kCommonBoxShadowLight
           : AppConstants.kCommonBoxShadowDark,
       ),
-      padding: AppConstants.kAppPadding,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppConstants.kAppPadding.left,
+        vertical: AppConstants.kAppPadding.top / 2,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Title with arrow
           Material(
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
-              onTap: () {
-                // TODO: show bottom modal of accounts
-              },
+              onTap: widget.onTap,
               child: Ink(
                 padding: AppConstants.kSmallPadding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppText.kDepositTo,
+                      widget.title,
                       style: CustomTextStyles(context).biggerStyle.copyWith(
                         fontWeight: FontWeight.w900,
                       ),
@@ -55,32 +69,19 @@ class AppTransferReceiveWidget extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 5.h),
-
-          AppDividerWidget(),
-
-          SizedBox(height: 15.h),
-
-          // TODO: create model and change data
-          // must come from the caller
-          Expanded(
-            child: Column(
+          // TODO: animate as it appears
+          // Body
+          widget.bottomWidget != null
+            ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  otherAccounts[0]['type'].toUpperCase(),
-                  style: CustomTextStyles(context).bigStyle.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-            
-                AppAmountWidget(
-                  amount: otherAccounts[0]['balance'],
-                ),
+                SizedBox(height: 5.h),
+                AppDividerWidget(),
+                SizedBox(height: 15.h),
+                widget.bottomWidget ?? Container()
               ],
-            ),
-          ),
+            )
+            : Container()
         ]
       ),
     );

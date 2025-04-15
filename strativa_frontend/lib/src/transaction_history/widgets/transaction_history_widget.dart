@@ -62,7 +62,7 @@ class TransactionHistoryWidget extends StatelessWidget {
                         ? "Send"
                         : "Receive",
                       style: CustomTextStyles(context).smallerStyle.copyWith(
-                        color: ColorsCommon.kDarkerGray,
+                        color: ColorsCommon.kDarkGray,
                       ),
                     )
                   ]
@@ -72,7 +72,7 @@ class TransactionHistoryWidget extends StatelessWidget {
                     double.parse(transaction.transaction.amount)
                   )}",
                   style: CustomTextStyles(context).smallStyle.copyWith(
-                    color: ColorsCommon.kDarkerGray,
+                    color: ColorsCommon.kDarkGray,
                   ),
                 ),
                 trailing: Column(
@@ -95,7 +95,7 @@ class TransactionHistoryWidget extends StatelessWidget {
                     Text(
                       DateFormat('MMM d, y H:m').format(DateTime.parse(transaction.transaction.datetime.toString())),
                       style: CustomTextStyles(context).smallStyle.copyWith(
-                        color: ColorsCommon.kDarkerGray,
+                        color: ColorsCommon.kDarkGray,
                       ),
                     ),
                   ]

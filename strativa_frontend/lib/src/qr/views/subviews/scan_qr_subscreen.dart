@@ -21,6 +21,7 @@ class ScanQrSubScreen extends StatelessWidget {
           ),
           child: MobileScanner(
             onDetect: (barcodes) {
+              // TODO: handle scanning
               print(barcodes);
             },
             controller: MobileScannerController(
@@ -33,7 +34,8 @@ class ScanQrSubScreen extends StatelessWidget {
 
               return Center(
                 child: Text(
-                  "An unexpected error occurred: ${mobileScannerException.errorCode}"
+                  "An unexpected error occurred: ${mobileScannerException.errorCode}",
+                  style: CustomTextStyles(context).defaultStyle
                 )
               );
             },

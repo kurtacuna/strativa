@@ -15,7 +15,7 @@ class CameraPermissionAlertDialogWidget extends StatelessWidget {
       titleTextStyle: CustomTextStyles(context).biggerStyle.copyWith(
         fontWeight: FontWeight.w900
       ),
-      content: Text(AppText.kPermissionCameraAllow),
+      content: Text(AppText.kPermissionsCameraAllow),
       actionsPadding: EdgeInsets.only(bottom: 10, right: 10),
       actions: [
         AppTextButtonWidget(

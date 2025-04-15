@@ -42,5 +42,7 @@ class AppText {
   static const kQrPermissionRequired = "To scan QR codes, permission is required.";
   static const kOpenSettings = "Open Settings";
   static const kStrativaCameraPermission = "Strativa Camera Permission";
-  static const kPermissionCameraAllow = "Permission > Camera > Allow";
+  static const kPermissionsCameraAllow = "Permissions > Camera > Allow";
+  static const kTransferFrom = "Transfer From";
+  static const kTransferTo = "Transfer To";
 }

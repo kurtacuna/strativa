@@ -39,7 +39,7 @@ SnackBar appSnackBarWidget({
                 borderRadius: BorderRadius.circular(AppConstants.kSnackBarRadius),
                 boxShadow: [
                   BoxShadow(
-                    color: ColorsCommon.kDarkerGray,
+                    color: ColorsCommon.kDarkGray,
                     blurRadius: 10,
                     offset: AppConstants.kCommonShadowOffset,
                   ),

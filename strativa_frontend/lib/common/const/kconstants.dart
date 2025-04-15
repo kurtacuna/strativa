@@ -9,6 +9,7 @@ class AppConstants {
   static double get kAppBorderWidth => 2;
   static EdgeInsets get kAppPadding => EdgeInsets.all(20);
   static EdgeInsets get kSmallPadding => EdgeInsets.all(5);
+  static EdgeInsets get kMediumPadding => EdgeInsets.all(10);
   static Offset get kCommonShadowOffset => Offset(0, 5);
   static EdgeInsets get kCardPadding => kAppPadding * 1.5;
   static Duration get kPageChangeDuration => Duration(milliseconds: 300);
@@ -24,7 +25,7 @@ class AppConstants {
   ];
   static List<BoxShadow> get kCommonBoxShadowDark => [
     BoxShadow(
-      color: ColorsCommon.kDarkGray,
+      color: ColorsCommon.kDarkerGray,
       blurRadius: 5,
       offset: kCommonShadowOffset,
     )

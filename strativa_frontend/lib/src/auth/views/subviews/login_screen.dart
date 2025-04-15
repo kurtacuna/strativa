@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : AppButtonWidget(
                     text: AppText.kLoginButtonText,
                     onTap: () async {
+                      FocusScope.of(context).unfocus();
                       if (_formKey.currentState!.validate()) {
                         LoginModel model = LoginModel(
                           password: _passwordController.text,
