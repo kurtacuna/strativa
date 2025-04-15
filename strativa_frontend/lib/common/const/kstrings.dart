@@ -23,4 +23,9 @@ class AppText {
   static const kValidId = "Select Valid ID";
   static const kDataPrivacy = "Data Privacy";
   static const kRegName = "Register Name";
+  static const kEmailVerify = "Email Verification";
+  static const kMobileNumber = "Mobile Verification";
+  static const kBirthday = "Birthday";
+  static const kInitialComplete = "Initial Info Complete";
+  static const kOpenCamera = "Opening Camera";
 }

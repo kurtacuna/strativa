@@ -4,6 +4,11 @@ class AppRoutes {
   static const String kRegisterScreen = '/register';
   static const String kValidId = '/validID';
   static const String kRegName = '/userName_reg';
+  static const String kEmailVerify = '/email_verify';
+  static const String kMobileNumber = '/mobile_verify';
+  static const String kBirthday = '/birthday';
+  static const String kInitialComplete = '/inital_complete';
+  static const String kOpenCamera = '/open_camera';
   static const String kDataPrivacy = '/data_privacy';
   static const String kLoginScreen = '/login';
   static const String kEntrypoint = '/entrypoint';

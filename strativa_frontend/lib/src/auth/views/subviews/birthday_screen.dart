@@ -3,14 +3,13 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
-class NameScreen extends StatelessWidget {
-  const NameScreen({super.key});
+class BirthdayScreen extends StatelessWidget {
+  const BirthdayScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final firstNameController = TextEditingController();
-    final middleNameController = TextEditingController();
-    final lastNameController = TextEditingController();
+    final DateOfBirthController = TextEditingController();
+    final CityOfBirthController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(title: Text('Back'),),
@@ -20,16 +19,16 @@ class NameScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'What is your name?',
+              'What is your birthday?',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 30),
-            const Text("First Name"),
+            const Text("Date of Birth (MM/DD/YYYY)"),
             const SizedBox(height: 5),
             TextField(
-              controller: firstNameController,
+              controller: DateOfBirthController,
               decoration: InputDecoration(
-                hintText: "Enter your first name",
+                hintText: "(MM/DD/YYYY)",
                 fillColor: const Color(0xFFEFF3F0),
                 filled: true,
                 border: OutlineInputBorder(
@@ -39,27 +38,12 @@ class NameScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Text("Middle Name (optional)"),
+            const Text("City of Birth"),
             const SizedBox(height: 5),
             TextField(
-              controller: middleNameController,
+              controller: CityOfBirthController,
               decoration: InputDecoration(
-                hintText: "Enter your middle name",
-                fillColor: const Color(0xFFEFF3F0),
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text("Last Name"),
-            const SizedBox(height: 5),
-            TextField(
-              controller: lastNameController,
-              decoration: InputDecoration(
-                hintText: "Enter your last name",
+                hintText: "Enter your City of Birth",
                 fillColor: const Color(0xFFEFF3F0),
                 filled: true,
                 border: OutlineInputBorder(
@@ -70,7 +54,7 @@ class NameScreen extends StatelessWidget {
             ),
             const Spacer(),
             AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kEmailVerify);
+              context.push(AppRoutes.kInitialComplete);
             },),
           ],
         ),

@@ -3,7 +3,12 @@ import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/src/auth/views/landing_screen.dart';
 import 'package:strativa_frontend/src/auth/views/login_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/birthday_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/data_privacy_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/email_verify_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/id_camera_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/initial_screen_complete.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/mobile_verification.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/register_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/select_id_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/username_screen.dart';
@@ -49,7 +54,27 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kRegName,
-      builder: (context, state) => const UsernameScreen(),
+      builder: (context, state) => const NameScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kEmailVerify,
+      builder: (context, state) => const EmailVerification(),
+    ),
+    GoRoute(
+      path: AppRoutes.kMobileNumber,
+      builder: (context, state) => const MobileVerification(),
+    ),
+    GoRoute(
+      path: AppRoutes.kBirthday,
+      builder: (context, state) => const BirthdayScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kInitialComplete,
+      builder: (context, state) => const InitialScreenComplete(),
+    ),
+    GoRoute(
+      path: AppRoutes.kOpenCamera,
+      builder: (context, state) => const CameraOpeningScreen(),
     ),
   ],
 );

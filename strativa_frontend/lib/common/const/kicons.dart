@@ -92,4 +92,12 @@ class AppIcons {
     'assets/icons/redprofile.png',
     height: 30.sp,
   );
+  static Image get kComplete => Image.asset(
+    'assets/icons/Information_done.png',
+    height: 300.sp,
+  );
+  static Image get kIDsample => Image.asset(
+    'assets/icons/ID_sample.png',
+    height: 300.sp,
+  );
 }
