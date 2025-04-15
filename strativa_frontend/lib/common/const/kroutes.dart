@@ -11,4 +11,7 @@ class AppRoutes {
   static const String kTransactionHistoryScreen = '/transaction_history';
   static const String kQrScreen = '/qr';
   static const String kGeneratedQrSubscreen = '/generated_qr';
+  static const String kReviewTransfer = '/review_transfer';
+  static const String kReviewTransferStrativaAccount =
+      '/review_transfer_strativaacc';
 }

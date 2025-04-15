@@ -8,6 +8,8 @@ import 'package:strativa_frontend/src/qr/views/qr_screen.dart';
 import 'package:strativa_frontend/src/qr/views/subviews/generated_qr_subscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/views/transaction_history_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/account/review_transfer_subscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/review_transfer_strativaacc_subscreen.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -40,6 +42,14 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kGeneratedQrSubscreen,
       builder: (context, state) => const GeneratedQrSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kReviewTransfer,
+      builder: (context, state) => const ReviewTransferSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kReviewTransferStrativaAccount,
+      builder: (context, state) => const ReviewTransferStrativaaccSubscreen(),
     ),
   ],
 );

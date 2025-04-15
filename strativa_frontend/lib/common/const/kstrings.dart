@@ -3,7 +3,7 @@ class AppText {
   static const kCurrencyText = "PHP";
   static const kAmountHintText = "0.00";
   static const kPasswordFieldError = "Please enter your password.";
-  static const kUserIdFieldError ="Please eneter your user ID";
+  static const kUserIdFieldError = "Please eneter your user ID";
   static const kAppName = "Strativa";
   static const kOpenAccountButtonText = "Open an Account";
   static const kLoginButtonText = "Log In";
@@ -27,7 +27,8 @@ class AppText {
   static const kScanQrCodeHeader = "Scan QR Code";
   static const kUploadQrCode = "Upload QR Code";
   static const kTapAnywhereToContinue = "Tap anywhere to continue";
-  static const kSnackBarQrCodeWasSuccessfullyScanned = "QR code was successfully scanned.";
+  static const kSnackBarQrCodeWasSuccessfullyScanned =
+      "QR code was successfully scanned.";
   static const kGenerateQrCode = "Generate QR Code";
   static const kGenerateNewQrCode = "Generate New QR Code";
   static const kGoToHome = "Go to Home";
@@ -37,4 +38,14 @@ class AppText {
   static const kAmountRequested = "Amount Requested";
   static const kEdit = "Edit";
   static const kShare = "Share";
+  static const kReviewTitle = "Review";
+  static const kAreTheseDetailsCorrect = "Are these details correct?";
+  static const kTransferFrom = "Transfer from";
+  static const kTransferTo = "Transfer to";
+  static const kSavingsAccount = "SAVINGS ACCOUNT";
+  static const kTimeDepositAccount = "TIME DEPOSIT ACCOUNT";
+  static const kSummary = "Summary";
+  static const kTransferAmount = "Transfer amount";
+  static const kTotal = "Total";
+  static const kConfirm = "Confirm";
 }
