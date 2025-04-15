@@ -28,4 +28,7 @@ class AppText {
   static const kBirthday = "Birthday";
   static const kInitialComplete = "Initial Info Complete";
   static const kOpenCamera = "Opening Camera";
+  static const kFaceVerification = "Face Verification";
+  static const kGenderMarital = "Gender Marital Selection";
+  static const kAddressForm = "Address";
 }

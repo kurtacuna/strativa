@@ -53,6 +53,7 @@ class BirthdayScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
+            SizedBox(height: 350),
             AppButtonWidget(text: 'Confirm', onTap: (){
               context.push(AppRoutes.kInitialComplete);
             },),

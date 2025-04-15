@@ -100,4 +100,8 @@ class AppIcons {
     'assets/icons/ID_sample.png',
     height: 300.sp,
   );
+  static Image get kFaceID => Image.asset(
+    'assets/icons/face_verification.png',
+    height: 250.sp,
+  );
 }
