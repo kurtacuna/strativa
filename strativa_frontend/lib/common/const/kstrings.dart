@@ -39,4 +39,8 @@ class AppText {
   static const kShare = "Share";
   static const kNoTransactionsYet = "No transactions yet";
   static const kSendOtp = "Send OTP";
+  static const kQrPermissionRequired = "To scan QR codes, permission is required.";
+  static const kOpenSettings = "Open Settings";
+  static const kStrativaCameraPermission = "Strativa Camera Permission";
+  static const kPermissionCameraAllow = "Permission > Camera > Allow";
 }

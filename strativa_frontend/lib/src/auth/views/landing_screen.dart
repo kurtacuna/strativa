@@ -26,7 +26,7 @@ class LandingScreen extends StatelessWidget {
             ),
         
             Align(
-              alignment: Alignment(-0.8, 0),
+              alignment: Alignment(-0.9, 0),
               child: AppLogoWidget(
                 logoHeight: 230,
                 fontSize: 35,
