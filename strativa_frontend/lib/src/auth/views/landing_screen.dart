@@ -26,13 +26,15 @@ class LandingScreen extends StatelessWidget {
             ),
         
             Align(
-              alignment: Alignment(-0.9, 0),
+              alignment: Alignment.center,
               child: AppLogoWidget(
-                logoHeight: 230,
+                logoHeight: 150,
                 fontSize: 35,
-                spacing: -10,
+                spacing: 35,
               ),
             ),
+
+            SizedBox(height:20.h),
         
             AppButtonWidget(
               text: AppText.kOpenAccountButtonText,

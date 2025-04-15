@@ -6,10 +6,12 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
+import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 import 'package:strativa_frontend/src/qr/controllers/account_modal_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/accounts_modal_bottom_sheet_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
@@ -38,6 +40,7 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
   void dispose() {
     notifier!.setWidgetIsBeingDisposed = true;
     notifier!.setAccount = null;
+    notifier!.setAmountController = null;
     _amountController.dispose();
     super.dispose();
   }
@@ -51,80 +54,90 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
 
         return Padding(
           padding: AppConstants.kAppPadding,
-          child: Column(
-            children: [
-              // TODO: pass model to this widget
-              AppTransferReceiveWidget(
-                onTap: () {
-                  showAccountsModalBottomSheet(
-                    context: context,
-                    type: AppTransferReceiveWidgetTypes.otheraccounts.name,
-                    toTitle: AppText.kDepositTo,
-                    // TODO: change once model is done
-                    accounts: myAccounts
-                  );
-                },
-                title: AppText.kDepositTo,
-                bottomWidget: account != null
-                  ? SizedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          account['type'].toUpperCase(),
-                          style: CustomTextStyles(context).bigStyle.copyWith(
-                            fontWeight: FontWeight.w900,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // TODO: pass model to this widget
+                AppTransferReceiveWidget(
+                  onTap: () {
+                    showAccountsModalBottomSheet(
+                      context: context,
+                      type: AppTransferReceiveWidgetTypes.otheraccounts.name,
+                      toTitle: AppText.kDepositTo,
+                      // TODO: change once model is done
+                      accounts: myAccounts
+                    );
+                  },
+                  title: AppText.kDepositTo,
+                  bottomWidget: account != null
+                    ? SizedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            account['type'].toUpperCase(),
+                            style: CustomTextStyles(context).bigStyle.copyWith(
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
-                        ),
-
-                        SizedBox(height: 5),
-
-                        Text(
-                          account['account_number'],
-                        ),
-
-                        AppAmountWidget(
-                          amount: account['balance'],
-                        ),
-                      ],
+            
+                          SizedBox(height: 5),
+            
+                          Text(
+                            account['account_number'],
+                          ),
+            
+                          AppAmountWidget(
+                            amount: account['balance'],
+                          ),
+                        ],
+                      )
                     )
-                  )
-                  : null
-              ),
-        
-              SizedBox(height: 50.h),
-        
-              SizedBox(
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        AppLabeledAmountFieldWidget(
-                          text: AppText.kRequestTheAmountOf,
-                          controller: _amountController,
-                        ),
-                            
-                        SizedBox(height: 40.h),
-                            
-                        AppButtonWidget(
-                          onTap: () {
-                            // if (_formKey.currentState!.validate()) {
-                            //   print(_amountController.text);
-                            //   context.go(AppRoutes.kGeneratedQrSubscreen);
-                            // }
-                            context.push(AppRoutes.kGeneratedQrSubscreen);
-                          },
-                          text: AppText.kGenerateQrCode,
-                        )
-                      ]
+                    : null
+                ),
+                    
+                SizedBox(height: 50.h),
+                    
+                SizedBox(
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          AppLabeledAmountFieldWidget(
+                            text: AppText.kRequestTheAmountOf,
+                            controller: _amountController,
+                          ),
+                              
+                          SizedBox(height: 40.h),
+                              
+                          AppButtonWidget(
+                            onTap: () {
+                              if (account != null) {
+                                if (_formKey.currentState!.validate()) {
+                                  accountModalNotifier.setAmountController = _amountController;
+                                  context.push(AppRoutes.kGeneratedQrSubscreen);
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  appSnackBarWidget(
+                                    context: context, 
+                                    text: AppText.kPleaseSelectAnAccountToDepositTo,
+                                    icon: AppIcons.kErrorIcon,
+                                  )
+                                );
+                              }
+                            },
+                            text: AppText.kGenerateQrCode,
+                          )
+                        ]
+                      ),
                     ),
                   ),
-                ),
-              )
-        
-            ]
+                )
+              ]
+            ),
           ),
         );
       }

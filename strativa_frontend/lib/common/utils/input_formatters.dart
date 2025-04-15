@@ -2,9 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
 
 
-String formatContactNumber(String number) {
-  return "${number.substring(0, 4)} ${number.substring(4, 7)} ${number.substring(7, 11)}";
-}
+// String formatContactNumber(String number) {
+//   return "${number.substring(0, 4)} ${number.substring(4, 7)} ${number.substring(7, 11)}";
+// }
 
 TextEditingValue formatDecimalInput(
   TextEditingValue oldValue,

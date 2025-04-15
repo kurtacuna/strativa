@@ -6,6 +6,12 @@ String addCommaToAmount(double amount) {
   return formattedAmount;
 }
 
+String removeCommaFromAmount(String amount) {
+  List split = amount.split(',');
+
+  return split.join('');
+}
+
 String addCommaToWholeNumber(String wholeNumber) {
   String formattedWholeNumber = NumberFormat("#,###").format(int.parse(wholeNumber));
 

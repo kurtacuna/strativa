@@ -45,4 +45,5 @@ class AppText {
   static const kPermissionsCameraAllow = "Permissions > Camera > Allow";
   static const kTransferFrom = "Transfer From";
   static const kTransferTo = "Transfer To";
+  static const kPleaseSelectAnAccountToDepositTo = "Please select an account to deposit to.";
 }
