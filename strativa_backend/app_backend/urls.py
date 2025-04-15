@@ -26,6 +26,8 @@ urlpatterns = [
     # path('auth/', include('djoser.urls.authtoken'))
     path('auth/', include('djoser.urls.jwt')),
 
+    path('otp/', include('otp.urls')),
+
     path('api/my_accounts/', include('my_accounts.urls')),
     path('api/transaction/', include('transaction.urls'))
 ]

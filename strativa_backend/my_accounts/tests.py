@@ -31,14 +31,19 @@ class UserDataViewTest(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="pass")
         user_card_details = UserCardDetails.objects.create(user_id=1)
-        user_data = models.UserData.objects.create(first_name="test", last_name="user", user_id=1, user_card_details=UserCardDetails.objects.get(user_id=1))
+        user_data = models.UserData.objects.create(
+            first_name="test", 
+            last_name="user", 
+            user_id=1, 
+            user_card_details=UserCardDetails.objects.get(user_id=1)
+        )
         
         self.client = APIClient()
 
         refresh = RefreshToken.for_user(self.user)
-        self.token = str(refresh.access_token)
+        token = str(refresh.access_token)
 
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
     def test_user_data_view(self):
         url = reverse('user-data')

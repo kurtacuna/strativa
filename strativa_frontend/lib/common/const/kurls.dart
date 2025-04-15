@@ -10,4 +10,8 @@ class ApiUrls {
   static String imageFromNetworkUrl({required String imageUrl}) {
     return Environment.appBaseUrl + imageUrl;
   }
+  static String createOtpUrl = "${Environment.appBaseUrl}/otp/create/";
+  static String verifyOtpUrl({required String query}) {
+    return "${Environment.appBaseUrl}/otp/verify/?type=$query";
+  }
 }

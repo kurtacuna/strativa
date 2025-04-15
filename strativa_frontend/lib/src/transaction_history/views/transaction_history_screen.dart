@@ -63,7 +63,6 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
           style: CustomTextStyles(context).screenHeaderStyle,
         ),
         centerTitle: true,
-        scrolledUnderElevation: 0,
       ),
       body: Padding(
         padding: AppConstants.kAppPadding,

@@ -9,10 +9,12 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 SnackBar appSnackBarWidget({
   required BuildContext context,
   required String text,
+  Duration? duration,
+  TextStyle? style,
   Widget? icon,
 }) {
   return SnackBar(
-    duration: AppConstants.kSnackBarDuration,
+    duration: duration ?? AppConstants.kSnackBarDuration,
     backgroundColor: Colors.transparent,
     padding: EdgeInsets.zero,
     elevation: 0,
@@ -57,7 +59,7 @@ SnackBar appSnackBarWidget({
                   
                       Text(
                         text,
-                        style: CustomTextStyles(context).bigStyle.copyWith(
+                        style: style ?? CustomTextStyles(context).bigStyle.copyWith(
                           fontWeight: FontWeight.w900,
                         ),
                         textAlign: TextAlign.center,

@@ -60,6 +60,7 @@
             "first_name": "Test User",
             "middle_name": "Tu",
             "last_name": "Testing",
+            "email": "csprojectserver@gmail.com",
             "user_card_details": 3
         }
     },

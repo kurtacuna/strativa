@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import random
 import os
-
-card_expiry_years = 3
+from utils.const import BackendConstants
 
 # Create your models here.
 class UserData(models.Model):
@@ -12,11 +11,13 @@ class UserData(models.Model):
     return os.path.join('profile_pictures', f"{instance.id}_{instance.user.username}_{filename}")
 
   user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-  first_name = models.CharField(max_length=255, blank=False)
+  first_name = models.CharField(max_length=255)
   middle_name = models.CharField(max_length=255, blank=True)
-  last_name = models.CharField(max_length=255, blank=False)
+  last_name = models.CharField(max_length=255)
   profile_picture = models.ImageField(upload_to=save_profile_picture_to, default='images/logo.png')
-  user_card_details = models.ForeignKey('UserCardDetails', blank=False, null=False, on_delete=models.CASCADE)
+  user_card_details = models.ForeignKey('UserCardDetails', on_delete=models.CASCADE)
+  email = models.EmailField(max_length=255)
+  # TODO: add refresh token for logging out, maybe in another app
 
   def __str__(self):
     return self.user.username
@@ -56,14 +57,14 @@ class UserCardDetails(models.Model):
     if not self.strativa_card_number:
       self.strativa_card_number = self.generate_strativa_card_number()
       self.strativa_card_created = timezone.now()
-      self.strativa_card_expiry = timezone.now().replace(year=timezone.now().year + card_expiry_years)
+      self.strativa_card_expiry = timezone.now().replace(year=timezone.now().year + BackendConstants.card_expiry_years)
       self.strativa_card_cvv = self.generate_cvv()
 
   def create_online_card(self):
     if self.is_online_card_active and not self.online_card_number:
       self.online_card_number = self.generate_online_card_number()
       self.online_card_created = timezone.now()
-      self.online_card_expiry = timezone.now().replace(year=timezone.now().year + card_expiry_years)
+      self.online_card_expiry = timezone.now().replace(year=timezone.now().year + BackendConstants.card_expiry_years)
       self.online_card_cvv = self.generate_cvv()
 
   @staticmethod

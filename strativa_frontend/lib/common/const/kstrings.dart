@@ -3,7 +3,7 @@ class AppText {
   static const kCurrencyText = "PHP";
   static const kAmountHintText = "0.00";
   static const kPasswordFieldError = "Please enter your password.";
-  static const kUserIdFieldError ="Please eneter your user ID";
+  static const kUserIdFieldError ="Please enter your user ID";
   static const kAppName = "Strativa";
   static const kOpenAccountButtonText = "Open an Account";
   static const kLoginButtonText = "Log In";
@@ -38,4 +38,5 @@ class AppText {
   static const kEdit = "Edit";
   static const kShare = "Share";
   static const kNoTransactionsYet = "No transactions yet";
+  static const kSendOtp = "Send OTP";
 }

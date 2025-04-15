@@ -7,6 +7,11 @@ enum TransactionTypes {
   other
 }
 
+enum VerifyOtpTypes {
+  common,
+  peekbalance,
+}
+
 List<String> get qrTabs => [
   "SCAN QR",
   "GENERATE QR"

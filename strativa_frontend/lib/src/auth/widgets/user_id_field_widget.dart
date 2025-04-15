@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 
 class UserIdFieldWidget extends StatelessWidget {
@@ -10,6 +12,7 @@ class UserIdFieldWidget extends StatelessWidget {
     this.obscureText,
     this.onEditingComplete,
     required this.controller,
+    this.focusNode,
     super.key,
   });
 
@@ -18,10 +21,12 @@ class UserIdFieldWidget extends StatelessWidget {
   final bool? obscureText;
   final Function()? onEditingComplete;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       textInputAction: TextInputAction.next,
       onEditingComplete: onEditingComplete,
       controller: controller,
@@ -35,12 +40,19 @@ class UserIdFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         // TODO: handle error messages
         // errorText: ,
-        hintText: hintText,
+        hintText: hintText ?? AppText.kHintUserId,
         prefixIcon: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 10,
           ),
-          child: prefixIcon
+          child: Theme.of(context).brightness == Brightness.dark 
+            ? AppIcons.kUserIdFieldIcon(
+              colorFilter: ColorFilter.mode(
+                ColorsCommon.kWhite,
+                BlendMode.srcIn,
+              ),
+            )
+            : AppIcons.kUserIdFieldIcon(),
           ),
         prefixIconConstraints: BoxConstraints(
             maxHeight: 40.sp,

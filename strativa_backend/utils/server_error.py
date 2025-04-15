@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 
-def server_error(error: Exception):
+def return_server_error(error: Exception):
     print(f"Error: {error}")
     return Response(
         {"detail": "An error occurred while processing your request."},

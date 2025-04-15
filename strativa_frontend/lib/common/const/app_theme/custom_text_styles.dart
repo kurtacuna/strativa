@@ -29,6 +29,10 @@ class CustomTextStyles {
     fontWeight: FontWeight.w900,
   );
 
+  TextStyle get biggestStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
+    fontSize: 20.sp,
+  );
+
   TextStyle get biggerStyle => Theme.of(context).textTheme.labelLarge!.copyWith(
     fontSize: 18.sp,
   );

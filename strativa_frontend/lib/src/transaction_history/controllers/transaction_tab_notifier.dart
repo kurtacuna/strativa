@@ -4,7 +4,7 @@ import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kurls.dart';
 import 'package:strativa_frontend/common/services/storage.dart';
-import 'package:strativa_frontend/common/utils/error_model.dart';
+import 'package:strativa_frontend/common/utils/common_json_model.dart';
 import 'package:strativa_frontend/common/utils/refresh/refresh_access_token.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 import 'package:strativa_frontend/src/transaction_history/models/transaction_history_model.dart';
@@ -58,7 +58,7 @@ class TransactionTabNotifier with ChangeNotifier {
         }
       } else {
         if (context.mounted) {
-          JsonErrorModel model = jsonErrorModelFromJson(response.body);
+          CommonJsonModel model = commonJsonModelFromJson(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
             appSnackBarWidget(
               context: context,

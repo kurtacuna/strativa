@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from . import models, serializers
-from utils import server_error
-from django.db.models import Prefetch, Q
+from utils.server_error import return_server_error
 
 class UserTransactionsView(APIView):
     permission_classes = [IsAuthenticated]
@@ -33,9 +32,9 @@ class UserTransactionsView(APIView):
                 ).order_by('-transaction__datetime')
                 
             serializer = serializers.UserTransactionsSerializer(user_transactions, many=True)
+
+            return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
         except models.Transactions.DoesNotExist:
             return Response({[]}, status=status.HTTP_200_OK)
-        except Exception:
-            return server_error(Exception)
-    
-        return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return return_server_error(e)
