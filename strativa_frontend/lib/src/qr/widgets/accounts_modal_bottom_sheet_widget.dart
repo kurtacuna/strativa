@@ -7,7 +7,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/src/qr/controllers/account_modal_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/account_item_widget.dart';
 
 Future<dynamic> showAccountsModalBottomSheet({
@@ -126,7 +126,7 @@ class _AccountsModalBottomSheetState extends State<AccountsModalBottomSheet> {
                         )
                         : null,
                       onTap: () {
-                        context.read<AccountModalNotifier>().setAccount = widget.accounts[index];
+                        context.read<GenerateQrAccountModalNotifier>().setAccount = widget.accounts[index];
                         Navigator.of(context).pop();
                       },
                       child: Ink (

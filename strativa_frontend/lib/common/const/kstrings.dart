@@ -46,4 +46,8 @@ class AppText {
   static const kTransferFrom = "Transfer From";
   static const kTransferTo = "Transfer To";
   static const kPleaseSelectAnAccountToDepositTo = "Please select an account to deposit to.";
+  static const kReview = "Review";
+  static const kAddNoteOptional = "Add Note (Optional)";
+  static const kSpecifyAmountPlus = "Specify Amount +";
+  static const kSpecifyAmountMinus = "Specify Amount -";
 }

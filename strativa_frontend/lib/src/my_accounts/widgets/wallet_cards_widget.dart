@@ -7,6 +7,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kresources.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/common/utils/input_formatters.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/card_widget.dart';
@@ -153,7 +154,8 @@ class WalletCardsWidget extends StatelessWidget {
                                   children: [
                                     Text(
                                       balanceNotifier.getShowBalance
-                                        ? "${userCardDetails.onlineCardNumber}"
+                                        // ? "${userCardDetails.onlineCardNumber}"
+                                        ? formatCardNumber("${userCardDetails.onlineCardNumber}")
                                         : "•••• •••• •••• ••••",
                                         style: CustomTextStyles(context).smallerStyle.copyWith(
                                           color: ColorsCommon.kWhite,

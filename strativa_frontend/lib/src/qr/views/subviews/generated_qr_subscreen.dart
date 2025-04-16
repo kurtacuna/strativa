@@ -8,7 +8,7 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
-import 'package:strativa_frontend/src/qr/controllers/account_modal_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/generated_qr_details_widget.dart';
 
 class GeneratedQrSubscreen extends StatelessWidget {
@@ -16,7 +16,7 @@ class GeneratedQrSubscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountModalNotifier>(
+    return Consumer<GenerateQrAccountModalNotifier>(
       builder: (context, accountModalNotifier, child) {
         // TODO: change type once model is done
         dynamic account = accountModalNotifier.getAccount;
@@ -53,17 +53,18 @@ class GeneratedQrSubscreen extends StatelessWidget {
         
                 SizedBox(height: 70.h),
         
+                // Generate New QR Code Button
                 AppButtonWidget(
                   onTap: () {
                     accountModalNotifier.getAmountController.clear();
-                    accountModalNotifier.setAmountController = null;
                     Navigator.of(context).pop();
                   },
                   text: AppText.kGenerateNewQrCode,
                 ),
         
                 SizedBox(height: 5.h),
-        
+
+                // Go To Home Button
                 AppButtonWidget(
                   onTap: () {
                     context.go(AppRoutes.kEntrypoint);

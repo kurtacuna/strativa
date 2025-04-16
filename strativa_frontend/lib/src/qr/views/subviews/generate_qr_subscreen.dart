@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
+import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
@@ -12,10 +13,11 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
-import 'package:strativa_frontend/src/qr/controllers/account_modal_notifier.dart';
+import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/accounts_modal_bottom_sheet_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
-import 'package:strativa_frontend/common/widgets/app_labeled_amount_field_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive_widget.dart';
 
 class GenerateQrSubscreen extends StatefulWidget {
@@ -28,11 +30,14 @@ class GenerateQrSubscreen extends StatefulWidget {
 class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
   late final TextEditingController _amountController = TextEditingController();
   final _formKey = AppGlobalKeys.generateQrFormKey;
-  AccountModalNotifier? notifier;
+  GenerateQrAccountModalNotifier? notifier;
+
 
   @override
   void initState() {
-    notifier = Provider.of<AccountModalNotifier>(context, listen: false);
+    notifier = Provider.of<GenerateQrAccountModalNotifier>(context, listen: false);
+    notifier!.setAmountController = _amountController;
+
     super.initState();
   }
 
@@ -42,12 +47,13 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
     notifier!.setAccount = null;
     notifier!.setAmountController = null;
     _amountController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountModalNotifier>(
+    return Consumer<GenerateQrAccountModalNotifier>(
       builder: (context, accountModalNotifier, child) {
         // TODO: change type once model is done
         dynamic account = accountModalNotifier.getAccount;
@@ -56,6 +62,7 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
           padding: AppConstants.kAppPadding,
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // TODO: pass model to this widget
                 AppTransferReceiveWidget(
@@ -97,26 +104,53 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
                     : null
                 ),
                     
-                SizedBox(height: 50.h),
-                    
+                SizedBox(height: 20.h),
+                
+                accountModalNotifier.getSpecifyAmount == false
+                  ? AppTextButtonWidget(
+                    onPressed: () {
+                      accountModalNotifier.setSpecifyAmount = true;
+                    },
+                    text: AppText.kSpecifyAmountPlus,
+                    overlayColor: ColorsCommon.kAccentL4,
+                    style: CustomTextStyles(context).defaultStyle.copyWith(
+                      color: ColorsCommon.kAccentL3
+                    ),
+                  )
+                  : AppTextButtonWidget(
+                    onPressed: () {
+                      accountModalNotifier.setSpecifyAmount = false;
+                      accountModalNotifier.getAmountController.clear();
+                    },
+                    text: AppText.kSpecifyAmountMinus,
+                    overlayColor: ColorsCommon.kAccentL4,
+                    style: CustomTextStyles(context).defaultStyle.copyWith(
+                      color: ColorsCommon.kAccentL3
+                    )
+                  ),
+
                 SizedBox(
                   child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          AppLabeledAmountFieldWidget(
-                            text: AppText.kRequestTheAmountOf,
-                            controller: _amountController,
-                          ),
+                          accountModalNotifier.getSpecifyAmount == false
+                            ? Container()
+                            : AppLabeledAmountNoteFieldWidget(
+                              text: AppText.kRequestTheAmountOf,
+                              amountController: _amountController,
+                              addNote: false,
+                            ),
+                          
                               
                           SizedBox(height: 40.h),
-                              
+                          
+                          // Generate QR Code Button
                           AppButtonWidget(
                             onTap: () {
                               if (account != null) {
                                 if (_formKey.currentState!.validate()) {
-                                  accountModalNotifier.setAmountController = _amountController;
                                   context.push(AppRoutes.kGeneratedQrSubscreen);
                                 }
                               } else {

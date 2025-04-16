@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
@@ -12,6 +13,7 @@ import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_divider_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
 
 class GeneratedQrDetailsWidget extends StatelessWidget {
   const GeneratedQrDetailsWidget({
@@ -50,12 +52,13 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
               children: [
                 SizedBox(height: 40.h),
 
+                // QR Code
                 Center(
                   child: SizedBox(
                     width: 200,
                     height: 200,
                     child: PrettyQrView.data(
-                      data: "${AppText.kAppName} QR\n$type, $accountNumber, $amountRequested",
+                      data: "$type, $accountNumber, $amountRequested",
                       decoration: const PrettyQrDecoration(
                         image: PrettyQrDecorationImage(
                           image: AssetImage(R.ASSETS_IMAGES_LOGO_PNG),
@@ -96,23 +99,30 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
                   ),
                 ),
     
-                SizedBox(height: 40.h),
-    
-                Text(
-                  AppText.kAmountRequested,
-                  style: CustomTextStyles(context).defaultStyle.copyWith(
-                    color: ColorsCommon.kDarkerGray,
-                  ),
-                ),
-    
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    AppAmountWidget(
-                      amount: removeCommaFromAmount(amountRequested),
-                    ),
-                  ]
-                ),
+                context.read<GenerateQrAccountModalNotifier>().getSpecifyAmount == true
+                  ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 40.h),
+
+                      Text(
+                        AppText.kAmountRequested,
+                        style: CustomTextStyles(context).defaultStyle.copyWith(
+                          color: ColorsCommon.kDarkerGray,
+                        ),
+                      ),
+          
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          AppAmountWidget(
+                            amount: removeCommaFromAmount(amountRequested),
+                          ),
+                        ]
+                      ),
+                    ]
+                  )
+                  : Container()
               ]
             ),
           ),

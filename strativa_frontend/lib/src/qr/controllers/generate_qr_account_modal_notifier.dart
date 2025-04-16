@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AccountModalNotifier with ChangeNotifier {
+class GenerateQrAccountModalNotifier with ChangeNotifier {
   // TODO: change type once model is done
   dynamic _account;
   bool _widgetIsBeingDisposed = false;
   TextEditingController? _amountController;
+  bool _specifyAmount = false;
 
   get getAccount => _account;
   get getAmountController => _amountController;
+  get getSpecifyAmount => _specifyAmount;
 
   set setAccount(dynamic account) {
     _account = account;
@@ -24,5 +26,10 @@ class AccountModalNotifier with ChangeNotifier {
 
   set setAmountController(TextEditingController? controller) {
     _amountController = controller;
+  }
+
+  set setSpecifyAmount(bool state) {
+    _specifyAmount = state;
+    notifyListeners();
   }
 }
