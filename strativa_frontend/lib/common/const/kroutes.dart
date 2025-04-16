@@ -15,4 +15,6 @@ class AppRoutes {
   static const String kReviewTransferStrativaAccount =
       '/review_transfer_strativaacc';
   static const String kReviewTransferBankAccount = '/review_transfer_bank';
+  static const String kTransferToAnotherStrativaAccNumber =
+      '/transfer_to_strativaacc_accnumber_subscreen';
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';

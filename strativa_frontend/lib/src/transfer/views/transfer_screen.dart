@@ -31,6 +31,14 @@ class TransferScreen extends StatelessWidget {
               },
               child: const Text("Go to Tranfer Bank Account Review"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                context.push(AppRoutes.kTransferToAnotherStrativaAccNumber);
+              },
+              child: const Text(
+                "Go to Tranfer Strativa Account Input account number",
+              ),
+            ),
           ],
         ),
       ),
