@@ -83,7 +83,7 @@ class AppIcons {
   // TODO: change to final
   static Icon get kCheckIcon => Icon(
     Ionicons.checkbox,
-    size: 50,
+    size: 50.sp,
   );
   // TODO: change to final
   static Icon get kRightArrowIcon => Icon(
@@ -94,18 +94,30 @@ class AppIcons {
   static Icon get kEditIcon => Icon(
     MaterialIcons.edit,
     color: ColorsCommon.kAccentL3,
-    size: 25.h,
+    size: 25.sp,
   );
   // TODO: change to final
   static Icon get kShareIcon => Icon(
     MaterialIcons.share,
     color: ColorsCommon.kAccentL3,
-    size: 25.h,
+    size: 25.sp,
   );
   // TODO: change to final
   static Icon get kErrorIcon => Icon(
     MaterialIcons.error,
     color: ColorsCommon.kRed,
-    size: 25.h,
+    size: 25.sp,
+  );
+  // TODO: change to final
+  static Icon get kTransferFromIcon => Icon(
+    Ionicons.wallet,
+    color: ColorsCommon.kAccentL3,
+    size: 25.sp
+  );
+  // TODO: change to final
+  static Icon get kTransferToIcon => Icon(
+    Ionicons.send,
+    color: ColorsCommon.kAccentL3,
+    size: 25.sp,
   );
 }

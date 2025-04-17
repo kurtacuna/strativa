@@ -6,6 +6,7 @@ import 'package:strativa_frontend/src/auth/views/subviews/login_screen.dart';
 import 'package:strativa_frontend/src/entrypoint/views/entrypoint.dart';
 import 'package:strativa_frontend/src/qr/views/qr_screen.dart';
 import 'package:strativa_frontend/src/qr/views/subviews/generated_qr_subscreen.dart';
+import 'package:strativa_frontend/src/qr/views/subviews/scanned_qr_subscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/views/transaction_history_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/account/review_transfer_subscreen.dart';
@@ -66,6 +67,10 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kPayloadBillsReviewSubscreen,
       builder: (context, state) => const PayloadBillsReviewSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kScannedQrSubscreen,
+      builder: (context, state) => const ScannedQrSubscreen(),
     ),
   ],
 );

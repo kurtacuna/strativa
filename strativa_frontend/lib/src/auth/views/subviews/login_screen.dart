@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
@@ -50,14 +51,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               spacing: 20,
               children: [
+                SizedBox(height: 20.h),
+                
                 Align(
-                  alignment: Alignment(-0.9, 0),
+                  alignment: Alignment.center,
                   child: AppLogoWidget(
-                    logoHeight: 230,
+                    logoHeight: 150,
                     fontSize: 35,
-                    spacing: -10,
+                    spacing: 35,
                   ),
                 ),
+
+                SizedBox(height:20.h),
                     
                 UserIdFieldWidget(
                     controller: _userIdController,
@@ -76,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : AppButtonWidget(
                     text: AppText.kLoginButtonText,
                     onTap: () async {
+                      FocusScope.of(context).unfocus();
                       if (_formKey.currentState!.validate()) {
                         LoginModel model = LoginModel(
                           password: _passwordController.text,

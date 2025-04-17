@@ -1,6 +1,19 @@
 import 'package:flutter/services.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
 
+
+// String formatContactNumber(String number) {
+//   return "${number.substring(0, 4)} ${number.substring(4, 7)} ${number.substring(7, 11)}";
+// }
+
+String formatCardNumber(String cardNumber) {
+  return "${cardNumber.substring(0, 4)} ${cardNumber.substring(4, 8)} ${cardNumber.substring(8, 12)} ${cardNumber.substring(12, 16)}";
+}
+
+RegExp allowNumbersAndDot() {
+  return RegExp(r'[0-9.]');
+}
+
 TextEditingValue formatDecimalInput(
   TextEditingValue oldValue,
   TextEditingValue newValue

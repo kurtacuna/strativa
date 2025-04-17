@@ -8,6 +8,7 @@ import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
+import 'package:strativa_frontend/common/utils/input_formatters.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/card_widget.dart';
@@ -74,7 +75,7 @@ class DetailedCardWidget extends StatelessWidget {
         
                   Text(
                     balanceNotifier.getShowBalance
-                      ? userCardDetails.strativaCardNumber
+                      ? formatCardNumber(userCardDetails.strativaCardNumber)
                       : "•••• •••• •••• ••••",
                       style: CustomTextStyles(context).defaultStyle.copyWith(
                         wordSpacing: 5,

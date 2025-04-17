@@ -29,7 +29,7 @@ class _SplashscreenState extends State<Splashscreen> {
     return Scaffold(
       backgroundColor: ColorsCommon.kAccentL2,
       body: Align(
-        alignment: Alignment(-0.5, 0),
+        alignment: Alignment.center,
         child: AppLogoWidget(color: ColorsCommon.kWhite),
       ),
     );

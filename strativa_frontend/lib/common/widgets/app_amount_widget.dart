@@ -7,10 +7,14 @@ import 'package:strativa_frontend/common/utils/amount.dart';
 class AppAmountWidget extends StatelessWidget {
   const AppAmountWidget({
     required this.amount,
+    this.amountStyle,
+    this.currencyStyle,
     super.key
   });
 
   final String amount;
+  final TextStyle? amountStyle;
+  final TextStyle? currencyStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +24,12 @@ class AppAmountWidget extends StatelessWidget {
       children: [
         Text(
           AppText.kCurrencyText,
-          style: CustomTextStyles(context).smallStyle
+          style: currencyStyle ?? CustomTextStyles(context).smallStyle
         ),
 
         Text(
           addCommaToAmount(double.parse(amount)),
-          style: CustomTextStyles(context).amountStyle.copyWith(
+          style: amountStyle ?? CustomTextStyles(context).amountStyle.copyWith(
             fontSize: 16.sp,
           ),
         )

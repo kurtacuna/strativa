@@ -44,7 +44,7 @@ class Entrypoint extends StatelessWidget {
                       BoxShadow(
                         color: Theme.of(context).brightness == Brightness.light
                           ? ColorsCommon.kGray
-                          : ColorsCommon.kDarkGray,
+                          : ColorsCommon.kDarkerGray,
                         blurRadius: 100,
                       )
                     ],

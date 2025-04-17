@@ -7,9 +7,7 @@ import 'package:strativa_frontend/common/widgets/otp/controllers/otp_notifier.da
 import 'package:strativa_frontend/common/widgets/otp/widget/otp_pinput_widget.dart';
 import 'package:strativa_frontend/common/widgets/otp/widget/otp_user_id_field_widget.dart';
 
-Future<dynamic> showAppOtpModalBottomSheet(
-  BuildContext context,
-) {
+Future<dynamic> showAppOtpModalBottomSheet(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,

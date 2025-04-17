@@ -12,6 +12,11 @@ enum VerifyOtpTypes {
   peekbalance,
 }
 
+enum AppTransferReceiveWidgetTypes {
+  myaccounts,
+  otheraccounts,
+}
+
 List<String> get qrTabs => [
   "SCAN QR",
   "GENERATE QR"

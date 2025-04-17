@@ -19,4 +19,5 @@ class AppRoutes {
       '/transfer_to_strativaacc_accnumber_subscreen';
   static const String kPayloadBillsReviewSubscreen =
       '/payload_bills_review_subscreen';
+  static const String kScannedQrSubscreen = '/scanned_qr';
 }

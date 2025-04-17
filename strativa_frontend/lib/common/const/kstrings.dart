@@ -40,7 +40,6 @@ class AppText {
   static const kShare = "Share";
   static const kReviewTitle = "Review";
   static const kAreTheseDetailsCorrect = "Are these details correct?";
-  static const kTransferFrom = "Transfer from";
   static const kTransferTo = "Transfer to";
   static const kSavingsAccount = "SAVINGS ACCOUNT";
   static const kTimeDepositAccount = "TIME DEPOSIT ACCOUNT";
@@ -53,4 +52,16 @@ class AppText {
   static const kAccountNumber = "Account Number";
   static const kNoTransactionsYet = "No transactions yet";
   static const kSendOtp = "Send OTP";
+  static const kQrPermissionRequired =
+      "To scan QR codes, permission is required.";
+  static const kOpenSettings = "Open Settings";
+  static const kStrativaCameraPermission = "Strativa Camera Permission";
+  static const kPermissionsCameraAllow = "Permissions > Camera > Allow";
+  static const kTransferFrom = "Transfer From";
+  static const kPleaseSelectAnAccountToDepositTo =
+      "Please select an account to deposit to.";
+  static const kReview = "Review";
+  static const kAddNoteOptional = "Add Note (Optional)";
+  static const kSpecifyAmountPlus = "Specify Amount +";
+  static const kSpecifyAmountMinus = "Specify Amount -";
 }

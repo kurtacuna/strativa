@@ -1,56 +1,194 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
+import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
+import 'package:strativa_frontend/src/qr/widgets/no_camera_permission_widget.dart';
 
-class ScanQrSubScreen extends StatelessWidget {
+class ScanQrSubScreen extends StatefulWidget {
   const ScanQrSubScreen({super.key});
 
   @override
+  State<ScanQrSubScreen> createState() => _ScanQrSubScreenState();
+}
+
+class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
+  late final MobileScannerController _scannerController = MobileScannerController(
+    formats: const [BarcodeFormat.qrCode],
+    detectionSpeed: DetectionSpeed.noDuplicates,
+    detectionTimeoutMs: 500,
+  );
+
+  @override
+  void initState() {
+    _scannerController.start();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scannerController.dispose();
+
+    super.dispose();
+  }
+  
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: ScreenUtil().screenHeight * 0.85,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-          ),
-        ),
-        
-        Positioned(
-          child: Align(
-            alignment: Alignment(0, 0.9),
-            child: ElevatedButton(
-              onPressed: () {
-                // TODO: handle upload qr code
-                ScaffoldMessenger.of(context).showSnackBar(
-                  appSnackBarWidget(
-                    context: context,
-                    text: AppText.kSnackBarQrCodeWasSuccessfullyScanned,
+    final scanWindow = Rect.fromCenter(
+      center: MediaQuery.sizeOf(context).center(Offset(0, -150.h)),
+      width: 300,
+      height: 300,
+    );
+
+    return Consumer<ScanQrNotifier>(
+      builder: (context, scanQrNotifier, child) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            MobileScanner(
+              onDetect: (captured) {
+                _scannerController.stop();
+                List<Barcode> barcodes = captured.barcodes;
+                scanQrNotifier.setScannedQrData = barcodes[0].rawValue ?? "";
+                scanQrNotifier.setScannerController = _scannerController; 
+
+                print("2");
+            
+                
+                context.push(AppRoutes.kScannedQrSubscreen);
+              },
+              scanWindow: scanWindow,
+              controller: _scannerController,
+              overlayBuilder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: CustomPaint(
+                    painter: ScannerOverlay(scanWindow: scanWindow),
+                  ),
+                );
+              },
+              errorBuilder: (context, mobileScannerException, child) {
+                if (mobileScannerException.errorCode == MobileScannerErrorCode.permissionDenied) {
+                  return NoCameraPermissionWidget();
+                }
+                    
+                return Center(
+                  child: Padding(
+                    padding: AppConstants.kAppPadding,
+                    child: Text(
+                      "An unexpected error occurred: ${mobileScannerException.errorCode}",
+                      style: CustomTextStyles(context).defaultStyle
+                    ),
                   )
                 );
               },
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  ColorsCommon.kAccentL3
-                ),
-                overlayColor: WidgetStatePropertyAll(
-                  ColorsCommon.kDarkerGray.withValues(alpha: 0.1),
-                ),
-              ),
-              child: Text(
-                AppText.kUploadQrCode,
-                style: CustomTextStyles(context).defaultStyle.copyWith(
-                  color: ColorsCommon.kWhite,
-                  fontWeight: FontWeight.w900,
+            ),
+            
+            // Upload QR Button
+            Positioned(
+              child: Align(
+                alignment: Alignment(0, 0.9),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: handle upload qr code
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      appSnackBarWidget(
+                        context: context,
+                        text: AppText.kSnackBarQrCodeWasSuccessfullyScanned,
+                      )
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      ColorsCommon.kAccentL3
+                    ),
+                    overlayColor: WidgetStatePropertyAll(
+                      ColorsCommon.kDarkerGray.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  child: Text(
+                    AppText.kUploadQrCode,
+                    style: CustomTextStyles(context).defaultStyle.copyWith(
+                      color: ColorsCommon.kWhite,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ]
+          ]
+        );
+      }
     );
+  }
+}
+
+class ScannerOverlay extends CustomPainter {
+  const ScannerOverlay({
+    required this.scanWindow,
+    this.borderRadius = 10,
+  });
+
+  final Rect scanWindow;
+  final double borderRadius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final backgroundPath = Path();
+    backgroundPath.addRect(
+      Rect.fromLTWH(0, 0, size.width, size.height)
+    );
+
+    final cutoutPath = Path();
+    cutoutPath.addRRect(
+      RRect.fromRectAndCorners(
+        scanWindow,
+        topLeft: Radius.circular(borderRadius),
+        topRight: Radius.circular(borderRadius),
+        bottomLeft: Radius.circular(borderRadius),
+        bottomRight: Radius.circular(borderRadius),
+      )
+    );
+
+    final backgroundPaint = Paint();
+    backgroundPaint.color = ColorsCommon.kDark.withValues(alpha: 0.4);
+    backgroundPaint.style = PaintingStyle.fill;
+
+    final backgroundWithCutout = Path.combine(
+      PathOperation.difference,
+      backgroundPath,
+      cutoutPath,
+    );
+
+    final borderPaint = Paint();
+    borderPaint.color = ColorsCommon.kWhite;
+    borderPaint.style = PaintingStyle.stroke;
+    borderPaint.strokeWidth = 4;
+
+    final borderRect = RRect.fromRectAndCorners(
+      scanWindow,
+      topLeft: Radius.circular(borderRadius),
+      topRight: Radius.circular(borderRadius),
+      bottomLeft: Radius.circular(borderRadius),
+      bottomRight: Radius.circular(borderRadius),
+    );
+
+    canvas.drawPath(backgroundWithCutout, backgroundPaint);
+    canvas.drawRRect(borderRect, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(ScannerOverlay oldDelegate) {
+    return scanWindow != oldDelegate.scanWindow || borderRadius != oldDelegate.borderRadius;
   }
 }

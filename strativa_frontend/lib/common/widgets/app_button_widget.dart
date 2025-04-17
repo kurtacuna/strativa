@@ -36,34 +36,36 @@ class AppButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
-      child: Ink(
-        width: width ?? ScreenUtil().screenWidth,
-        height: height ?? 50.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
-          gradient: LinearGradient(
-            colors: [
-              firstColor ?? ColorsCommon.kPrimaryL3,
-              secondColor ?? ColorsCommon.kPrimaryL3,
-            ],
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
+        child: Ink(
+          width: width ?? ScreenUtil().screenWidth,
+          height: height ?? 50.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius ?? AppConstants.kSmallRadius),
+            gradient: LinearGradient(
+              colors: [
+                firstColor ?? ColorsCommon.kPrimaryL3,
+                secondColor ?? ColorsCommon.kPrimaryL3,
+              ],
+            ),
+            border: Border.all(
+              width: AppConstants.kAppBorderWidth,
+              color: showBorder ?? false
+                ? borderColor ?? ColorsCommon.kPrimaryL3
+                : Colors.transparent,
+            ),
           ),
-          border: Border.all(
-            width: AppConstants.kAppBorderWidth,
-            color: showBorder ?? false
-              ? borderColor ?? ColorsCommon.kPrimaryL3
-              : Colors.transparent,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: CustomTextStyles(context).appButtonTextStyle.copyWith(
-              fontSize: fontSize,
-              color: color,
-              fontWeight: fontWeight,
+          child: Center(
+            child: Text(
+              text,
+              style: CustomTextStyles(context).appButtonTextStyle.copyWith(
+                fontSize: fontSize,
+                color: color,
+                fontWeight: fontWeight,
+              ),
             ),
           ),
         ),

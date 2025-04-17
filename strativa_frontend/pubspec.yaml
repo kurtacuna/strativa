@@ -27,6 +27,8 @@ dependencies:
   pinput: ^5.0.1
   mobile_scanner: ^6.0.7
   pretty_qr_code: ^3.4.0
+  permission_handler: ^12.0.0+1
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -41,3 +43,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - .env.development
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/images/square_logo.png"

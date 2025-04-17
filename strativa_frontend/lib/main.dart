@@ -13,7 +13,9 @@ import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
 import 'package:strativa_frontend/src/qr/controllers/qr_tab_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -34,6 +36,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => JwtNotifier()),
       ChangeNotifierProvider(create: (_) => UserDataNotifier()),
       ChangeNotifierProvider(create: (_) => OtpNotifier()),
+      ChangeNotifierProvider(create: (_) => GenerateQrAccountModalNotifier()),
+      ChangeNotifierProvider(create: (_) => ScanQrNotifier()),
     ],
     child: const MyApp(),
   ));
@@ -70,6 +74,8 @@ class _MyAppState extends State<MyApp> {
               details.offset.dx,
               details.offset.dy,
             );
+
+            print(position);
           });
         },
         child: FloatingActionButton(
