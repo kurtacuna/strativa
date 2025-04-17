@@ -20,7 +20,7 @@ class AppTextButtonWidget extends StatelessWidget {
   final TextStyle? style;
   final Color? overlayColor;
   final Color? color;
-  final Icon? prefixIcon;
+  final Widget? prefixIcon;
   final double? spacing;
 
   @override

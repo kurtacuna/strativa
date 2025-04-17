@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
@@ -26,8 +29,8 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
     detectionSpeed: DetectionSpeed.noDuplicates,
     detectionTimeoutMs: 500,
   );
-
   final Debouncer _debouncer = Debouncer(milliseconds: 2000);
+  final _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -104,14 +107,28 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
               child: Align(
                 alignment: Alignment(0, 0.9),
                 child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: handle upload qr code
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      appSnackBarWidget(
-                        context: context,
-                        text: AppText.kSnackBarQrCodeWasSuccessfullyScanned,
-                      )
+                  onPressed: () async {
+                    final XFile? pickedFile = await _imagePicker.pickImage(
+                      source: ImageSource.gallery
                     );
+
+                    if (pickedFile != null) {
+                      BarcodeCapture? captured = await MobileScannerPlatform.instance.analyzeImage(pickedFile.path);
+                      
+                      if (captured != null) {
+
+                      } else {
+                        if (context.mounted) {
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   appSnackBarWidget(
+                          //     context: context, 
+                          //     text: text
+                          //   )
+                          // );
+                        }
+                      }
+                      
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(
