@@ -13,6 +13,8 @@ class AppRoutes {
   static const String kGenderMarital = '/gender_marital';
   static const String kAddressForm = '/address';
   static const String kReviewApplication = '/review_application';
+  static const String kAccountNumber = '/account_number';
+  static const String kCreatePassword = '/create_pass';
   static const String kDataPrivacy = '/data_privacy';
   static const String kLoginScreen = '/login';
   static const String kEntrypoint = '/entrypoint';

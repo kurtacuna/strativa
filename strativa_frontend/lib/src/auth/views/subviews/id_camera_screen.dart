@@ -38,7 +38,7 @@ class CameraOpeningScreen extends StatelessWidget {
             ),
             SizedBox(height: 275),
             AppButtonWidget(text: 'Next', onTap: (){
-              context.push(AppRoutes.kGenderMarital);
+              context.push(AppRoutes.kFaceVerification);
             },),
           ],
           

@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Back')),
       body: Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -20,8 +20,9 @@ class RegisterScreen extends StatelessWidget {
               'Open An Account now',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 10),
             Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(10), 
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,

@@ -5,6 +5,7 @@ import 'package:strativa_frontend/src/auth/views/landing_screen.dart';
 import 'package:strativa_frontend/src/auth/views/login_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/address_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/birthday_screen.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/create_password_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/data_privacy_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/email_verify_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/face_verification.dart';
@@ -12,6 +13,7 @@ import 'package:strativa_frontend/src/auth/views/subviews/gender_marital_screen.
 import 'package:strativa_frontend/src/auth/views/subviews/id_camera_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/initial_screen_complete.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/mobile_verification.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/new_account_number_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/register_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/review_application_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/select_id_screen.dart';
@@ -95,6 +97,14 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kReviewApplication,
       builder: (context, state) => const ReviewApplicationScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kAccountNumber,
+      builder: (context, state) => const NewAccountNumberScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kCreatePassword,
+      builder: (context, state) => const CreatePasswordScreen(),
     ),
   ],
 );

@@ -104,4 +104,12 @@ class AppIcons {
     'assets/icons/face_verification.png',
     height: 250.sp,
   );
+  static Image get kEditIcon => Image.asset(
+    'assets/icons/edit_icon.png',
+    height: 20.sp,
+  );
+  static Image get kSuccessfulIcon=> Image.asset(
+    'assets/icons/successful_icon.png',
+    height: 300.sp,
+  );
 }

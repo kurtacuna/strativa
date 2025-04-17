@@ -35,7 +35,7 @@ class AddressForm extends StatelessWidget {
       ),
       backgroundColor: Colors.grey[50],
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,50 +43,73 @@ class AddressForm extends StatelessWidget {
               'What is your address?',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
+
+            Text(
+              'Country'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Philippines"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+
+            Text(
+              'City/Municipality/Province'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Select city"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+            Text(
+              'District/Town'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Select district"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+            Text(
+              'House/Lot/Block/Unit number'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Enter your house number"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+            Text(
+              'Street'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Enter your street"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+            Text(
+              'Subdivision/Village/Barangay'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Enter your subdivision"),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
+            Text(
+              'Zipcode'
+            ), Spacer(),
 
             TextFormField(
               readOnly: true,
               decoration: _inputDecoration("Enter your zip code"),
             ),
 
-            SizedBox(height: 180),
+            SizedBox(height: 20),
             AppButtonWidget(text: 'Confirm', onTap: (){
               context.push(AppRoutes.kReviewApplication);
             },),
