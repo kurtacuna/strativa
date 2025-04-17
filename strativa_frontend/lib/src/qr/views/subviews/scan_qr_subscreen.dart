@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/debouncer.dart';
@@ -30,7 +29,6 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
     detectionTimeoutMs: 500,
   );
   final Debouncer _debouncer = Debouncer(milliseconds: 2000);
-  final _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -108,7 +106,7 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
                 alignment: Alignment(0, 0.9),
                 child: ElevatedButton(
                   onPressed: () async {
-                    final XFile? pickedFile = await _imagePicker.pickImage(
+                    final XFile? pickedFile = await ImagePicker().pickImage(
                       source: ImageSource.gallery
                     );
 
@@ -116,18 +114,39 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
                       BarcodeCapture? captured = await MobileScannerPlatform.instance.analyzeImage(pickedFile.path);
                       
                       if (captured != null) {
-
+                        List<Barcode> barcodes = captured.barcodes;
+                        String? scannedQrData = barcodes[0].rawValue;
+                        
+                        if (scannedQrData != null) {
+                          if (context.mounted) {
+                            scanQrNotifier.setScannedQrData = scannedQrData;
+                            scanQrNotifier.setScannerController = _scannerController;
+                            _scannerController.stop();
+                            context.push(AppRoutes.kScannedQrSubscreen);
+                          }
+                        }
+                        
                       } else {
                         if (context.mounted) {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   appSnackBarWidget(
-                          //     context: context, 
-                          //     text: text
-                          //   )
-                          // );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            appSnackBarWidget(
+                              context: context, 
+                              text: AppText.kNoQrCodeFound,
+                              icon: AppIcons.kErrorIcon
+                            )
+                          );
                         }
                       }
-                      
+                    } else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          appSnackBarWidget(
+                            context: context, 
+                            text: AppText.kImageCouldntBeScanned,
+                            icon: AppIcons.kErrorIcon
+                          )
+                        );
+                      }
                     }
                   },
                   style: ButtonStyle(

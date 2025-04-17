@@ -30,7 +30,7 @@ class AppConstants {
       offset: kCommonShadowOffset,
     )
   ];
-  static Duration get kSnackBarDuration => Duration(seconds: 2);
+  static Duration get kSnackBarDuration => Duration(seconds: 3);
   static OutlineInputBorder get kEnabledBorder => OutlineInputBorder(
     borderSide: BorderSide(
       width: (AppConstants.kAppBorderWidth) - 1,

@@ -22,10 +22,8 @@ class ScannedQrSubscreen extends StatelessWidget {
     String scannedQrData = context.read<ScanQrNotifier>().getScannedQrData;
     List dataSplit = scannedQrData.split(', ');
 
-    print(dataSplit);
-
     void navigator() {
-      // context.read<ScanQrNotifier>().getScannerController.start();
+      context.read<ScanQrNotifier>().getScannerController.start();
       Navigator.of(context).pop();
     }
 

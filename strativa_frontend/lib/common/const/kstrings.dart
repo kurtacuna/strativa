@@ -53,4 +53,6 @@ class AppText {
   static const kSpecifyAmountMinus = "Specify Amount -";
   static const kConfirm = "Confirm";
   static const kCancel = "Cancel";
+  static const kNoQrCodeFound = "No QR code found";
+  static const kImageCouldntBeScanned = "Image couldn't be scanned";
 }
