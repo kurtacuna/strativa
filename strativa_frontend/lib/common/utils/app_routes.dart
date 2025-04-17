@@ -12,6 +12,7 @@ import 'package:strativa_frontend/src/transfer/views/subviews/account/review_tra
 import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/review_transfer_strativaacc_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/bank/review_transfer_bank_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/transfer_to_strativaacc_accnumber_subscreen.dart';
+import 'package:strativa_frontend/src/payload/views/subviews/bills/payload_bills_review_subscreen.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -61,6 +62,10 @@ final GoRouter _router = GoRouter(
       path: AppRoutes.kTransferToAnotherStrativaAccNumber,
       builder:
           (context, state) => const TransferToStrativaaccAccnumberSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kPayloadBillsReviewSubscreen,
+      builder: (context, state) => const PayloadBillsReviewSubscreen(),
     ),
   ],
 );
