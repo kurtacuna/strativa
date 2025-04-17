@@ -1,0 +1,192 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$iIfdxcJpgfnRPlHfnQZvdp$plc6bTQfpFbiAZMx0HvF3FpD69LtZ3Tnv9BgurKENCY=",
+            "last_login": "2025-04-06T21:12:56.720Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@email.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-03-27T09:10:57.469Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "!VSgYCHP7ygfwU7d74wY3Wl5ocJZsAvEFa0rutsKG",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Deleted-User",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-08T19:16:12.020Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$vEL2DQHNZuJsnTwnODoLmu$SbzSoge9aRBIgoy1Sxpf+fgL7ImqRblSEkaJff+JYFI=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "test",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-09T01:43:35.591Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "my_accounts.userdata",
+        "pk": 3,
+        "fields": {
+            "first_name": "Test User",
+            "middle_name": "Tu",
+            "last_name": "Testing",
+            "email": "csprojectserver@gmail.com",
+            "user_card_details": 3
+        }
+    },
+    {
+        "model": "my_accounts.usercarddetails",
+        "pk": 3,
+        "fields": {
+            "balance": "0.00",
+            "strativa_card_number": "1234567890123456",
+            "strativa_card_created": "2025-04-07T09:27:09Z",
+            "strativa_card_expiry": "2025-04-08T16:40:40Z",
+            "strativa_card_cvv": "123",
+            "is_online_card_active": false,
+            "online_card_number": null,
+            "online_card_created": null,
+            "online_card_expiry": null,
+            "online_card_cvv": null
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 1,
+        "fields": {
+            "type": "other"
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 2,
+        "fields": {
+            "type": "food"
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 3,
+        "fields": {
+            "type": "shopping"
+        }
+    },
+    {
+        "model": "transaction.transactions",
+        "pk": 1,
+        "fields": {
+            "reference_id": "oiwjf-0u23fpoeijqf-1",
+            "datetime": "2025-04-01T09:27:09Z",
+            "amount": "120.00",
+            "transaction_type": 1,
+            "sender": 1,
+            "receiver": 3
+        }
+    },
+    {
+        "model": "transaction.transactions",
+        "pk": 2,
+        "fields": {
+            "reference_id": "oiwjf-0u23fpoeijqf-12",
+            "datetime": "2025-04-07T09:27:09Z",
+            "amount": "120.00",
+            "transaction_type": 2,
+            "sender": 3,
+            "receiver": 2
+        }
+    },
+    {
+        "model": "transaction.transactions",
+        "pk": 3,
+        "fields": {
+            "reference_id": "oiwjf-0u23fpoeijqf-123",
+            "datetime": "2025-04-07T09:28:09Z",
+            "amount": "120.00",
+            "transaction_type": 3,
+            "sender": 3,
+            "receiver": 2
+        }
+    },
+    {
+        "model": "transaction.transactions",
+        "pk": 4,
+        "fields": {
+            "reference_id": "oiwjf-0u23fpoeijqf-124",
+            "datetime": "2025-04-07T09:29:09Z",
+            "amount": "120.00",
+            "transaction_type": 3,
+            "sender": 1,
+            "receiver": 3
+        }
+    },
+    {
+        "model": "transaction.usertransactions",
+        "pk": 1,
+        "fields": {
+            "user": 3,
+            "transaction": 1,
+             "direction": "send",
+            "resulting_balance": 200.00
+        }
+    },
+    {
+        "model": "transaction.usertransactions",
+        "pk": 2,
+        "fields": {
+            "user": 3,
+            "transaction": 2,
+            "direction": "receive",
+            "resulting_balance": 400.00
+        }
+    },
+    {
+        "model": "transaction.usertransactions",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "transaction": 3,
+            "direction": "receive",
+            "resulting_balance": 400.00
+        }
+    },
+    {
+        "model": "transaction.usertransactions",
+        "pk": 4,
+        "fields": {
+            "user": 3,
+            "transaction": 4,
+            "direction": "send",
+            "resulting_balance": 400.00
+        }
+    }
+]

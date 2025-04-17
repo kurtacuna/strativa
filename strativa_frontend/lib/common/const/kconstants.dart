@@ -13,6 +13,8 @@ class AppConstants {
   static EdgeInsets get kCardPadding => kAppPadding * 1.5;
   static Duration get kPageChangeDuration => Duration(milliseconds: 300);
   static Curve get kPageChangeCurve => Curves.decelerate;
+  static int get kOtpResendDuration => 2;
+  static String get kPinputCursor => "|";
   static List<BoxShadow> get kCommonBoxShadowLight => [
     BoxShadow(
       color: ColorsCommon.kGray,

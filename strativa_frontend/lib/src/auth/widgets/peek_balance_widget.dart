@@ -5,6 +5,7 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
+import 'package:strativa_frontend/common/widgets/otp/widget/app_otp_modal_bottom_sheet.dart';
 
 class PeekBalanceWidget extends StatelessWidget {
   const PeekBalanceWidget({super.key});
@@ -16,7 +17,7 @@ class PeekBalanceWidget extends StatelessWidget {
       children: [
         AppTextButtonWidget(
           onPressed: () {
-            //TODO: handle peek
+            showAppOtpModalBottomSheet(context);
           },
           prefixIcon: Icon(
             AppIcons.kEyeOpenIcon.icon,

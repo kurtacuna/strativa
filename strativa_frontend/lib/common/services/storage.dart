@@ -25,3 +25,8 @@ class Storage {
     return GetStorage().remove(key);
   }
 }
+
+class StorageKeys {
+  static const String accessTokenKey = 'accessToken';
+  static const String refreshTokenKey = 'refreshToken';
+}

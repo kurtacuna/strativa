@@ -16,7 +16,7 @@ class AppTextButtonWidget extends StatelessWidget {
   });
 
   final String text;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final TextStyle? style;
   final Color? overlayColor;
   final Color? color;

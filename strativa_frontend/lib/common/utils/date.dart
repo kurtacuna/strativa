@@ -24,3 +24,7 @@ String greetUserByTimeOfDay() {
   
   return 'Good $greeting,';
 }
+
+String getCardExpiry(DateTime date) {
+  return DateFormat('M/yy').format(date);
+}

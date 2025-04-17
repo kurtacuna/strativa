@@ -16,6 +16,9 @@ ThemeData lightMode = ThemeData(
   textTheme: GoogleFonts.poppinsTextTheme(
     ThemeData.light().textTheme,
   ),
+  appBarTheme: AppBarTheme(
+    scrolledUnderElevation: 0
+  )
 );
 
 ThemeData darkMode = ThemeData(
@@ -32,4 +35,7 @@ ThemeData darkMode = ThemeData(
   textTheme: GoogleFonts.poppinsTextTheme(
     ThemeData.dark().textTheme,
   ),
+  appBarTheme: AppBarTheme(
+    scrolledUnderElevation: 0
+  )
 );

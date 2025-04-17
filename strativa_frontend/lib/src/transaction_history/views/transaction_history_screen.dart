@@ -5,6 +5,8 @@ import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
+import 'package:strativa_frontend/common/widgets/temp_empty_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/detailed_card_widget.dart';
 import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
 import 'package:strativa_frontend/src/transaction_history/widgets/transaction_history_widget.dart';
@@ -23,7 +25,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
   @override
   void initState() {
     _tabController = TabController(
-      length: transactionTabs.length,
+      length: TransactionTypes.values.length,
       vsync: this,
     );
 
@@ -33,14 +35,15 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
   }
 
   void _handleSelection() {
-    final controller = Provider.of<TransactionTabNotifier>(
+    final notifier = Provider.of<TransactionTabNotifier>(
       context,
       listen: false,
     );
 
     if (_tabController.indexIsChanging) {
-      controller.setCurrentTabIndex = _tabController.index;
-      controller.setCurrentTab = transactionTabs[controller.getCurrentTabIndex];
+      notifier.setCurrentTabIndex = _tabController.index; 
+      notifier.setCurrentTab = TransactionTypes.values[notifier.getCurrentTabIndex];
+      notifier.fetchUserTransactions(context);
     }
   }
 
@@ -60,7 +63,6 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
           style: CustomTextStyles(context).screenHeaderStyle,
         ),
         centerTitle: true,
-        scrolledUnderElevation: 0,
       ),
       body: Padding(
         padding: AppConstants.kAppPadding,
@@ -87,9 +89,25 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> wit
             SizedBox(height: 20.h),
 
             Expanded(
-              child: SingleChildScrollView(
-                child: TransactionHistoryWidget(),
-              ),
+              child: Consumer<TransactionTabNotifier>(
+                builder: (context, transactionTabNotifier, child) {
+                  if (transactionTabNotifier.getUserTransactions == null || transactionTabNotifier.getIsLoading) {
+                    return Center(
+                      child: AppCircularProgressIndicatorWidget()
+                    );
+                  }
+
+                  if (transactionTabNotifier.getUserTransactions!.transactions.isEmpty) {
+                    return Center(
+                      child: AppEmptyWidget()
+                    );
+                  }
+
+                  return SingleChildScrollView(
+                    child: TransactionHistoryWidget(),
+                  );
+                } ,
+              )
             ),
           ],
         ),
