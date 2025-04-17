@@ -14,6 +14,5 @@ class ScanQrNotifier with ChangeNotifier {
   
   set setScannedQrData(String data) {
     _scannedQrData = data;
-    // notifyListeners();
   }
 }

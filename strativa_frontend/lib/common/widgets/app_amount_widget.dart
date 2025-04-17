@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
@@ -24,14 +23,12 @@ class AppAmountWidget extends StatelessWidget {
       children: [
         Text(
           AppText.kCurrencyText,
-          style: currencyStyle ?? CustomTextStyles(context).smallStyle
+          style: currencyStyle ?? CustomTextStyles(context).defaultStyle
         ),
 
         Text(
           addCommaToAmount(double.parse(amount)),
-          style: amountStyle ?? CustomTextStyles(context).amountStyle.copyWith(
-            fontSize: 16.sp,
-          ),
+          style: amountStyle ?? CustomTextStyles(context).amountStyle
         )
       ],
     );

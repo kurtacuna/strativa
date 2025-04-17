@@ -33,6 +33,7 @@ class AppText {
   static const kGoToHome = "Go to Home";
   static const kDepositTo = "Deposit To";
   static const kRequestTheAmountOf = "Request the amount of";
+  static const kTransferTheAmountOf = "Transfer the amount of";
   static const kLabeledAmountFieldError = "Please enter a valid amount.";
   static const kAmountRequested = "Amount Requested";
   static const kEdit = "Edit";
@@ -50,4 +51,6 @@ class AppText {
   static const kAddNoteOptional = "Add Note (Optional)";
   static const kSpecifyAmountPlus = "Specify Amount +";
   static const kSpecifyAmountMinus = "Specify Amount -";
+  static const kConfirm = "Confirm";
+  static const kCancel = "Cancel";
 }

@@ -14,17 +14,23 @@ class UserData(models.Model):
   first_name = models.CharField(max_length=255)
   middle_name = models.CharField(max_length=255, blank=True)
   last_name = models.CharField(max_length=255)
+  full_name = models.CharField(max_length=765)
   profile_picture = models.ImageField(upload_to=save_profile_picture_to, default='images/logo.png')
   user_card_details = models.ForeignKey('UserCardDetails', on_delete=models.CASCADE)
   email = models.EmailField(max_length=255)
-  # TODO: add refresh token for logging out, maybe in another app
+  # TODO: add refresh token for logging out and tracking sessions, maybe in another app
 
   def __str__(self):
     return self.user.username
   
+  def save(self, *args, **kwargs):
+    self.full_name = self.get_full_name
+
+    super().save(*args, **kwargs)
+  
   @property
-  def get_full_name(self):
-    return f"{self.first_name} {f"{self.middle_name} " if self.middle_name else ""}{self.last_name}"
+  def get_full_name():
+    return f"{UserData.first_name} {f"{UserData.middle_name} " if UserData.middle_name else ""}{UserData.last_name}"
 
   class Meta:
     verbose_name = "User Data"
@@ -50,9 +56,10 @@ class UserCardDetails(models.Model):
     return self.user.username
   
   def save(self, *args, **kwargs):
-    self.create_strativa_card()
+    self.create_strativa_card
     super().save(*args, **kwargs)
   
+  @property
   def create_strativa_card(self):
     if not self.strativa_card_number:
       self.strativa_card_number = self.generate_strativa_card_number()
@@ -60,6 +67,7 @@ class UserCardDetails(models.Model):
       self.strativa_card_expiry = timezone.now().replace(year=timezone.now().year + BackendConstants.card_expiry_years)
       self.strativa_card_cvv = self.generate_cvv()
 
+  @property
   def create_online_card(self):
     if self.is_online_card_active and not self.online_card_number:
       self.online_card_number = self.generate_online_card_number()

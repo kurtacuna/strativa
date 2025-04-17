@@ -26,7 +26,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
     
     def get_sender(self, obj):
         user_data = getattr(obj.sender, 'userdata', None)
-        full_name = user_data.get_full_name if user_data else "Deleted"
+        full_name = user_data.full_name if user_data else "Deleted"
         profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
         serializer = common_serializers.UserSerializer(obj.sender)
         data = serializer.data
@@ -36,7 +36,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
     
     def get_receiver(self, obj):
         user_data = getattr(obj.receiver, 'userdata', None)
-        full_name = user_data.get_full_name if user_data else "Deleted"
+        full_name = user_data.full_name if user_data else "Deleted"
         profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
         serializer = common_serializers.UserSerializer(obj.receiver)
         data = serializer.data

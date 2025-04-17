@@ -11,7 +11,8 @@ String daysPastSinceDate(DateTime date) {
 }
 
 String greetUserByTimeOfDay() {
-  int hour = DateTime.now().hour;
+  // Fixed +8
+  int hour = DateTime.now().toUtc().add(Duration(hours: 8)).hour;
   String greeting = '';
   
   if (hour >= 0 && hour < 12) {

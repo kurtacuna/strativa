@@ -8,6 +8,7 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/common/utils/debouncer.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/no_camera_permission_widget.dart';
@@ -25,6 +26,8 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
     detectionSpeed: DetectionSpeed.noDuplicates,
     detectionTimeoutMs: 500,
   );
+
+  final Debouncer _debouncer = Debouncer(milliseconds: 2000);
 
   @override
   void initState() {
@@ -56,15 +59,17 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
           children: [
             MobileScanner(
               onDetect: (captured) {
-                _scannerController.stop();
-                List<Barcode> barcodes = captured.barcodes;
-                scanQrNotifier.setScannedQrData = barcodes[0].rawValue ?? "";
-                scanQrNotifier.setScannerController = _scannerController; 
+                _debouncer.run(() {
+                  List<Barcode> barcodes = captured.barcodes;
+                  String scannedQrData = barcodes[0].rawValue ?? "";
 
-                print("2");
-            
-                
-                context.push(AppRoutes.kScannedQrSubscreen);
+                  if (scannedQrData.isNotEmpty) {
+                    scanQrNotifier.setScannedQrData = scannedQrData;
+                    scanQrNotifier.setScannerController = _scannerController;
+                    _scannerController.stop();
+                    context.push(AppRoutes.kScannedQrSubscreen);
+                  }
+                });
               },
               scanWindow: scanWindow,
               controller: _scannerController,

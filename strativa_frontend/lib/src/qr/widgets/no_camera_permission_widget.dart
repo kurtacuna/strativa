@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
@@ -10,32 +11,37 @@ class NoCameraPermissionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            AppText.kQrPermissionRequired,
-            style: CustomTextStyles(context).biggerStyle.copyWith(
-              color: ColorsCommon.kGray
+    return Container(
+      width: ScreenUtil().screenWidth,
+      height: ScreenUtil().screenHeight,
+      color: ColorsCommon.kDark,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppText.kQrPermissionRequired,
+              style: CustomTextStyles(context).biggerStyle.copyWith(
+                color: ColorsCommon.kGray
+              )
+            ),
+      
+            AppTextButtonWidget(
+              text: AppText.kOpenSettings,
+              color: ColorsCommon.kAccentL3,
+              overlayColor: ColorsCommon.kAccentL4,
+              onPressed: () async {
+                showDialog(
+                  context: context, 
+                  builder: (context) {
+                    return CameraPermissionAlertDialogWidget();
+                  }
+                );
+              },
             )
-          ),
-
-          AppTextButtonWidget(
-            text: AppText.kOpenSettings,
-            color: ColorsCommon.kAccentL3,
-            overlayColor: ColorsCommon.kAccentL4,
-            onPressed: () async {
-              showDialog(
-                context: context, 
-                builder: (context) {
-                  return CameraPermissionAlertDialogWidget();
-                }
-              );
-            },
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
 }

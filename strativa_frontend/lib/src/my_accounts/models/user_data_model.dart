@@ -9,6 +9,7 @@ class UserDataModel {
     String firstName;
     String middleName;
     String lastName;
+    String fullName;
     String profilePicture;
     UserCardDetails userCardDetails;
 
@@ -17,6 +18,7 @@ class UserDataModel {
         required this.firstName,
         required this.middleName,
         required this.lastName,
+        required this.fullName,
         required this.profilePicture,
         required this.userCardDetails,
     });
@@ -26,6 +28,7 @@ class UserDataModel {
         firstName: json["first_name"],
         middleName: json["middle_name"],
         lastName: json["last_name"],
+        fullName: json["full_name"],
         profilePicture: json["profile_picture"],
         userCardDetails: UserCardDetails.fromJson(json["user_card_details"]),
     );
@@ -35,6 +38,7 @@ class UserDataModel {
         "first_name": firstName,
         "middle_name": middleName,
         "last_name": lastName,
+        "full_name": fullName,
         "profile_piocture": profilePicture,
         "user_card_details": userCardDetails.toJson(),
     };
