@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from utils.server_error import return_server_error
-from utils.user_not_found import return_user_not_found
+from my_accounts.utils.user_not_found import return_user_not_found
 from . import models
 import pyotp
 from utils.const import BackendConstants

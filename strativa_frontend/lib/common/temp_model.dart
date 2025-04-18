@@ -12,20 +12,4 @@ List<Map<String, dynamic>> get myAccounts => [
     "account_number": "TD-K12AS9GN4J",
     "balance": "2678.00",
   },
-
-];
-List<Map<String, dynamic>> get otherAccounts => [
-  {
-    "id": "1",
-    "name": "Full Name",
-    "type": "Savings Account",
-    "number": "09876543210",
-  },
-  {
-    "id": "2",
-    "name": "Full Name",
-    "type": "Savings Account",
-    "number": "09876543210",
-  },
-];
-
+]; 

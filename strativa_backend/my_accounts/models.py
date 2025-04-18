@@ -4,6 +4,7 @@ from django.utils import timezone
 import random
 import os
 from utils.const import BackendConstants
+import uuid
 
 # Create your models here.
 class UserData(models.Model):
@@ -29,8 +30,8 @@ class UserData(models.Model):
     super().save(*args, **kwargs)
   
   @property
-  def get_full_name():
-    return f"{UserData.first_name} {f"{UserData.middle_name} " if UserData.middle_name else ""}{UserData.last_name}"
+  def get_full_name(self):
+    return f"{self.first_name} {f"{self.middle_name} " if self.middle_name else ""}{self.last_name}"
 
   class Meta:
     verbose_name = "User Data"
@@ -39,6 +40,7 @@ class UserData(models.Model):
 
 class UserCardDetails(models.Model):
   user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+  account_number = models.CharField(max_length=50, unique=True)
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
   strativa_card_number = models.CharField(max_length=16, unique=True)
@@ -56,6 +58,9 @@ class UserCardDetails(models.Model):
     return self.user.username
   
   def save(self, *args, **kwargs):
+    if not self.account_number:
+      self.account_number = f"CW-{uuid.uuid4().hex.upper()}"
+
     self.create_strativa_card
     super().save(*args, **kwargs)
   
@@ -117,3 +122,36 @@ class UserCardDetails(models.Model):
   class Meta:
     verbose_name = "User Card Detail"
     verbose_name_plural = "User Card Details"
+
+
+class UserAccounts(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  account_type = models.ForeignKey('AccountTypes', on_delete=models.CASCADE)
+  account_number = models.CharField(max_length=255, unique=True)
+  balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+  def __str__(self):
+    return self.user.username
+  
+  def save(self, *args, **kwargs):
+    if not self.account_number:
+      account_type_code = AccountTypes.objects.get(account_type=self.account_type).code
+      self.account_number = f"{account_type_code}-{uuid.uuid4().hex.upper()}"
+    
+    super().save(*args, **kwargs)
+
+  class Meta:
+    verbose_name = "User Account"
+    verbose_name_plural = "User Accounts"
+
+
+class AccountTypes(models.Model):
+  account_type = models.CharField(max_length=255, unique=True)
+  code = models.CharField(max_length=10, unique=True)
+
+  def __str__(self):
+    return self.account_type
+
+  class Meta:
+    verbose_name = "Account Type"
+    verbose_name_plural = "Account Types"

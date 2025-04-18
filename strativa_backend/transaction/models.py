@@ -29,12 +29,13 @@ class Transactions(models.Model):
     transaction_type = models.ForeignKey('TransactionTypes', on_delete=models.SET_DEFAULT, default=1)
     sender = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='sender_transactions_set')
     receiver = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='receiver_transactions_set')
+    note = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.reference_id
     
     def save(self, *args, **kwargs):
-        self.reference_id = uuid.uuid4().hex
+        self.reference_id = uuid.uuid4().hex.upper()
         self.datetime = timezone.now()
         super().save(*args, **kwargs)
     

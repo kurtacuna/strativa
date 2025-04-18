@@ -29,8 +29,10 @@ urlpatterns = [
     path('otp/', include('otp.urls')),
 
     path('api/my_accounts/', include('my_accounts.urls')),
-    path('api/transaction/', include('transaction.urls'))
+    path('api/transaction/', include('transaction.urls')),
+    path('api/transfer/', include('transfer.urls')),
 ]
 
+# For fetching images
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

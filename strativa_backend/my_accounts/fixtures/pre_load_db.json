@@ -54,13 +54,42 @@
         }
     },
     {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$vEL2DQHNZuJsnTwnODoLmu$SbzSoge9aRBIgoy1Sxpf+fgL7ImqRblSEkaJff+JYFI=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "test2",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-09T01:43:35.591Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
         "model": "my_accounts.userdata",
         "pk": 3,
         "fields": {
-            "first_name": "Test User",
-            "middle_name": "Tu",
-            "last_name": "Testing",
-            "full_name": "Test User Tu Testing",
+            "first_name": "John",
+            "last_name": "Doe",
+            "full_name": "John Doe",
+            "email": "csprojectserver@gmail.com",
+            "user_card_details": 3
+        }
+    },
+    {
+        "model": "my_accounts.userdata",
+        "pk": 4,
+        "fields": {
+            "first_name": "Jane",
+            "middle_name": "J",
+            "last_name": "Doe",
+            "full_name": "Jane J Doe",
             "email": "csprojectserver@gmail.com",
             "user_card_details": 3
         }
@@ -69,7 +98,25 @@
         "model": "my_accounts.usercarddetails",
         "pk": 3,
         "fields": {
-            "balance": "0.00",
+            "balance": "12345.00",
+            "account_number": "CW-A40E4A704CD54883BCAF21DD15ED779D",
+            "strativa_card_number": "0234567890123456",
+            "strativa_card_created": "2025-04-07T09:27:09Z",
+            "strativa_card_expiry": "2025-04-08T16:40:40Z",
+            "strativa_card_cvv": "123",
+            "is_online_card_active": false,
+            "online_card_number": null,
+            "online_card_created": null,
+            "online_card_expiry": null,
+            "online_card_cvv": null
+        }
+    },
+    {
+        "model": "my_accounts.usercarddetails",
+        "pk": 4,
+        "fields": {
+            "balance": "678.00",
+            "account_number": "CW-B40E4A704CD54883BCAF21DD15ED779D",
             "strativa_card_number": "1234567890123456",
             "strativa_card_created": "2025-04-07T09:27:09Z",
             "strativa_card_expiry": "2025-04-08T16:40:40Z",
@@ -79,6 +126,24 @@
             "online_card_created": null,
             "online_card_expiry": null,
             "online_card_cvv": null
+        }
+    },
+    {
+        "model": "my_accounts.accounttypes",
+        "pk": 1,
+        "fields": {
+            "account_type": "Savings Account",
+            "code": "SA"
+        }
+    },
+    {
+        "model": "my_accounts.useraccounts",
+        "pk": 1,
+        "fields": {
+            "user": 4,
+            "account_type": 1,
+            "account_number": "SA-A40E4A704CD54883BCAF21DD15ED779D",
+            "balance": "90.00"
         }
     },
     {
@@ -100,6 +165,20 @@
         "pk": 3,
         "fields": {
             "type": "shopping"
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 4,
+        "fields": {
+            "type": "transport"
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 5,
+        "fields": {
+            "type": "transfers"
         }
     },
     {

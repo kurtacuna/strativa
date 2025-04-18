@@ -28,7 +28,8 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
     detectionSpeed: DetectionSpeed.noDuplicates,
     detectionTimeoutMs: 500,
   );
-  final Debouncer _debouncer = Debouncer(milliseconds: 2000);
+  final Debouncer _debouncer = Debouncer(milliseconds: 500);
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -106,48 +107,50 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
                 alignment: Alignment(0, 0.9),
                 child: ElevatedButton(
                   onPressed: () async {
-                    final XFile? pickedFile = await ImagePicker().pickImage(
-                      source: ImageSource.gallery
-                    );
+                    _debouncer.run(() async {
+                      final XFile? pickedFile = await _imagePicker.pickImage(
+                        source: ImageSource.gallery
+                      );
 
-                    if (pickedFile != null) {
-                      BarcodeCapture? captured = await MobileScannerPlatform.instance.analyzeImage(pickedFile.path);
-                      
-                      if (captured != null) {
-                        List<Barcode> barcodes = captured.barcodes;
-                        String? scannedQrData = barcodes[0].rawValue;
+                      if (pickedFile != null) {
+                        BarcodeCapture? captured = await MobileScannerPlatform.instance.analyzeImage(pickedFile.path);
                         
-                        if (scannedQrData != null) {
+                        if (captured != null) {
+                          List<Barcode> barcodes = captured.barcodes;
+                          String? scannedQrData = barcodes[0].rawValue;
+                          
+                          if (scannedQrData != null) {
+                            if (context.mounted) {
+                              scanQrNotifier.setScannedQrData = scannedQrData;
+                              scanQrNotifier.setScannerController = _scannerController;
+                              _scannerController.stop();
+                              context.push(AppRoutes.kScannedQrSubscreen);
+                            }
+                          }
+                          
+                        } else {
                           if (context.mounted) {
-                            scanQrNotifier.setScannedQrData = scannedQrData;
-                            scanQrNotifier.setScannerController = _scannerController;
-                            _scannerController.stop();
-                            context.push(AppRoutes.kScannedQrSubscreen);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              appSnackBarWidget(
+                                context: context, 
+                                text: AppText.kNoQrCodeFound,
+                                icon: AppIcons.kErrorIcon
+                              )
+                            );
                           }
                         }
-                        
                       } else {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             appSnackBarWidget(
                               context: context, 
-                              text: AppText.kNoQrCodeFound,
+                              text: AppText.kImageCouldntBeScanned,
                               icon: AppIcons.kErrorIcon
                             )
                           );
                         }
                       }
-                    } else {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          appSnackBarWidget(
-                            context: context, 
-                            text: AppText.kImageCouldntBeScanned,
-                            icon: AppIcons.kErrorIcon
-                          )
-                        );
-                      }
-                    }
+                    });
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(

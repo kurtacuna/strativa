@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'otp',
     'my_accounts',
     'transaction',
+    'transfer',
 ]
 
 MIDDLEWARE = [
