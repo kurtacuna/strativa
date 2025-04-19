@@ -6,7 +6,7 @@ class BackendConstants:
     otp_length = 4
     otp_valid_duration = 60
 
-    def get_uuid(half):
+    def get_uuid(half=False):
         if half:
             return uuid.uuid4().hex[:16].upper()
         else:

@@ -61,7 +61,6 @@ class User {
 }
 
 class UserCardDetails {
-    String balance;
     String strativaCardNumber;
     DateTime strativaCardCreated;
     DateTime strativaCardExpiry;
@@ -73,7 +72,6 @@ class UserCardDetails {
     String? onlineCardCvv;
 
     UserCardDetails({
-        required this.balance,
         required this.strativaCardNumber,
         required this.strativaCardCreated,
         required this.strativaCardExpiry,
@@ -86,7 +84,6 @@ class UserCardDetails {
     });
 
     factory UserCardDetails.fromJson(Map<String, dynamic> json) => UserCardDetails(
-        balance: json["balance"],
         strativaCardNumber: json["strativa_card_number"],
         strativaCardCreated: DateTime.parse(json["strativa_card_created"]),
         strativaCardExpiry: DateTime.parse(json["strativa_card_expiry"]),
@@ -103,7 +100,6 @@ class UserCardDetails {
     );
 
     Map<String, dynamic> toJson() => {
-        "balance": balance,
         "strativa_card_number": strativaCardNumber,
         "strativa_card_created": strativaCardCreated.toIso8601String(),
         "strativa_card_expiry": strativaCardExpiry.toIso8601String(),

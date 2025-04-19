@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import models
-from utils import common_serializers
+from utils.common_serializers import UserSerializer
 
 
 class UserTransactionsSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
         user_data = getattr(obj.sender, 'userdata', None)
         full_name = user_data.full_name if user_data else "Deleted"
         profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
-        serializer = common_serializers.UserSerializer(obj.sender)
+        serializer = UserSerializer(obj.sender)
         data = serializer.data
         data['full_name'] = full_name
         data['profile_picture'] = profile_picture
@@ -38,7 +38,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
         user_data = getattr(obj.receiver, 'userdata', None)
         full_name = user_data.full_name if user_data else "Deleted"
         profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
-        serializer = common_serializers.UserSerializer(obj.receiver)
+        serializer = UserSerializer(obj.receiver)
         data = serializer.data
         data['full_name'] = full_name
         data['profile_picture'] = profile_picture

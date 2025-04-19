@@ -9,6 +9,7 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
 import 'package:strativa_frontend/common/utils/input_formatters.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/card_widget.dart';
@@ -43,7 +44,13 @@ class DetailedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         balanceNotifier.getShowBalance
-                          ? "${AppText.kCurrencySign} ${addCommaToAmount(double.parse(userCardDetails.balance))}"
+                          ? "${AppText.kCurrencySign} ${addCommaToAmount(
+                            double.parse(context.read<AppTransferReceiveWidgetNotifier>()
+                              .getAccountsList
+                              .where((account) => account.accountType.accountType == "Card/Wallet")
+                              .first
+                              .balance)
+                          )}"
                           : "${AppText.kCurrencySign} •••••",
                           style: CustomTextStyles(context).numberStyle.copyWith(
                             fontWeight: FontWeight.w800,

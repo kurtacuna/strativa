@@ -40,8 +40,6 @@ class UserData(models.Model):
 
 class UserCardDetails(models.Model):
   user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-  account_number = models.CharField(max_length=50, unique=True)
-  balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
   strativa_card_number = models.CharField(max_length=16, unique=True)
   strativa_card_created = models.DateTimeField()
@@ -129,7 +127,7 @@ class UserCardDetails(models.Model):
 class UserAccounts(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   account_type = models.ForeignKey('AccountTypes', on_delete=models.CASCADE)
-  account_number = models.CharField(max_length=255, unique=True)
+  account_number = models.CharField(max_length=30, unique=True)
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
   def __str__(self):

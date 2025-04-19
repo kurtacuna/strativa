@@ -10,6 +10,7 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/common/widgets/temp_empty_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/detailed_card_widget.dart';
@@ -26,6 +27,7 @@ class MyAccountsScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<UserDataNotifier>().fetchUserData(context);
       context.read<TransactionTabNotifier>().fetchUserTransactions(context);
+      context.read<AppTransferReceiveWidgetNotifier>().fetchUserAccounts(context);
     });
 
     return Consumer<UserDataNotifier>(
@@ -34,9 +36,19 @@ class MyAccountsScreen extends StatelessWidget {
           context,
           listen: true
         );
+        AppTransferReceiveWidgetNotifier appTransferReceiveWidgetNotifier = Provider.of<AppTransferReceiveWidgetNotifier>(
+          context,
+          listen: false
+        );
         
-        if (userDataNotifier.getUserData == null || userDataNotifier.getIsLoading || transactionTabNotifier.getUserTransactions == null || transactionTabNotifier.getIsLoading) {
-          // TODO: change to shimmers?
+        if (
+          userDataNotifier.getUserData == null || 
+          userDataNotifier.getIsLoading || 
+          transactionTabNotifier.getUserTransactions == null || 
+          transactionTabNotifier.getIsLoading ||
+          appTransferReceiveWidgetNotifier.getAccountsList == null ||
+          appTransferReceiveWidgetNotifier.getIsLoading
+        ) {
           return Scaffold(
             body: Center(
               child: AppCircularProgressIndicatorWidget()

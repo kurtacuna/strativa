@@ -46,6 +46,8 @@ class AppTransferReceiveWidgetNotifier with ChangeNotifier {
         }
       );
 
+      print(response.body);
+
       if (response.statusCode == 200) {
         AccountModalModel model = accountModalModelFromJson(response.body);
         _accounts = model.userAccounts;

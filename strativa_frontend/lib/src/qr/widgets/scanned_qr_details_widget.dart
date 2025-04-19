@@ -73,7 +73,7 @@ class ScannedQrDetailsWidget extends StatelessWidget {
             Text(
               accountNumber,
               style: CustomTextStyles(context).bigStyle.copyWith(
-                color: ColorsCommon.kDarkerGray
+                color: ColorsCommon.kDarkGray
               )
             ),
 
