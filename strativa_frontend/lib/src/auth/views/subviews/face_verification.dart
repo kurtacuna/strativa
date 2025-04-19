@@ -42,8 +42,8 @@ class FaceVerification extends StatelessWidget {
             const InstructionItem(text: 'Hold your device at eye level.'),
             const InstructionItem(text: 'Align your face within the frame and follow the on-screen instructions.'),
             const Spacer(),
-            AppButtonWidget(text: 'Next', onTap: (){
-              context.push(AppRoutes.kGenderMarital);
+            AppButtonWidget(text: 'Start', onTap: (){
+              context.push(AppRoutes.kFaceScanVerification);
             },),
           ],
         ),

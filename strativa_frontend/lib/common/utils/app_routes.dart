@@ -9,6 +9,7 @@ import 'package:strativa_frontend/src/auth/views/subviews/create_password_screen
 import 'package:strativa_frontend/src/auth/views/subviews/data_privacy_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/email_verify_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/face_verification.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/face_scan_camera_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/gender_marital_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/id_camera_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/initial_screen_complete.dart';
@@ -105,6 +106,10 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kCreatePassword,
       builder: (context, state) => const CreatePasswordScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kFaceScanVerification,
+      builder: (context, state) => const FaceScanCameraScreen(),
     ),
   ],
 );
