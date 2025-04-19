@@ -13,7 +13,7 @@ import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_divider_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
-import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_notifier.dart';
 
 class GeneratedQrDetailsWidget extends StatelessWidget {
   const GeneratedQrDetailsWidget({
@@ -112,7 +112,7 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
                   ),
                 ),
     
-                context.read<GenerateQrAccountModalNotifier>().getSpecifyAmount == true
+                context.read<GenerateQrNotifier>().getSpecifyAmount == true
                   ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

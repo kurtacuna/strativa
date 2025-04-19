@@ -1,17 +1,20 @@
 import 'package:strativa_frontend/common/utils/environment.dart';
 
 class ApiUrls {
-  static String jwtCreateUrl = "${Environment.appBaseUrl}/auth/jwt/create";
-  static String jwtRefreshUrl = "${Environment.appBaseUrl}/auth/jwt/refresh";
-  static String userDataUrl =  "${Environment.appBaseUrl}/api/my_accounts/me";
+  static String _appBaseUrl = "${Environment.appBaseUrl}";
+
+  static String jwtCreateUrl = "$_appBaseUrl/auth/jwt/create";
+  static String jwtRefreshUrl = "$_appBaseUrl/auth/jwt/refresh";
+  static String userDataUrl =  "$_appBaseUrl/api/my_accounts/me";
   static String userTransactionsUrl({required String query}) {
-    return "${Environment.appBaseUrl}/api/transaction/me/?type=$query";
+    return "$_appBaseUrl/api/transaction/me/?type=$query";
   }
   static String imageFromNetworkUrl({required String imageUrl}) {
     return Environment.appBaseUrl + imageUrl;
   }
-  static String createOtpUrl = "${Environment.appBaseUrl}/otp/create/";
+  static String createOtpUrl = "$_appBaseUrl/otp/create/";
   static String verifyOtpUrl({required String query}) {
-    return "${Environment.appBaseUrl}/otp/verify/?type=$query";
+    return "$_appBaseUrl/otp/verify/?type=$query";
   }
+  static String userAccountsUrl = "$_appBaseUrl/api/my_accounts/me/accounts";
 }

@@ -8,9 +8,11 @@ import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/models/user_data_model.dart';
-import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/generated_qr_details_widget.dart';
 
 class GeneratedQrSubscreen extends StatelessWidget {
@@ -20,10 +22,9 @@ class GeneratedQrSubscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     UserDataModel userAccount = context.read<UserDataNotifier>().getUserData!;
 
-    return Consumer<GenerateQrAccountModalNotifier>(
+    return Consumer<GenerateQrNotifier>(
       builder: (context, accountModalNotifier, child) {
-        // TODO: change type once model is done
-        dynamic account = accountModalNotifier.getAccount;
+        UserAccount account = context.read<AppTransferReceiveWidgetNotifier>().getAccount;
 
         return Scaffold(
           appBar: AppBar(
@@ -48,10 +49,9 @@ class GeneratedQrSubscreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                // TODO: change data once backend is done
                 GeneratedQrDetailsWidget(
-                  type: account['type'],
-                  accountNumber: account['account_number'],
+                  type: account.accountType.accountType,
+                  accountNumber: account.accountNumber,
                   amountRequested: accountModalNotifier.getAmountController.text,
                   fullName: userAccount.fullName,
                 ),

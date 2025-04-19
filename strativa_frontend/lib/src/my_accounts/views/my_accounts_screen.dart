@@ -10,6 +10,7 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/date.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
+import 'package:strativa_frontend/common/widgets/temp_empty_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/detailed_card_widget.dart';
 import 'package:strativa_frontend/src/my_accounts/widgets/top_bar_widget.dart';
@@ -110,10 +111,25 @@ class MyAccountsScreen extends StatelessWidget {
           
                 SizedBox(height: 10.h),
           
-                TransactionHistoryWidget(
-                  length: context.read<TransactionTabNotifier>().getUserTransactions!.transactions.length < 3
-                    ? context.read<TransactionTabNotifier>().getUserTransactions!.transactions.length
-                    : 3
+                Consumer<TransactionTabNotifier>(
+                  builder: (context, transactionTabNotifier, child) {
+                    if (transactionTabNotifier.getUserTransactions!.transactions.isNotEmpty) {
+                      return TransactionHistoryWidget(
+                        length: transactionTabNotifier.getUserTransactions!.transactions.length < 3
+                          ? transactionTabNotifier.getUserTransactions!.transactions.length
+                          : 3
+                      );
+                    } else {
+                      return Expanded(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 100.h),
+                            AppEmptyWidget(),
+                          ],
+                        ),
+                      );
+                    }
+                  }
                 ),
               ],
             ),

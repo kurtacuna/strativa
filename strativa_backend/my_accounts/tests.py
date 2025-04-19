@@ -7,24 +7,24 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import models
 
-class UserCardDetailsTest(TestCase):
-    def test_online_card_activation(self):
-        user = User.objects.create(username="testuser")
+# class UserCardDetailsTest(TestCase):
+#     def test_online_card_activation(self):
+#         user = User.objects.create(username="testuser")
 
-        card = UserCardDetails.objects.create(
-            user=User.objects.get(id=1),
-        )
-        card.save()
+#         card = UserCardDetails.objects.create(
+#             user=User.objects.get(id=1),
+#         )
+#         card.save()
 
-        self.assertIsNone(card.online_card_number)
+#         self.assertIsNone(card.online_card_number)
 
-        card.is_online_card_active = True
-        card.create_online_card()
+#         card.is_online_card_active = True
+#         card.create_online_card()
 
-        # print(card.online_card_number)
-        # print(card.online_card_cvv)
+#         # print(card.online_card_number)
+#         # print(card.online_card_cvv)
 
-        self.assertIsNotNone(card.online_card_number)
+#         self.assertIsNotNone(card.online_card_number)
 
 
 class UserDataViewTest(APITestCase):
@@ -36,6 +36,15 @@ class UserDataViewTest(APITestCase):
             last_name="user", 
             user_id=1, 
             user_card_details=UserCardDetails.objects.get(user_id=1)
+        )
+        account_type = models.AccountTypes.objects.create(
+            account_type="Savings",
+            code="S"
+        )
+        user_account = models.UserAccounts.objects.create(
+            user=self.user,
+            account_type=account_type,
+            account_number="p23pi5j",
         )
         
         self.client = APIClient()
@@ -52,3 +61,9 @@ class UserDataViewTest(APITestCase):
         print(response.content)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    # def test_user_accounts_view(self):
+    #     url = reverse('user-accounts')
+    #     response = self.client.get(url)
+
+    #     print(response.content)

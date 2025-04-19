@@ -31,10 +31,11 @@ class UserTransactionsView(APIView):
                     user=user_id, transaction__transaction_type__type=query
                 ).order_by('-transaction__datetime')
                 
-            serializer = serializers.UserTransactionsSerializer(user_transactions, many=True)
 
+            if not user_transactions.exists():
+                return Response({"transactions": []}, status=status.HTTP_200_OK)
+
+            serializer = serializers.UserTransactionsSerializer(user_transactions, many=True)
             return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
-        except models.Transactions.DoesNotExist:
-            return Response({[]}, status=status.HTTP_200_OK)
         except Exception as e:
             return return_server_error(e)

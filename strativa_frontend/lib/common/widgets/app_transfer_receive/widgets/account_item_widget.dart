@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
 
 class AccountItemWidget extends StatelessWidget {
   const AccountItemWidget({
@@ -9,8 +10,7 @@ class AccountItemWidget extends StatelessWidget {
     super.key
   });
 
-  // TODO: change type once model is done
-  final dynamic account;
+  final UserAccount account;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,9 @@ class AccountItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          // TODO: change data once backend is done
           children: [
             Text(
-              account['type'].toUpperCase(),
+              account.accountType.accountType.toUpperCase(),
               style: CustomTextStyles(context).defaultStyle.copyWith(
                 fontWeight: FontWeight.w900
               )
@@ -41,11 +40,11 @@ class AccountItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [  
                 Text(
-                  account['account_number'],
+                  account.accountNumber,
                 ),
 
                 AppAmountWidget(
-                  amount: account['balance'],
+                  amount: account.balance,
                 )
               ],
             ),

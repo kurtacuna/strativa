@@ -10,15 +10,16 @@ import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/temp_model.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
-import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
-import 'package:strativa_frontend/src/qr/widgets/accounts_modal_bottom_sheet_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_notifier.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/widgets/accounts_modal_bottom_sheet_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_widget.dart';
-import 'package:strativa_frontend/common/widgets/app_transfer_receive_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/widgets/app_transfer_receive_widget.dart';
 
 class GenerateQrSubscreen extends StatefulWidget {
   const GenerateQrSubscreen({super.key});
@@ -30,22 +31,24 @@ class GenerateQrSubscreen extends StatefulWidget {
 class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
   late final TextEditingController _amountController = TextEditingController();
   final _formKey = AppGlobalKeys.generateQrFormKey;
-  GenerateQrAccountModalNotifier? notifier;
+  AppTransferReceiveWidgetNotifier? appTransferReceiveWidgetNotifier;
+  GenerateQrNotifier? generateQrNotifier;
 
 
   @override
   void initState() {
-    notifier = Provider.of<GenerateQrAccountModalNotifier>(context, listen: false);
-    notifier!.setAmountController = _amountController;
+    appTransferReceiveWidgetNotifier = Provider.of<AppTransferReceiveWidgetNotifier>(context, listen: false);
+    generateQrNotifier = Provider.of<GenerateQrNotifier>(context, listen: false);
+    generateQrNotifier!.setAmountController = _amountController;
 
     super.initState();
   }
 
   @override
   void dispose() {
-    notifier!.setWidgetIsBeingDisposed = true;
-    notifier!.setAccount = null;
-    notifier!.setAmountController = null;
+    appTransferReceiveWidgetNotifier!.setWidgetIsBeingDisposed = true;
+    appTransferReceiveWidgetNotifier!.setAccount = null;
+    generateQrNotifier!.setAmountController = null;
     _amountController.dispose();
 
     super.dispose();
@@ -53,126 +56,127 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GenerateQrAccountModalNotifier>(
-      builder: (context, accountModalNotifier, child) {
-        // TODO: change type once model is done
-        dynamic account = accountModalNotifier.getAccount;
+    return Consumer<GenerateQrNotifier>(
+      builder: (context, generateQrNotifier, child) {
+        return Consumer<AppTransferReceiveWidgetNotifier>(
+          builder: (context, appTransferReceiveWidgetNotifier, child) {
+            UserAccount? account = appTransferReceiveWidgetNotifier.getAccount;
 
-        return Padding(
-          padding: AppConstants.kAppPadding,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                // TODO: pass model to this widget
-                AppTransferReceiveWidget(
-                  onTap: () {
-                    showAccountsModalBottomSheet(
-                      context: context,
-                      type: AppTransferReceiveWidgetTypes.otheraccounts.name,
-                      toTitle: AppText.kDepositTo,
-                      // TODO: change once model is done
-                      accounts: myAccounts
-                    );
-                  },
-                  title: AppText.kDepositTo,
-                  bottomWidget: account != null
-                    ? SizedBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            account['type'].toUpperCase(),
-                            style: CustomTextStyles(context).bigStyle.copyWith(
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-            
-                          SizedBox(height: 5),
-            
-                          Text(
-                            account['account_number'],
-                          ),
-            
-                          AppAmountWidget(
-                            amount: account['balance'],
-                          ),
-                        ],
-                      )
-                    )
-                    : null
-                ),
-                    
-                SizedBox(height: 20.h),
+            return Padding(
+              padding: AppConstants.kAppPadding,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AppTransferReceiveWidget(
+                      onTap: () {
+                        showAccountsModalBottomSheet(
+                          context: context,
+                          type: AppTransferReceiveWidgetTypes.otheraccounts.name,
+                          toTitle: AppText.kDepositTo,
+                        );
+                      },
+                      title: AppText.kDepositTo,
+                      bottomWidget: account != null
+                        ? SizedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                account.accountType.accountType.toUpperCase(),
+                                style: CustomTextStyles(context).bigStyle.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
                 
-                accountModalNotifier.getSpecifyAmount == false
-                  ? AppTextButtonWidget(
-                    onPressed: () {
-                      accountModalNotifier.setSpecifyAmount = true;
-                    },
-                    text: AppText.kSpecifyAmountPlus,
-                    overlayColor: ColorsCommon.kAccentL4,
-                    style: CustomTextStyles(context).defaultStyle.copyWith(
-                      color: ColorsCommon.kAccentL3
-                    ),
-                  )
-                  : AppTextButtonWidget(
-                    onPressed: () {
-                      accountModalNotifier.setSpecifyAmount = false;
-                      accountModalNotifier.getAmountController.clear();
-                    },
-                    text: AppText.kSpecifyAmountMinus,
-                    overlayColor: ColorsCommon.kAccentL4,
-                    style: CustomTextStyles(context).defaultStyle.copyWith(
-                      color: ColorsCommon.kAccentL3
-                    )
-                  ),
-
-                SizedBox(
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          accountModalNotifier.getSpecifyAmount == false
-                            ? Container()
-                            : AppLabeledAmountNoteFieldWidget(
-                              text: AppText.kRequestTheAmountOf,
-                              amountController: _amountController,
-                              addNote: false,
-                            ),
-                          
-                              
-                          SizedBox(height: 40.h),
-                          
-                          // Generate QR Code Button
-                          AppButtonWidget(
-                            onTap: () {
-                              if (account != null) {
-                                if (_formKey.currentState!.validate()) {
-                                  context.push(AppRoutes.kGeneratedQrSubscreen);
-                                }
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  appSnackBarWidget(
-                                    context: context, 
-                                    text: AppText.kPleaseSelectAnAccountToDepositTo,
-                                    icon: AppIcons.kErrorIcon,
-                                  )
-                                );
-                              }
-                            },
-                            text: AppText.kGenerateQrCode,
+                              SizedBox(height: 5),
+                
+                              Text(
+                                account.accountNumber,
+                              ),
+                
+                              AppAmountWidget(
+                                amount: account.balance,
+                              ),
+                            ],
                           )
-                        ]
-                      ),
+                        )
+                        : null
                     ),
-                  ),
-                )
-              ]
-            ),
-          ),
+                        
+                    SizedBox(height: 20.h),
+                    
+                    // Specify Amount
+                    generateQrNotifier.getSpecifyAmount == false
+                      ? AppTextButtonWidget(
+                        onPressed: () {
+                          generateQrNotifier.setSpecifyAmount = true;
+                        },
+                        text: AppText.kSpecifyAmountPlus,
+                        overlayColor: ColorsCommon.kAccentL4,
+                        style: CustomTextStyles(context).defaultStyle.copyWith(
+                          color: ColorsCommon.kAccentL3
+                        ),
+                      )
+                      : AppTextButtonWidget(
+                        onPressed: () {
+                          generateQrNotifier.setSpecifyAmount = false;
+                          generateQrNotifier.getAmountController.clear();
+                        },
+                        text: AppText.kSpecifyAmountMinus,
+                        overlayColor: ColorsCommon.kAccentL4,
+                        style: CustomTextStyles(context).defaultStyle.copyWith(
+                          color: ColorsCommon.kAccentL3
+                        )
+                      ),
+                    
+                    SizedBox(
+                      child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              generateQrNotifier.getSpecifyAmount == false
+                                ? Container()
+                                : AppLabeledAmountNoteFieldWidget(
+                                  text: AppText.kRequestTheAmountOf,
+                                  amountController: _amountController,
+                                  addNote: false,
+                                ),
+                              
+                                  
+                              SizedBox(height: 40.h),
+                              
+                              // Generate QR Code Button
+                              AppButtonWidget(
+                                onTap: () {
+                                  if (account != null) {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.push(AppRoutes.kGeneratedQrSubscreen);
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      appSnackBarWidget(
+                                        context: context, 
+                                        text: AppText.kPleaseSelectAnAccountToDepositTo,
+                                        icon: AppIcons.kErrorIcon,
+                                      )
+                                    );
+                                  }
+                                },
+                                text: AppText.kGenerateQrCode,
+                              )
+                            ]
+                          ),
+                        ),
+                      ),
+                    )
+                  ]
+                ),
+              ),
+            );
+          }
         );
       }
     );

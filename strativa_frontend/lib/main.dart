@@ -7,13 +7,14 @@ import 'package:strativa_frontend/common/utils/app_routes.dart';
 import 'package:strativa_frontend/common/const/app_theme/app_theme_notifier.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/environment.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/common/widgets/otp/controllers/otp_notifier.dart';
 import 'package:strativa_frontend/src/auth/controllers/jwt_notifier.dart';
 import 'package:strativa_frontend/src/auth/controllers/password_notifier.dart';
 import 'package:strativa_frontend/src/entrypoint/controllers/bottom_nav_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/balance_notifier.dart';
 import 'package:strativa_frontend/src/my_accounts/controllers/user_data_notifier.dart';
-import 'package:strativa_frontend/src/qr/controllers/generate_qr_account_modal_notifier.dart';
+import 'package:strativa_frontend/src/qr/controllers/generate_qr_notifier.dart';
 import 'package:strativa_frontend/src/qr/controllers/qr_tab_notifier.dart';
 import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
@@ -36,7 +37,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => JwtNotifier()),
       ChangeNotifierProvider(create: (_) => UserDataNotifier()),
       ChangeNotifierProvider(create: (_) => OtpNotifier()),
-      ChangeNotifierProvider(create: (_) => GenerateQrAccountModalNotifier()),
+      ChangeNotifierProvider(create: (_) => GenerateQrNotifier()),
+      ChangeNotifierProvider(create: (_) => AppTransferReceiveWidgetNotifier()),
       ChangeNotifierProvider(create: (_) => ScanQrNotifier()),
     ],
     child: const MyApp(),

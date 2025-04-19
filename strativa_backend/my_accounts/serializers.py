@@ -28,3 +28,21 @@ class UserCardDetailsSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.UserCardDetails
     exclude = ['user']
+
+  
+class UserAccountsSerializer(serializers.ModelSerializer):
+  account_type = serializers.SerializerMethodField()
+
+  def get_account_type(self, obj):
+    serializer = AccountTypesSerializer(obj.account_type)
+    return serializer.data
+
+  class Meta:
+    model = models.UserAccounts
+    exclude = ['id', 'user']
+
+
+class AccountTypesSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.AccountTypes
+    fields = ['account_type']

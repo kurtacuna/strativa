@@ -99,7 +99,7 @@
         "pk": 3,
         "fields": {
             "balance": "12345.00",
-            "account_number": "CW-A40E4A704CD54883BCAF21DD15ED779D",
+            "account_number": "CW-174002EC87644764",
             "strativa_card_number": "0234567890123456",
             "strativa_card_created": "2025-04-07T09:27:09Z",
             "strativa_card_expiry": "2025-04-08T16:40:40Z",
@@ -116,7 +116,7 @@
         "pk": 4,
         "fields": {
             "balance": "678.00",
-            "account_number": "CW-B40E4A704CD54883BCAF21DD15ED779D",
+            "account_number": "CW-274002EC87644764",
             "strativa_card_number": "1234567890123456",
             "strativa_card_created": "2025-04-07T09:27:09Z",
             "strativa_card_expiry": "2025-04-08T16:40:40Z",
@@ -132,8 +132,8 @@
         "model": "my_accounts.accounttypes",
         "pk": 1,
         "fields": {
-            "account_type": "Savings Account",
-            "code": "SA"
+            "account_type": "Savings",
+            "code": "S"
         }
     },
     {
@@ -142,7 +142,7 @@
         "fields": {
             "user": 4,
             "account_type": 1,
-            "account_number": "SA-A40E4A704CD54883BCAF21DD15ED779D",
+            "account_number": "S-174002EC87644764",
             "balance": "90.00"
         }
     },

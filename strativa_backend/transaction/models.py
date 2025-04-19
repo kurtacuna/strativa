@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-import uuid
 from django.utils import timezone
+from utils.const import BackendConstants
 
 
 class UserTransactions(models.Model):
@@ -35,7 +35,7 @@ class Transactions(models.Model):
         return self.reference_id
     
     def save(self, *args, **kwargs):
-        self.reference_id = uuid.uuid4().hex.upper()
+        self.reference_id = BackendConstants.get_uuid()
         self.datetime = timezone.now()
         super().save(*args, **kwargs)
     

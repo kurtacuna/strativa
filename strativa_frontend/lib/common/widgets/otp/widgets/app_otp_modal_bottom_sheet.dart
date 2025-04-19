@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/widgets/otp/controllers/otp_notifier.dart';
-import 'package:strativa_frontend/common/widgets/otp/widget/otp_pinput_widget.dart';
-import 'package:strativa_frontend/common/widgets/otp/widget/otp_user_id_field_widget.dart';
+import 'package:strativa_frontend/common/widgets/otp/widgets/otp_pinput_widget.dart';
+import 'package:strativa_frontend/common/widgets/otp/widgets/otp_user_id_field_widget.dart';
 
 Future<dynamic> showAppOtpModalBottomSheet(BuildContext context) {
   return showModalBottomSheet(

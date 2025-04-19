@@ -6,6 +6,7 @@ import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kurls.dart';
 import 'package:http/http.dart' as http;
 import 'package:strativa_frontend/common/utils/common_json_model.dart';
+import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 
 class OtpNotifier with ChangeNotifier {
@@ -80,11 +81,7 @@ class OtpNotifier with ChangeNotifier {
         if (context.mounted) {
           CommonJsonModel model = commonJsonModelFromJson(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
-            appSnackBarWidget(
-              context: context,
-              text: model.detail,
-              icon: AppIcons.kErrorIcon
-            )
+            appErrorSnackBarWidget(context: context, text: model.detail)
           );
         }
       }

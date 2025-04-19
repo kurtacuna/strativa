@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.auth.models import User
 from django.utils import timezone
 import random
@@ -59,7 +59,7 @@ class UserCardDetails(models.Model):
   
   def save(self, *args, **kwargs):
     if not self.account_number:
-      self.account_number = f"CW-{uuid.uuid4().hex.upper()}"
+      self.account_number = f"CW-{BackendConstants.get_uuid(half=True)}"
 
     self.create_strativa_card
     super().save(*args, **kwargs)
@@ -67,7 +67,13 @@ class UserCardDetails(models.Model):
   @property
   def create_strativa_card(self):
     if not self.strativa_card_number:
-      self.strativa_card_number = self.generate_strativa_card_number()
+      while True:
+        try:
+          self.strativa_card_number = self.generate_card_number()
+          break
+        except IntegrityError:
+          continue
+
       self.strativa_card_created = timezone.now()
       self.strativa_card_expiry = timezone.now().replace(year=timezone.now().year + BackendConstants.card_expiry_years)
       self.strativa_card_cvv = self.generate_cvv()
@@ -75,15 +81,25 @@ class UserCardDetails(models.Model):
   @property
   def create_online_card(self):
     if self.is_online_card_active and not self.online_card_number:
-      self.online_card_number = self.generate_online_card_number()
+      while True:
+        try:
+          self.online_card_number = self.generate_card_number()
+          break
+        except IntegrityError:
+          continue
+
       self.online_card_created = timezone.now()
       self.online_card_expiry = timezone.now().replace(year=timezone.now().year + BackendConstants.card_expiry_years)
       self.online_card_cvv = self.generate_cvv()
 
   @staticmethod
   def generate_card_number():
-    card_number = ''.join(str(random.randint(0, 9)) for _ in range(16))
-    return card_number
+    while True:
+      card_number = ''.join(str(random.randint(0, 9)) for _ in range(16))
+      if UserCardDetails.luhn_check(card_number):
+        return card_number
+      else:
+        continue
   
   @staticmethod
   def luhn_check(card_number):
@@ -99,21 +115,7 @@ class UserCardDetails(models.Model):
       checksum += number
     
     return checksum % 10 == 0
-    
-  @staticmethod
-  def generate_strativa_card_number():
-    while True:
-      number = UserCardDetails.generate_card_number()
-      if UserCardDetails.luhn_check(number) and not UserCardDetails.objects.filter(strativa_card_number=number).exists():
-        return number
-      
-  @staticmethod
-  def generate_online_card_number():
-    while True:
-      number = UserCardDetails.generate_card_number()
-      if UserCardDetails.luhn_check(number) and not UserCardDetails.objects.filter(online_card_number=number).exists():
-        return number
-      
+  
   @staticmethod
   def generate_cvv():
     cvv = ''.join(str(random.randint(0, 9)) for _ in range(3))
@@ -136,7 +138,7 @@ class UserAccounts(models.Model):
   def save(self, *args, **kwargs):
     if not self.account_number:
       account_type_code = AccountTypes.objects.get(account_type=self.account_type).code
-      self.account_number = f"{account_type_code}-{uuid.uuid4().hex.upper()}"
+      self.account_number = f"{account_type_code}-{BackendConstants.get_uuid(half=True)}"
     
     super().save(*args, **kwargs)
 
