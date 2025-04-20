@@ -166,7 +166,7 @@
         "fields": {
             "user": 4,
             "account_type": 2,
-            "account_number": "S-174002EC87644764",
+            "account_number": "S-123",
             "balance": "789.00"
         }
     },
@@ -203,94 +203,6 @@
         "pk": 5,
         "fields": {
             "type": "transfers"
-        }
-    },
-    {
-        "model": "transaction.transactions",
-        "pk": 1,
-        "fields": {
-            "reference_id": "oiwjf-0u23fpoeijqf-1",
-            "datetime": "2025-04-01T09:27:09Z",
-            "amount": "120.00",
-            "transaction_type": 1,
-            "sender": 1,
-            "receiver": 3
-        }
-    },
-    {
-        "model": "transaction.transactions",
-        "pk": 2,
-        "fields": {
-            "reference_id": "oiwjf-0u23fpoeijqf-12",
-            "datetime": "2025-04-07T09:27:09Z",
-            "amount": "120.00",
-            "transaction_type": 2,
-            "sender": 3,
-            "receiver": 2
-        }
-    },
-    {
-        "model": "transaction.transactions",
-        "pk": 3,
-        "fields": {
-            "reference_id": "oiwjf-0u23fpoeijqf-123",
-            "datetime": "2025-04-07T09:28:09Z",
-            "amount": "120.00",
-            "transaction_type": 3,
-            "sender": 3,
-            "receiver": 2
-        }
-    },
-    {
-        "model": "transaction.transactions",
-        "pk": 4,
-        "fields": {
-            "reference_id": "oiwjf-0u23fpoeijqf-124",
-            "datetime": "2025-04-07T09:29:09Z",
-            "amount": "120.00",
-            "transaction_type": 3,
-            "sender": 1,
-            "receiver": 3
-        }
-    },
-    {
-        "model": "transaction.usertransactions",
-        "pk": 1,
-        "fields": {
-            "user": 3,
-            "transaction": 1,
-             "direction": "send",
-            "resulting_balance": 200.00
-        }
-    },
-    {
-        "model": "transaction.usertransactions",
-        "pk": 2,
-        "fields": {
-            "user": 3,
-            "transaction": 2,
-            "direction": "receive",
-            "resulting_balance": 400.00
-        }
-    },
-    {
-        "model": "transaction.usertransactions",
-        "pk": 3,
-        "fields": {
-            "user": 3,
-            "transaction": 3,
-            "direction": "receive",
-            "resulting_balance": 400.00
-        }
-    },
-    {
-        "model": "transaction.usertransactions",
-        "pk": 4,
-        "fields": {
-            "user": 3,
-            "transaction": 4,
-            "direction": "send",
-            "resulting_balance": 400.00
         }
     }
 ]

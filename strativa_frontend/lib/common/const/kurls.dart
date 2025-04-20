@@ -1,8 +1,9 @@
 import 'package:strativa_frontend/common/utils/environment.dart';
 
 class ApiUrls {
-  static String _appBaseUrl = "${Environment.appBaseUrl}";
+  static final String _appBaseUrl = Environment.appBaseUrl;
 
+  // URLs with trailing slashes are those that require bodies in the request
   static String jwtCreateUrl = "$_appBaseUrl/auth/jwt/create";
   static String jwtRefreshUrl = "$_appBaseUrl/auth/jwt/refresh";
   static String userDataUrl =  "$_appBaseUrl/api/my_accounts/me";
@@ -17,4 +18,5 @@ class ApiUrls {
     return "$_appBaseUrl/otp/verify/?type=$query";
   }
   static String userAccountsUrl = "$_appBaseUrl/api/my_accounts/me/accounts";
+  static String checkIfAccountExistsUrl = "$_appBaseUrl/api/my_accounts/check_account/";
 }

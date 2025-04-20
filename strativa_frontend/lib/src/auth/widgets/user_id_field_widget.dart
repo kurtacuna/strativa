@@ -13,7 +13,10 @@ class UserIdFieldWidget extends StatelessWidget {
     this.onEditingComplete,
     required this.controller,
     this.focusNode,
-    super.key,
+    this.showPrefixIcon = true,
+    this.initialValue,
+    this.validatorText,
+    super.key
   });
 
   final String? hintText;
@@ -22,9 +25,16 @@ class UserIdFieldWidget extends StatelessWidget {
   final Function()? onEditingComplete;
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final bool showPrefixIcon;
+  final String? initialValue;
+  final String? validatorText;
 
   @override
   Widget build(BuildContext context) {
+    if (initialValue != null) {
+      controller.text = initialValue!;
+    }
+
     return TextFormField(
       focusNode: focusNode,
       textInputAction: TextInputAction.next,
@@ -32,7 +42,7 @@ class UserIdFieldWidget extends StatelessWidget {
       controller: controller,
       validator: (value) {
         if (value!.isEmpty) {
-          return AppText.kUserIdFieldError;
+          return validatorText ?? AppText.kUserIdFieldError;
         } else {
           return null;
         }
@@ -41,19 +51,21 @@ class UserIdFieldWidget extends StatelessWidget {
         // TODO: handle error messages
         // errorText: ,
         hintText: hintText ?? AppText.kHintUserId,
-        prefixIcon: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          child: Theme.of(context).brightness == Brightness.dark 
-            ? AppIcons.kUserIdFieldIcon(
-              colorFilter: ColorFilter.mode(
-                ColorsCommon.kWhite,
-                BlendMode.srcIn,
-              ),
+        prefixIcon: showPrefixIcon
+          ? prefixIcon ?? Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            child: Theme.of(context).brightness == Brightness.dark 
+              ? AppIcons.kUserIdFieldIcon(
+                colorFilter: ColorFilter.mode(
+                  ColorsCommon.kWhite,
+                  BlendMode.srcIn,
+                ),
+              )
+              : AppIcons.kUserIdFieldIcon(),
             )
-            : AppIcons.kUserIdFieldIcon(),
-          ),
+          : null,
         prefixIconConstraints: BoxConstraints(
             maxHeight: 40.sp,
             maxWidth: 40.sp,

@@ -6,6 +6,8 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import models
+import json
+
 
 # class UserCardDetailsTest(TestCase):
 #     def test_online_card_activation(self):
@@ -67,3 +69,15 @@ class UserDataViewTest(APITestCase):
     #     response = self.client.get(url)
 
     #     print(response.content)
+
+    def test_check_if_user_account_exists(self):
+        url = reverse("check-if-account-exists")
+        response = self.client.post(
+            url,
+            content_type="application/json",
+            data=json.dumps({
+                "account_number": "p23pi5j"
+            })
+        )
+
+        print(response.content)

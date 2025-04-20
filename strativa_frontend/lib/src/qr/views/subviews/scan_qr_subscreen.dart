@@ -7,11 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
-import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/debouncer.dart';
-import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
 import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
 import 'package:strativa_frontend/src/qr/widgets/no_camera_permission_widget.dart';
 
@@ -131,10 +130,9 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
                         } else {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              appSnackBarWidget(
+                              appErrorSnackBarWidget(
                                 context: context, 
                                 text: AppText.kNoQrCodeFound,
-                                icon: AppIcons.kErrorIcon
                               )
                             );
                           }
@@ -142,10 +140,9 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
                       } else {
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            appSnackBarWidget(
+                            appErrorSnackBarWidget(
                               context: context, 
                               text: AppText.kImageCouldntBeScanned,
-                              icon: AppIcons.kErrorIcon
                             )
                           );
                         }

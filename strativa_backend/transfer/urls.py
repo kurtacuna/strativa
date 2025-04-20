@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 
-urlpatterns = [
-    path('transfer/', views.TransferView.as_view(), name="transfer"),
-]
+# For testing only
+# urlpatterns = [
+#     path('', views.TransferView.as_view(), name="transfer"),
+# ]

@@ -55,4 +55,8 @@ class AppText {
   static const kCancel = "Cancel";
   static const kNoQrCodeFound = "No QR code found";
   static const kImageCouldntBeScanned = "Image couldn't be scanned";
+  static const kTheUserDoesNotExist = "The user does not exist.";
+  static const kAccountNumber = "Account Number";
+  static const kOtpSentPleaseCheckYourEmail = "OTP sent. Please check your email.";
+  static const kPleaseEnterAValidAccountNumber = "Please enter a valid account number";
 }

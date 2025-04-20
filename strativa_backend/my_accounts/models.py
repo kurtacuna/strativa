@@ -56,10 +56,8 @@ class UserCardDetails(models.Model):
     return self.user.username
   
   def save(self, *args, **kwargs):
-    if not self.account_number:
-      self.account_number = f"CW-{BackendConstants.get_uuid(half=True)}"
-
     self.create_strativa_card
+
     super().save(*args, **kwargs)
   
   @property

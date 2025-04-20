@@ -8,25 +8,60 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/otp/controllers/otp_notifier.dart';
-import 'package:strativa_frontend/common/widgets/otp/models/username_model.dart';
+import 'package:strativa_frontend/common/widgets/otp/models/account_number_model.dart';
 import 'package:strativa_frontend/src/auth/widgets/user_id_field_widget.dart';
 
-class OtpUserIdFieldWidget extends StatelessWidget {
-  const OtpUserIdFieldWidget({
-    required this.userIdController,
-    this.userIdNode,
+class OtpAccountNumberFieldWidget extends StatefulWidget {
+  const OtpAccountNumberFieldWidget({
+    required this.accountNumberController,
+    this.accountNumberNode,
     required this.formKey,
+    this.initialValue,
+    this.sendOtp = false,
     super.key
   });
 
-  final TextEditingController userIdController;
-  final FocusNode? userIdNode;
+  final TextEditingController accountNumberController;
+  final FocusNode? accountNumberNode;
   final GlobalKey<FormState> formKey;
+  final String? initialValue;
+  final bool? sendOtp;
+
+  @override
+  State<OtpAccountNumberFieldWidget> createState() => _OtpAccountNumberFieldWidgetState();
+}
+
+class _OtpAccountNumberFieldWidgetState extends State<OtpAccountNumberFieldWidget> {
+  void _sendOtp(BuildContext context, OtpNotifier otpNotifier) {
+    if (widget.formKey.currentState!.validate()) {
+      AccountNumber model = AccountNumber(
+        accountNumber: widget.accountNumberController.text
+      );
+      String data = accountNumberToJson(model);
+
+      otpNotifier.sendOtp(
+        context: context,
+        data: data
+      );
+    }
+  }
+
+  bool hasSentOtp = false;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<OtpNotifier>(
-      builder:(context, otpNotifier, child) {
+      builder: (context, otpNotifier, child) {
+        if (widget.sendOtp == true && !hasSentOtp) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _sendOtp(context, otpNotifier);
+            
+            setState(() {
+              hasSentOtp = true;
+            });
+          });
+        }
+
         return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).brightness == Brightness.light
@@ -40,11 +75,16 @@ class OtpUserIdFieldWidget extends StatelessWidget {
               SizedBox(
                 width: 270.w,
                 child: UserIdFieldWidget(
-                  focusNode: userIdNode,
-                  controller: userIdController,
+                  focusNode: widget.accountNumberNode,
+                  controller: widget.accountNumberController,
+                  showPrefixIcon: false,
+                  hintText: AppText.kAccountNumber,
+                  initialValue: widget.initialValue,
+                  validatorText: AppText.kPleaseEnterAValidAccountNumber,
                 ),
               ),
   
+              // Send OTP Button
               otpNotifier.getIsLoading
                 ? SizedBox(
                   width: 90.w,
@@ -70,17 +110,7 @@ class OtpUserIdFieldWidget extends StatelessWidget {
                       fontSize: 14.sp,
                     ),
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        UsernameModel model = UsernameModel(
-                          username: userIdController.text
-                        );
-                        String data = usernameModelToJson(model);
-
-                        otpNotifier.sendOtp(
-                          context: context,
-                          data: data
-                        );
-                      }
+                      _sendOtp(context, otpNotifier);
                     }
                   )
             ],

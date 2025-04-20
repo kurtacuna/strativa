@@ -1,58 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/kurls.dart';
+import 'package:http/http.dart' as http;
 import 'package:strativa_frontend/common/services/storage.dart';
 import 'package:strativa_frontend/common/utils/common_json_model.dart';
 import 'package:strativa_frontend/common/utils/refresh/refresh_access_token.dart';
 import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
-import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:strativa_frontend/src/transfer/models/check_if_account_exists_model.dart';
 
-class AppTransferReceiveWidgetNotifier with ChangeNotifier {
-  UserAccount? _account;
-  List<UserAccount>? _accounts;
-  bool _widgetIsBeingDisposed = false;
+class TransferNotifier with ChangeNotifier {
   bool _isLoading = false;
+  int _statusCode = -1;
 
-  get getAccount => _account;
-  get getAccountsList => _accounts;
   get getIsLoading => _isLoading;
-  
-  set setWidgetIsBeingDisposed(bool state) {
-    _widgetIsBeingDisposed = state;
-  }
+  get getStatusCode => _statusCode;
 
-  set setAccount(UserAccount? account) {
-    _account = account;
-    if (!_widgetIsBeingDisposed) {
-      notifyListeners();
-    } else {
-      _widgetIsBeingDisposed = false;
-    }
-  }
-
-  Future<void> fetchUserAccounts(BuildContext context) async {
+  Future<void> checkIfAccountExists(
+    BuildContext context,
+    String data,
+  ) async {
+    _statusCode = -1;
     _isLoading = true;
-    _accounts = null;
     notifyListeners();
-
+    
     try {
+      CheckIfAccountExists model = CheckIfAccountExists(accountNumber: data);
+
       String? accessToken = Storage().getString(StorageKeys.accessTokenKey);
-      var url = Uri.parse(ApiUrls.userAccountsUrl);
-      var response = await http.get(
+      var url = Uri.parse(ApiUrls.checkIfAccountExistsUrl);
+      var response = await http.post(
         url,
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken'
-        }
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $accessToken"
+        },
+        body: checkIfAccountExistsToJson(model)
       );
 
       if (response.statusCode == 200) {
-        AccountModalModel model = accountModalModelFromJson(response.body);
-        _accounts = model.userAccounts;
+        _statusCode = response.statusCode;
       } else if (response.statusCode == 401) {
         if (context.mounted) {
           await refetch(
-            fetch: () => fetchUserAccounts(context)
+            fetch: () => checkIfAccountExists(context, data)
           );
         }
       } else {
@@ -65,11 +54,13 @@ class AppTransferReceiveWidgetNotifier with ChangeNotifier {
       }
 
     } catch (e) {
-      print("AppTransferReceiveWidgetNotifier:");
+      print("TransferNotifier:");
       print(e);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
+
+  
 }

@@ -7,14 +7,13 @@ import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/const/kenums.dart';
-import 'package:strativa_frontend/common/const/kicons.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
-import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
-import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_text_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/widgets/app_transfer_receive_bottom_widget.dart';
 import 'package:strativa_frontend/src/qr/controllers/generate_qr_notifier.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/widgets/accounts_modal_bottom_sheet_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
@@ -78,30 +77,7 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
                       },
                       title: AppText.kDepositTo,
                       bottomWidget: account != null
-                        ? SizedBox(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                account.accountType.accountType.toUpperCase(),
-                                style: CustomTextStyles(context).bigStyle.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                
-                              SizedBox(height: 5),
-                
-                              Text(
-                                account.accountNumber,
-                              ),
-                
-                              AppAmountWidget(
-                                amount: account.balance,
-                              ),
-                            ],
-                          )
-                        )
+                        ? AppTransferReceiveBottomWidget(account: account)
                         : null
                     ),
                         
@@ -157,10 +133,9 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
                                     }
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      appSnackBarWidget(
+                                      appErrorSnackBarWidget(
                                         context: context, 
                                         text: AppText.kPleaseSelectAnAccountToDepositTo,
-                                        icon: AppIcons.kErrorIcon,
                                       )
                                     );
                                   }

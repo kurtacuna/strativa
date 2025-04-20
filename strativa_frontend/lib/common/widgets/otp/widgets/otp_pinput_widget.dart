@@ -12,12 +12,16 @@ import 'package:strativa_frontend/common/widgets/otp/models/otp_model.dart';
 class OtpPinputWidget extends StatelessWidget {
   const OtpPinputWidget({
     required this.otpNode,
-    required this.userIdController,
+    required this.accountNumberController,
+    required this.transactionDetails,
+    this.query,
     super.key
   });
 
   final FocusNode otpNode;
-  final TextEditingController userIdController;
+  final TextEditingController accountNumberController;
+  final String? query;
+  final String? transactionDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +35,21 @@ class OtpPinputWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius)
       ),
       child: Pinput(
+        onCompleted: (value) {
+          OtpModel model = OtpModel(
+            transactionDetails: transactionDetails,
+            accountNumber: accountNumberController.text,
+            otp: value
+          );
+          String data = otpModelToJson(model);
+
+          context.read<OtpNotifier>().verifyOtp(
+            context: context,
+            data: data,
+            query: query ?? VerifyOtpTypes.common.name
+          );
+        },
         enabled: context.watch<OtpNotifier>().getIsPinputEnabled,
-        obscureText: true,
         focusNode: otpNode,
         cursor: Text(
           AppConstants.kPinputCursor,
@@ -40,19 +57,6 @@ class OtpPinputWidget extends StatelessWidget {
             color: ColorsCommon.kPrimaryL4
           )
         ),
-        onCompleted: (value) {
-          OtpModel model = OtpModel(
-            username: userIdController.text,
-            otp: value
-          );
-          String data = otpModelToJson(model);
-
-          context.read<OtpNotifier>().validateOtp(
-            context: context,
-            data: data,
-            query: VerifyOtpTypes.peekbalance.name
-          );
-        },
 
         defaultPinTheme: PinTheme(
           width: 50.sp,

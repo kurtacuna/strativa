@@ -12,15 +12,23 @@ import time
 
 class OtpViewsTest(APITestCase):
     def setUp(self):
+        account_type = my_accounts_models.AccountTypes.objects.create(
+            account_type="Card/Wallet",
+            code="CW"
+        )
         self.user = User.objects.create(username="testuser")
-        user_card_details = my_accounts_models.UserCardDetails.objects.create(
+        user_card_details = my_accounts_models.UserCardDetails.objects.create(user=self.user)
+        user_account_details = my_accounts_models.UserAccounts.objects.create(
             user=self.user,
+            account_type=account_type,
+            account_number="123",
             balance=200
         )
         user_data = my_accounts_models.UserData.objects.create(
             user=self.user,
             first_name="test",
             last_name="user",
+            email="csprojectserver@gmail.com",
             user_card_details=user_card_details
         )
         self.client = APIClient()
@@ -29,7 +37,7 @@ class OtpViewsTest(APITestCase):
         create_otp_url = reverse('create-otp')
         create_otp_response = self.client.post(
             create_otp_url,
-            data={"username": "testuser"}
+            data={"account_number": "123"}
         )
 
         self.otp = pyotp.TOTP(
@@ -38,16 +46,15 @@ class OtpViewsTest(APITestCase):
             interval=BackendConstants.otp_valid_duration
         ).now()
 
-        # print(create_otp_response.content)
-        # print(self.otp)
+        print(self.otp)
 
-        # peek_url = reverse('peek-balance')
-        # peek_response = self.client.post(
-        #     peek_url,
-        #     data={
-        #         "username": "testuser",
-        #         "otp": self.otp
-        #     }
-        # )
+        peek_url = reverse('verify-otp') + '?type=peekbalance'
+        peek_response = self.client.post(
+            peek_url,
+            data={
+                "account_number": "123",
+                "otp": self.otp
+            }
+        )
 
-        # print(peek_response.content)
+        print(peek_response.content)

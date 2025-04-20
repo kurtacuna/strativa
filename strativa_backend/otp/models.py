@@ -20,10 +20,11 @@ class UserOtp(models.Model):
 
     @staticmethod
     def create_otp():
-        totp = pyotp.TOTP(pyotp.random_base32(),
-                          digits=BackendConstants.otp_length, 
-                          interval=BackendConstants.otp_valid_duration
-                        )
+        totp = pyotp.TOTP(
+            pyotp.random_base32(),
+            digits=BackendConstants.otp_length, 
+            interval=BackendConstants.otp_valid_duration
+        )
         valid_date = timezone.now() + timedelta(seconds=BackendConstants.otp_valid_duration)
         return [totp.secret, valid_date]
     

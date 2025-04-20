@@ -20,6 +20,7 @@ import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/controllers/transaction_tab_notifier.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => GenerateQrNotifier()),
       ChangeNotifierProvider(create: (_) => AppTransferReceiveWidgetNotifier()),
       ChangeNotifierProvider(create: (_) => ScanQrNotifier()),
+      ChangeNotifierProvider(create: (_) => TransferNotifier()),
     ],
     child: const MyApp(),
   ));

@@ -5,26 +5,48 @@ import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
 import 'package:strativa_frontend/common/widgets/otp/controllers/otp_notifier.dart';
 import 'package:strativa_frontend/common/widgets/otp/widgets/otp_pinput_widget.dart';
-import 'package:strativa_frontend/common/widgets/otp/widgets/otp_user_id_field_widget.dart';
+import 'package:strativa_frontend/common/widgets/otp/widgets/otp_account_number_field_widget.dart';
 
-Future<dynamic> showAppOtpModalBottomSheet(BuildContext context) {
+Future<dynamic> showAppOtpModalBottomSheet({
+  required BuildContext context,
+  String? query,
+  String? initialValue,
+  bool? sendOtp,
+  String? transactionDetails
+}) {
   return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
-    builder: (context) => ShowAppOtpModalBottomSheet()
+    builder: (context) => ShowAppOtpModalBottomSheet(
+      query: query,
+      initialValue: initialValue,
+      sendOtp: sendOtp,
+      transactionDetails: transactionDetails
+    )
   );
 }
 
 class ShowAppOtpModalBottomSheet extends StatefulWidget {
-  const ShowAppOtpModalBottomSheet({super.key});
+  const ShowAppOtpModalBottomSheet({
+    this.query,
+    this.initialValue,
+    this.sendOtp,
+    this.transactionDetails,
+    super.key
+  });
+
+  final String? query;
+  final String? initialValue;
+  final bool? sendOtp;
+  final String? transactionDetails;
 
   @override
   State<ShowAppOtpModalBottomSheet> createState() => _ShowAppOtpModalBottomSheetState();
 }
 
 class _ShowAppOtpModalBottomSheetState extends State<ShowAppOtpModalBottomSheet> {
-  late final TextEditingController _userIdController = TextEditingController();
-  final FocusNode _userIdNode = FocusNode();
+  late final TextEditingController _accountNumberController = TextEditingController();
+  final FocusNode _accountNumberNode = FocusNode();
   final FocusNode _otpNode = FocusNode();
   final _formKey = AppGlobalKeys.otpFormKey;
   OtpNotifier? notifier;
@@ -39,8 +61,8 @@ class _ShowAppOtpModalBottomSheetState extends State<ShowAppOtpModalBottomSheet>
   void dispose() {
     notifier!.setWidgetIsBeingDisposed = true;
     notifier!.setIsPinputEnabled = false;
-    _userIdController.dispose();
-    _userIdNode.dispose();
+    _accountNumberController.dispose();
+    _accountNumberNode.dispose();
     _otpNode.dispose();
     
     super.dispose();
@@ -48,7 +70,7 @@ class _ShowAppOtpModalBottomSheetState extends State<ShowAppOtpModalBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).requestFocus(_userIdNode);
+    FocusScope.of(context).requestFocus(_accountNumberNode);
     return SingleChildScrollView(
       child: Consumer<OtpNotifier>(
         builder:(context, otpNotifier, child) {
@@ -63,15 +85,19 @@ class _ShowAppOtpModalBottomSheetState extends State<ShowAppOtpModalBottomSheet>
                     child: Column(
                       spacing: 5,
                       children: [
-                        OtpUserIdFieldWidget(
+                        OtpAccountNumberFieldWidget(
                           formKey: _formKey,
-                          userIdNode: _userIdNode,
-                          userIdController: _userIdController
+                          accountNumberNode: _accountNumberNode,
+                          accountNumberController: _accountNumberController,
+                          initialValue: widget.initialValue,
+                          sendOtp: widget.sendOtp
                         ),
                   
                         OtpPinputWidget(
                           otpNode: _otpNode,
-                          userIdController: _userIdController
+                          accountNumberController: _accountNumberController,
+                          query: widget.query,
+                          transactionDetails: widget.transactionDetails,
                         )
                       ],
                     ),

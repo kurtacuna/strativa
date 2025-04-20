@@ -39,3 +39,18 @@ class UserAccountsView(APIView):
       return Response({"user_accounts": serializer.data}, status=status.HTTP_200_OK)
     except Exception as e:
       return return_server_error(e)
+    
+    
+class CheckIfAccountExistsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        account_number = request.data.get('account_number')
+
+        try:
+            account = models.UserAccounts.objects.get(account_number=account_number)
+            return Response(status=status.HTTP_200_OK)
+        except models.UserAccounts.DoesNotExist:
+            return return_user_not_found()
+        except Exception as e:
+            return return_server_error(e)

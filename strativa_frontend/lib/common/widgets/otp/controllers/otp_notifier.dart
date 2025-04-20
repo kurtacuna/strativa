@@ -2,10 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kconstants.dart';
+import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
+import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/kurls.dart';
 import 'package:http/http.dart' as http;
+import 'package:strativa_frontend/common/services/storage.dart';
 import 'package:strativa_frontend/common/utils/common_json_model.dart';
+import 'package:strativa_frontend/common/utils/refresh/refresh_access_token.dart';
 import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_snack_bar_widget.dart';
 
@@ -77,6 +81,15 @@ class OtpNotifier with ChangeNotifier {
         toggleButtonState();
         startTimer();
         _isPinputEnabled = true;
+        
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            appSnackBarWidget(
+              context: context, 
+              text: AppText.kOtpSentPleaseCheckYourEmail
+            )
+          );
+        }
       } else {
         if (context.mounted) {
           CommonJsonModel model = commonJsonModelFromJson(response.body);
@@ -95,7 +108,7 @@ class OtpNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> validateOtp({
+  Future<void> verifyOtp({
     required BuildContext context, 
     required String data,
     required String query,
@@ -104,31 +117,50 @@ class OtpNotifier with ChangeNotifier {
     notifyListeners();
     
     try {
+      String? accessToken = Storage().getString(StorageKeys.accessTokenKey);
       var url = Uri.parse(ApiUrls.verifyOtpUrl(query: query));
       var response = await http.post(
         url,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken'
         },
         body: data
       );
 
-      CommonJsonModel model = commonJsonModelFromJson(response.body);
+      print(response.body);
 
       if (response.statusCode == 200) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            appSnackBarWidget(
-              context: context,
-              text: model.detail,
-              style: CustomTextStyles(context).biggestStyle,
-              icon: SizedBox.shrink(),
-              duration: query == "peekbalance" ? Duration(seconds: 60) : null
-            )
-          );
+        if (query == VerifyOtpTypes.peekbalance.name) {
+          if (context.mounted) {
+            CommonJsonModel model = commonJsonModelFromJson(response.body);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              appSnackBarWidget(
+                context: context,
+                text: model.detail,
+                style: CustomTextStyles(context).biggestStyle,
+                icon: SizedBox.shrink(),
+                duration: Duration(seconds: 60)
+              )
+            );
+          }
+        } else {
+          if (context.mounted) {
+            Navigator.of(context).pop(response.statusCode);
+          }
         }
+      } else if (response.statusCode == 401) {
+        await refetch(
+          fetch: () => verifyOtp(
+            context: context,
+            data: data, 
+            query: query
+          )
+        );
       } else {
         if (context.mounted) {
+          CommonJsonModel model = commonJsonModelFromJson(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
             appSnackBarWidget(
               context: context, 

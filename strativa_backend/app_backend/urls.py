@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('api/my_accounts/', include('my_accounts.urls')),
     path('api/transaction/', include('transaction.urls')),
-    path('api/transfer/', include('transfer.urls')),
+    # path('api/transfer/', include('transfer.urls')),
 ]
 
 # For fetching images

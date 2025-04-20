@@ -8,13 +8,16 @@ from my_accounts.utils.user_not_found import return_user_not_found
 from decimal import Decimal
 from django.db import transaction
 from transaction.utils.log_transaction import log_transaction
-
+import json
 
 class TransferView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        transaction_details = request.data.get('transaction_details')
+        transaction_details = request.query_params.get('transaction_details')
+        transaction_details = json.loads(transaction_details)
+        transaction_details = transaction_details.get('transaction_details')
+        
         transaction_type = transaction_details.get('transaction_type', None)
         sender_data = transaction_details.get('sender', {})
         sender_account_number = sender_data.get('account_number', None)
@@ -25,26 +28,15 @@ class TransferView(APIView):
 
         try:
             with transaction.atomic():
-                sender_account_details = {}
-                receiver_account_details = {}
-                
-                if (sender_account_number[:2] == "CW"):
-                    sender_account_details = my_accounts_models.UserCardDetails.objects.select_related('user').get(
-                        account_number=sender_account_number
-                    )
-                else:
-                    sender_account_details = my_accounts_models.UserAccounts.objects.select_related('user').get(
-                        account_number=sender_account_number
-                    )
+                sender_account_details = my_accounts_models.UserAccounts.objects.select_related('user').get(
+                    account_number=sender_account_number
+                )
+                receiver_account_details = my_accounts_models.UserAccounts.objects.select_related('user').get(
+                    account_number=receiver_account_number
+                )
 
-                if (receiver_account_number[:2] == "CW"):
-                    receiver_account_details = my_accounts_models.UserCardDetails.objects.select_related('user').get(
-                        account_number=receiver_account_number
-                    )
-                else:
-                    receiver_account_details = my_accounts_models.UserAccounts.objects.select_related('user').get(
-                        account_number=receiver_account_number
-                    )
+                # print(f"senderbefore: {sender_account_details.balance}")
+                # print(f"receiverbefore: {receiver_account_details.balance}")
 
                 if (Decimal(amount) < sender_account_details.balance):
                     sender_account_details.balance -= Decimal(amount)
@@ -56,19 +48,25 @@ class TransferView(APIView):
 
                 receiver_account_details.balance += Decimal(amount)
 
-                sender_account_details.save()
-                receiver_account_details.save()
-
+                # print(f"senderafter: {sender_account_details.balance}")
+                # print(f"receiverafter: {receiver_account_details.balance}")
+                
+                # Log transaction first before saving balance of both users to not double the amount
                 log_transaction(
                     amount=amount,
                     transaction_type=transaction_type,
                     sender=sender_account_details.user,
+                    sender_account_number=sender_account_number,
                     receiver=receiver_account_details.user,
+                    receiver_account_number=receiver_account_number,
                     note=note
                 )
 
+                sender_account_details.save()
+                receiver_account_details.save()
+
                 return Response(status=status.HTTP_200_OK)
-        except (my_accounts_models.UserCardDetails.DoesNotExist, my_accounts_models.UserAccounts.DoesNotExist):
+        except my_accounts_models.UserAccounts.DoesNotExist:
             return return_user_not_found()
         except Exception as e:
             return return_server_error(e)   
