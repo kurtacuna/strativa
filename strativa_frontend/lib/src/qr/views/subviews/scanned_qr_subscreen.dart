@@ -135,7 +135,7 @@ class ScannedQrSubscreen extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               appErrorSnackBarWidget(
                                 context: context, 
-                                text: AppText.kPleaseSelectAnAccountToDepositTo
+                                text: AppText.kPleaseSelectAnAccountToTransferFrom
                               )
                             );
                             return;

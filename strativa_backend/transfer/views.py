@@ -27,6 +27,12 @@ class TransferView(APIView):
         note = transaction_details.get('note')
 
         try:
+            if sender_account_number == receiver_account_number:
+                return Response(
+                    {"detail": "Can't transfer to the same account."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
             with transaction.atomic():
                 sender_account_details = my_accounts_models.UserAccounts.objects.select_related('user').get(
                     account_number=sender_account_number
@@ -38,15 +44,11 @@ class TransferView(APIView):
                 # print(f"senderbefore: {sender_account_details.balance}")
                 # print(f"receiverbefore: {receiver_account_details.balance}")
 
-                if (Decimal(amount) < sender_account_details.balance):
-                    sender_account_details.balance -= Decimal(amount)
-                else:
+                if (Decimal(amount) > sender_account_details.balance):
                     return Response(
                         {"detail": "Not enough balance."},
                         status=status.HTTP_400_BAD_REQUEST    
                     )
-
-                receiver_account_details.balance += Decimal(amount)
 
                 # print(f"senderafter: {sender_account_details.balance}")
                 # print(f"receiverafter: {receiver_account_details.balance}")
@@ -62,7 +64,9 @@ class TransferView(APIView):
                     note=note
                 )
 
+                sender_account_details.balance -= Decimal(amount)
                 sender_account_details.save()
+                receiver_account_details.balance += Decimal(amount)
                 receiver_account_details.save()
 
                 return Response(status=status.HTTP_200_OK)
