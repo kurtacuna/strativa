@@ -90,12 +90,12 @@ class AppIcons {
     MaterialIcons.arrow_right,
     size: 40,
   );
-  // TODO: change to final
-  static Icon get kEditIcon => Icon(
-    MaterialIcons.edit,
-    color: ColorsCommon.kAccentL3,
-    size: 25.sp,
-  );
+  // // TODO: change to final
+  // static Icon get kEditIcon => Icon(
+  //   MaterialIcons.edit,
+  //   color: ColorsCommon.kAccentL3,
+  //   size: 25.sp,
+  // );
   // TODO: change to final
   static Icon get kShareIcon => Icon(
     MaterialIcons.share,
@@ -119,5 +119,38 @@ class AppIcons {
     Ionicons.send,
     color: ColorsCommon.kAccentL3,
     size: 25.sp,
+  );
+  // Register screen icons
+  static Image get kBulbIcon => Image.asset(
+    'assets/icons/bulb_icon.png',
+    height: 30.sp,
+  );
+  static Image get kShieldStick => Image.asset(
+    'assets/icons/shieldStick.png',
+    height: 30.sp,
+  );
+  static Image get kRedIcon => Image.asset(
+    'assets/icons/redprofile.png',
+    height: 30.sp,
+  );
+  static Image get kComplete => Image.asset(
+    'assets/icons/Information_done.png',
+    height: 300.sp,
+  );
+  static Image get kIDsample => Image.asset(
+    'assets/icons/ID_sample.png',
+    height: 300.sp,
+  );
+  static Image get kFaceID => Image.asset(
+    'assets/icons/face_verification.png',
+    height: 250.sp,
+  );
+  static Image get kEditIcon => Image.asset(
+    'assets/icons/edit_icon.png',
+    height: 20.sp,
+  );
+  static Image get kSuccessfulIcon=> Image.asset(
+    'assets/icons/successful_icon.png',
+    height: 300.sp,
   );
 }

@@ -61,4 +61,16 @@ class AppText {
   static const kAccountNumber = "Account Number";
   static const kOtpSentPleaseCheckYourEmail = "OTP sent. Please check your email.";
   static const kPleaseEnterAValidAccountNumber = "Please enter a valid account number";
+  static const kRegisterScreen = "Register Account";
+  static const kValidId = "Select Valid ID";
+  static const kDataPrivacy = "Data Privacy";
+  static const kRegName = "Register Name";
+  static const kEmailVerify = "Email Verification";
+  static const kMobileNumber = "Mobile Verification";
+  static const kBirthday = "Birthday";
+  static const kInitialComplete = "Initial Info Complete";
+  static const kOpenCamera = "Opening Camera";
+  static const kFaceVerification = "Face Verification";
+  static const kGenderMarital = "Gender Marital Selection";
+  static const kAddressForm = "Address";
 }

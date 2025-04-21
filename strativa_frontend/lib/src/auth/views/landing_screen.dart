@@ -39,7 +39,7 @@ class LandingScreen extends StatelessWidget {
             AppButtonWidget(
               text: AppText.kOpenAccountButtonText,
               onTap: () {
-                // TODO: push to registration
+                context.push(AppRoutes.kRegisterScreen);
               },
               firstColor: ColorsCommon.kPrimaryL1,
               secondColor: ColorsCommon.kPrimaryL4,
