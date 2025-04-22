@@ -73,4 +73,19 @@ class AppText {
   static const kFaceVerification = "Face Verification";
   static const kGenderMarital = "Gender Marital Selection";
   static const kAddressForm = "Address";
+  static const kScanGenerate = "Scan and Generate QR";
+  static const kTransferSuccessful = "Your transfer has been successful!";
+  static const kGoToMyAccounts = "Go to my Accounts";
+  static const kNewTransfer = "New Transfer";
+  static const kSavingsAccount = "Savings Account";
+  static const kTimeDepositAccount = "Time Deposit Account";
+  static const kTransferAmount = "Transfer Amount";
+  static const kTransfer = "Make a Transfer";
+  static const kTransferHelp = "How can we help with your transfer?";
+  static const kFundTransfer = "Fund Transfer";
+  static const kToAnotherAccount = "To another account";
+  static const kToAnotherStrativaAccount = "To another Strativa account";
+  static const kToAnotherBankAccount = "To another bank account";
+  static const kDeposit = "Deposit";
+  static const kDepositCheck = "Deposit Check";
 }

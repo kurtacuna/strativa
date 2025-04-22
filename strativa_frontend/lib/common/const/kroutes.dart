@@ -21,6 +21,10 @@ class AppRoutes {
   static const String kEntrypoint = '/entrypoint';
   static const String kMyAccounts = 'my_accounts';
   static const String kTransfer = '/transfer';
+  static const String kTransferToAccount = '/transfer_to_account_subscreen';
+  static const String kTransferToStrativaAccount = '/transfer_to_strativa_account_subscreen';
+  static const String kTransferToBankAccount = '/transfer_to_bank_account_subscreen';
+  static const String kAccountDetails = '/account_details'; 
   static const String kPayLoad = '/pay_load';
   static const String kInvest = '/invest';
   static const String kProfile = '/profile';
