@@ -32,6 +32,7 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
       );
 
       _initializeControllerFuture = _controller!.initialize();
+      await _initializeControllerFuture;
       setState(() {});
     } catch (e) {
       debugPrint("Camera initialization failed: $e");

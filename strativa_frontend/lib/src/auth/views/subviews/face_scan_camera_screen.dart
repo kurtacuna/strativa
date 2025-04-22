@@ -30,6 +30,7 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
 
     _controller = CameraController(frontCamera, ResolutionPreset.medium);
     _initializeControllerFuture = _controller!.initialize();
+    await _initializeControllerFuture;
     setState(() {});
   }
 
