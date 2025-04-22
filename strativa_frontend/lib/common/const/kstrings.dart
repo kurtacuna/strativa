@@ -3,7 +3,7 @@ class AppText {
   static const kCurrencyText = "PHP";
   static const kAmountHintText = "0.00";
   static const kPasswordFieldError = "Please enter your password.";
-  static const kUserIdFieldError ="Please enter your user ID";
+  static const kUserIdFieldError = "Please enter your user ID";
   static const kAppName = "Strativa";
   static const kOpenAccountButtonText = "Open an Account";
   static const kLoginButtonText = "Log In";
@@ -27,7 +27,8 @@ class AppText {
   static const kScanQrCodeHeader = "Scan QR Code";
   static const kUploadQrCode = "Upload QR Code";
   static const kTapAnywhereToContinue = "Tap anywhere to continue";
-  static const kSnackBarQrCodeWasSuccessfullyScanned = "QR code was successfully scanned.";
+  static const kSnackBarQrCodeWasSuccessfullyScanned =
+      "QR code was successfully scanned.";
   static const kGenerateQrCode = "Generate QR Code";
   static const kGenerateNewQrCode = "Generate New QR Code";
   static const kGoToHome = "Go to Home";
@@ -38,27 +39,34 @@ class AppText {
   static const kAmountRequested = "Amount Requested";
   static const kEdit = "Edit";
   static const kShare = "Share";
+  static const kReviewTitle = "Review";
+  static const kAreTheseDetailsCorrect = "Are these details correct?";
+  static const kSummary = "Summary";
+  static const kTotal = "Total";
+  static const kConfirm = "Confirm";
+  static const kTransferToAnotherStrativaAcc =
+      "Transfer to antoher Strativa Account";
+  static const kAccountNumber = "Account Number";
   static const kNoTransactionsYet = "No transactions yet";
   static const kSendOtp = "Send OTP";
-  static const kQrPermissionRequired = "To scan QR codes, permission is required.";
+  static const kQrPermissionRequired =
+      "To scan QR codes, permission is required.";
   static const kOpenSettings = "Open Settings";
   static const kStrativaCameraPermission = "Strativa Camera Permission";
   static const kPermissionsCameraAllow = "Permissions > Camera > Allow";
   static const kTransferFrom = "Transfer From";
   static const kTransferTo = "Transfer To";
-  static const kPleaseSelectAnAccountToDepositTo = "Please select an account to deposit to.";
   static const kPleaseSelectAnAccountToTransferFrom = "Please select an account to transfer from.";
   static const kPleaseSelectAnAccountToTransferTo = "Please select an account to transfer to.";
+  static const kPleaseSelectAnAccountToDepositTo = "Please select an account to deposit to.";
   static const kReview = "Review";
   static const kAddNoteOptional = "Add Note (Optional)";
   static const kSpecifyAmountPlus = "Specify Amount +";
   static const kSpecifyAmountMinus = "Specify Amount -";
-  static const kConfirm = "Confirm";
   static const kCancel = "Cancel";
   static const kNoQrCodeFound = "No QR code found";
   static const kImageCouldntBeScanned = "Image couldn't be scanned";
   static const kTheUserDoesNotExist = "The user does not exist.";
-  static const kAccountNumber = "Account Number";
   static const kOtpSentPleaseCheckYourEmail = "OTP sent. Please check your email.";
   static const kPleaseEnterAValidAccountNumber = "Please enter a valid account number";
   static const kRegisterScreen = "Register Account";

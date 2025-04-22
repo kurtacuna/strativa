@@ -7,6 +7,8 @@ import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 //import 'package:strativa_frontend/common/const/kroutes.dart';
 //import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart'; // Import your routes
 
 class TransferScreen extends StatelessWidget {
   const TransferScreen({super.key});
@@ -102,11 +104,10 @@ class TransferScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
+        )
+      )
     );
   }
 }
-
 
 void _noop() {}

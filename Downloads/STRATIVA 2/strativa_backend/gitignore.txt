@@ -1,3 +1,0 @@
-__pycache__
-
-// add yourpythonvenv if you used one

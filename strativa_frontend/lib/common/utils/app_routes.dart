@@ -29,6 +29,11 @@ import 'package:strativa_frontend/src/transfer/views/subviews/account/transfer_t
 import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/transfer_to_strativa_account_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/bank/transfer_to_bank_account_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/bank/account_details.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/account/review_transfer_subscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/review_transfer_strativaacc_subscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/bank/review_transfer_bank_subscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/transfer_to_strativaacc_accnumber_subscreen.dart';
+import 'package:strativa_frontend/src/payload/views/subviews/bills/payload_bills_review_subscreen.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -69,6 +74,27 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kGeneratedQrSubscreen,
       builder: (context, state) => const GeneratedQrSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kReviewTransfer,
+      builder: (context, state) => const ReviewTransferSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kReviewTransferStrativaAccount,
+      builder: (context, state) => const ReviewTransferStrativaaccSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kReviewTransferBankAccount,
+      builder: (context, state) => const ReviewTransferBankSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kTransferToAnotherStrativaAccNumber,
+      builder:
+          (context, state) => const TransferToStrativaaccAccnumberSubscreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kPayloadBillsReviewSubscreen,
+      builder: (context, state) => const PayloadBillsReviewSubscreen(),
     ),
     GoRoute(
       path: AppRoutes.kScannedQrSubscreen,
