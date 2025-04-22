@@ -52,7 +52,6 @@ class Transactions(models.Model):
             transaction=self,
             direction=UserTransactions.Direction.SEND,
             resulting_balance=Decimal(sender_account_balance) - Decimal(self.amount)
-            # resulting_balance=sender_account_balance
         )
         
         receiver_account_balance = my_accounts_models.UserAccounts.objects.get(
@@ -63,7 +62,6 @@ class Transactions(models.Model):
             transaction=self,
             direction=UserTransactions.Direction.RECEIVE,
             resulting_balance=Decimal(receiver_account_balance) + Decimal(self.amount)
-            # resulting_balance=receiver_account_balance
         )
     
     class Meta:

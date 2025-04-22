@@ -47,7 +47,9 @@ class TransactionElement {
 class TransactionTransaction {
     TransactionType transactionType;
     Receiver sender;
+    String senderAccountNumber;
     Receiver receiver;
+    String receiverAccountNumber;
     String referenceId;
     DateTime datetime;
     String amount;
@@ -55,7 +57,9 @@ class TransactionTransaction {
     TransactionTransaction({
         required this.transactionType,
         required this.sender,
+        required this.senderAccountNumber,
         required this.receiver,
+        required this.receiverAccountNumber,
         required this.referenceId,
         required this.datetime,
         required this.amount,
@@ -64,7 +68,9 @@ class TransactionTransaction {
     factory TransactionTransaction.fromJson(Map<String, dynamic> json) => TransactionTransaction(
         transactionType: TransactionType.fromJson(json["transaction_type"]),
         sender: Receiver.fromJson(json["sender"]),
+        senderAccountNumber: json["sender_account_number"],
         receiver: Receiver.fromJson(json["receiver"]),
+        receiverAccountNumber: json["receiver_account_number"],
         referenceId: json["reference_id"],
         datetime: DateTime.parse(json["datetime"]),
         amount: json["amount"],
@@ -73,7 +79,9 @@ class TransactionTransaction {
     Map<String, dynamic> toJson() => {
         "transaction_type": transactionType.toJson(),
         "sender": sender.toJson(),
+        "sender_account_number": senderAccountNumber,
         "receiver": receiver.toJson(),
+        "receiver_account_number": receiverAccountNumber,
         "reference_id": referenceId,
         "datetime": datetime.toIso8601String(),
         "amount": amount,

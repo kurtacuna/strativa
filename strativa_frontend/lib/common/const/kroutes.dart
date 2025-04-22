@@ -28,4 +28,6 @@ class AppRoutes {
   static const String kQrScreen = '/qr';
   static const String kGeneratedQrSubscreen = '/generated_qr';
   static const String kScannedQrSubscreen = '/scanned_qr';
+  static const String kTransactionPageString = '/transaction/:index';
+  static String kTransactionPage(int index) => '/transaction/$index';
 }

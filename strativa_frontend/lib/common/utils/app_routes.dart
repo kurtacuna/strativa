@@ -25,6 +25,7 @@ import 'package:strativa_frontend/src/qr/views/subviews/generated_qr_subscreen.d
 import 'package:strativa_frontend/src/qr/views/subviews/scanned_qr_subscreen.dart';
 import 'package:strativa_frontend/src/transaction_history/views/transaction_history_screen.dart';
 import 'package:strativa_frontend/src/splashscreen/views/splashscreen.dart';
+import 'package:strativa_frontend/src/transaction_history/widgets/transaction_item_page_widget.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -125,6 +126,13 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppRoutes.kFaceScanVerification,
       builder: (context, state) => const FaceScanCameraScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.kTransactionPageString,
+      builder: (context, GoRouterState state) {
+        final String? transactionIndex = state.pathParameters['index'];
+        return TransactionItemPageWidget(index: transactionIndex!);
+      }
     ),
   ],
 );

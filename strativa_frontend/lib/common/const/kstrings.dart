@@ -73,4 +73,8 @@ class AppText {
   static const kFaceVerification = "Face Verification";
   static const kGenderMarital = "Gender Marital Selection";
   static const kAddressForm = "Address";
+  static const kSentTo = "Sent To";
+  static const kReceivedFrom = "Received From";
+  static const kClose = "Close";
+  static const kAnAmountOf = "An amount of";
 }
