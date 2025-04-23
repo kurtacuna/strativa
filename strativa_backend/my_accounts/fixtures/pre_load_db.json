@@ -72,6 +72,13 @@
         }
     },
     {
+        "model": "my_accounts.usertypes",
+        "pk": 1,
+        "fields": {
+            "user_type": "regular"
+        }
+    },
+    {
         "model": "my_accounts.userdata",
         "pk": 3,
         "fields": {
@@ -79,7 +86,8 @@
             "last_name": "Doe",
             "full_name": "John Doe",
             "email": "csprojectserver@gmail.com",
-            "user_card_details": 3
+            "user_card_details": 3,
+            "user_type": 1
         }
     },
     {

@@ -4,7 +4,7 @@ from django.utils import timezone
 import random
 import os
 from utils.const import BackendConstants
-import uuid
+from transaction import models as transaction_models
 
 # Create your models here.
 class UserData(models.Model):
@@ -12,6 +12,7 @@ class UserData(models.Model):
     return os.path.join('profile_pictures', f"{instance.id}_{instance.user.username}_{filename}")
 
   user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+  user_type = models.ForeignKey('UserTypes', on_delete=models.SET_DEFAULT, default=1)
   first_name = models.CharField(max_length=255)
   middle_name = models.CharField(max_length=255, blank=True)
   last_name = models.CharField(max_length=255)
@@ -36,6 +37,18 @@ class UserData(models.Model):
   class Meta:
     verbose_name = "User Data"
     verbose_name_plural = "User Data"
+
+  
+class UserTypes(models.Model):
+  user_type = models.CharField(max_length=255, unique=True)
+  transaction_category = models.ForeignKey(transaction_models.TransactionTypes, on_delete=models.SET_DEFAULT, default=1)
+
+  def __str__(self):
+    return self.user_type
+  
+  class Meta:
+    verbose_name = "User Type"
+    verbose_name_plural = "User Types"
 
 
 class UserCardDetails(models.Model):
