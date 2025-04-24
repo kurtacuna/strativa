@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from . import models
 from utils.common_serializers import UserSerializer
+from other_banks import models as other_banks_models
+from other_banks import serializers as other_banks_serializers
 
 
 class UserTransactionsSerializer(serializers.ModelSerializer):
@@ -35,14 +37,22 @@ class TransactionsSerializer(serializers.ModelSerializer):
         return data
     
     def get_receiver(self, obj):
-        user_data = getattr(obj.receiver, 'userdata', None)
-        full_name = user_data.full_name if user_data else "Deleted"
-        profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
-        serializer = UserSerializer(obj.receiver)
-        data = serializer.data
-        data['full_name'] = full_name
-        data['profile_picture'] = profile_picture
-        return data
+        if obj.receiver_bank == 'Strativa':
+            user_data = getattr(obj.receiver, 'userdata', None)
+            full_name = user_data.full_name if user_data else "Deleted"
+            profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
+            serializer = UserSerializer(obj.receiver)
+            data = serializer.data
+            data['full_name'] = full_name
+            data['profile_picture'] = profile_picture
+            return data
+        else:
+            other_bank_account_data = other_banks_models.OtherBankAccounts.objects.get(
+                bank__bank_name=obj.receiver_bank,
+                account_number=obj.receiver_account_number
+            )
+            serializer = other_banks_serializers.OtherBankAccountsSerializer(other_bank_account_data)
+            return serializer.data
 
     class Meta:
         model = models.Transactions

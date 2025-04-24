@@ -31,8 +31,10 @@ class Transactions(models.Model):
     transaction_type = models.ForeignKey('TransactionTypes', on_delete=models.SET_DEFAULT, default=1)
     sender = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='sender_transactions_set')
     sender_account_number = models.CharField(max_length=30)
+    sender_bank = models.CharField(max_length=255)
     receiver = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='receiver_transactions_set')
     receiver_account_number = models.CharField(max_length=30)
+    receiver_bank = models.CharField(max_length=255)
     note = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
@@ -51,18 +53,19 @@ class Transactions(models.Model):
             user=self.sender,
             transaction=self,
             direction=UserTransactions.Direction.SEND,
-            resulting_balance=Decimal(sender_account_balance) - Decimal(self.amount)
+            resulting_balance=Decimal(sender_account_balance)
         )
         
-        receiver_account_balance = my_accounts_models.UserAccounts.objects.get(
-            account_number=self.receiver_account_number
-        ).balance
-        UserTransactions.objects.create(
-            user=self.receiver,
-            transaction=self,
-            direction=UserTransactions.Direction.RECEIVE,
-            resulting_balance=Decimal(receiver_account_balance) + Decimal(self.amount)
-        )
+        if self.receiver_bank == "Strativa":
+            receiver_account_balance = my_accounts_models.UserAccounts.objects.get(
+                account_number=self.receiver_account_number
+            ).balance
+            UserTransactions.objects.create(
+                user=self.receiver,
+                transaction=self,
+                direction=UserTransactions.Direction.RECEIVE,
+                resulting_balance=Decimal(receiver_account_balance)
+            )
     
     class Meta:
         verbose_name = 'Transaction'

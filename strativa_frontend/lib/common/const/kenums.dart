@@ -2,6 +2,7 @@ enum TransactionTypes {
   all,
   food,
   shopping,
+  bills,
   transport,
   transfers,
   other

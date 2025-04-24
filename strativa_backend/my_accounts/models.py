@@ -140,6 +140,7 @@ class UserAccounts(models.Model):
   account_type = models.ForeignKey('AccountTypes', on_delete=models.CASCADE)
   account_number = models.CharField(max_length=30, unique=True)
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+  bank = models.CharField(max_length=50, default="Strativa")
 
   def __str__(self):
     return self.user.username

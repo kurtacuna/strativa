@@ -39,6 +39,24 @@
         "model": "auth.user",
         "pk": 3,
         "fields": {
+            "password": "!VSgYCHP7ygfwU7d74wY3Wl5ocJZsAvEFa0rutsKG",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Other-Bank-User",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-08T19:16:12.020Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
             "password": "pbkdf2_sha256$870000$vEL2DQHNZuJsnTwnODoLmu$SbzSoge9aRBIgoy1Sxpf+fgL7ImqRblSEkaJff+JYFI=",
             "last_login": null,
             "is_superuser": false,
@@ -55,7 +73,7 @@
     },
     {
         "model": "auth.user",
-        "pk": 4,
+        "pk": 5,
         "fields": {
             "password": "pbkdf2_sha256$870000$vEL2DQHNZuJsnTwnODoLmu$SbzSoge9aRBIgoy1Sxpf+fgL7ImqRblSEkaJff+JYFI=",
             "last_login": null,
@@ -80,31 +98,31 @@
     },
     {
         "model": "my_accounts.userdata",
-        "pk": 3,
+        "pk": 4,
         "fields": {
             "first_name": "John",
             "last_name": "Doe",
             "full_name": "John Doe",
             "email": "csprojectserver@gmail.com",
-            "user_card_details": 3,
+            "user_card_details": 4,
             "user_type": 1
         }
     },
     {
         "model": "my_accounts.userdata",
-        "pk": 4,
+        "pk": 5,
         "fields": {
             "first_name": "Jane",
             "middle_name": "J",
             "last_name": "Doe",
             "full_name": "Jane J Doe",
             "email": "csprojectserver@gmail.com",
-            "user_card_details": 3
+            "user_card_details": 5
         }
     },
     {
         "model": "my_accounts.usercarddetails",
-        "pk": 3,
+        "pk": 4,
         "fields": {
             "strativa_card_number": "0234567890123456",
             "strativa_card_created": "2025-04-07T09:27:09Z",
@@ -119,7 +137,7 @@
     },
     {
         "model": "my_accounts.usercarddetails",
-        "pk": 4,
+        "pk": 5,
         "fields": {
             "strativa_card_number": "1234567890123456",
             "strativa_card_created": "2025-04-07T09:27:09Z",
@@ -152,7 +170,7 @@
         "model": "my_accounts.useraccounts",
         "pk": 1,
         "fields": {
-            "user": 3,
+            "user": 4,
             "account_type": 1,
             "account_number": "CW-174002EC87644764",
             "balance": "123.00"
@@ -162,7 +180,7 @@
         "model": "my_accounts.useraccounts",
         "pk": 2,
         "fields": {
-            "user": 4,
+            "user": 5,
             "account_type": 1,
             "account_number": "CW-274002EC87644764",
             "balance": "456.00"
@@ -172,7 +190,7 @@
         "model": "my_accounts.useraccounts",
         "pk": 3,
         "fields": {
-            "user": 4,
+            "user": 5,
             "account_type": 2,
             "account_number": "S-123",
             "balance": "789.00"
@@ -203,14 +221,109 @@
         "model": "transaction.transactiontypes",
         "pk": 4,
         "fields": {
-            "type": "transport"
+            "type": "bills"
         }
     },
     {
         "model": "transaction.transactiontypes",
         "pk": 5,
         "fields": {
+            "type": "transport"
+        }
+    },
+    {
+        "model": "transaction.transactiontypes",
+        "pk": 6,
+        "fields": {
             "type": "transfers"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 1,
+        "fields": {
+            "bank_name": "Banco de Oro"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 2,
+        "fields": {
+            "bank_name": "Bank of the Philippine Islands"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 3,
+        "fields": {
+            "bank_name": "BNP Paribas"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 4,
+        "fields": {
+            "bank_name": "China Bank"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 5,
+        "fields": {
+            "bank_name": "CIMB Bank PH"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 6,
+        "fields": {
+            "bank_name": "Citibank"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 7,
+        "fields": {
+            "bank_name": "Landbank"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 8,
+        "fields": {
+            "bank_name": "Metrobank"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 9,
+        "fields": {
+            "bank_name": "Philippine National Bank"
+        }
+    },
+    {
+        "model": "other_banks.otherbanks",
+        "pk": 10,
+        "fields": {
+            "bank_name": "Rizal Commercial Banking Corporation"
+        }
+    },
+    {
+        "model": "other_banks.otherbankaccounts",
+        "pk": 1,
+        "fields": {
+            "bank": 1,
+            "full_name": "Juan Dela Cruz",
+            "account_number": "123456789"
+        }
+    },
+    {
+        "model": "other_banks.otherbankaccounts",
+        "pk": 2,
+        "fields": {
+            "bank": 2,
+            "full_name": "Juan Dela Cruz",
+            "account_number": "123456789"
         }
     }
 ]

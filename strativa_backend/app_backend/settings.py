@@ -43,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djoser',
     'rest_framework',
-    # 'rest_framework.authtoken',
     'otp',
     'my_accounts',
     'transaction',
     'transfer',
+    'other_banks'
 ]
 
 MIDDLEWARE = [
@@ -150,7 +150,6 @@ JAZZMIN_SETTINGS = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
     )
 }
 

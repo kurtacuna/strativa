@@ -3,6 +3,6 @@ from . import views
 
 
 # For testing only
-# urlpatterns = [
-#     path('', views.TransferView.as_view(), name="transfer"),
-# ]
+urlpatterns = [
+    path('', views.TransferView.as_view(), name="transfer"),
+]
