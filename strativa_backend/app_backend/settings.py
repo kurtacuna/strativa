@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'my_accounts',
     'transaction',
     'transfer',
-    'other_banks'
+    'other_banks',
+    'scheduled_payments',
 ]
 
 MIDDLEWARE = [

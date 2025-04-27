@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/my_accounts/', include('my_accounts.urls')),
     path('api/transaction/', include('transaction.urls')),
     path('api/other_banks/', include('other_banks.urls')),
+    path('api/scheduled_payments/', include('scheduled_payments.urls')),
 
 
 
