@@ -6,7 +6,8 @@ import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 
 class InitialScreenComplete extends StatelessWidget {
-  const InitialScreenComplete({super.key});
+  final Map<String, dynamic> userData;
+  const InitialScreenComplete({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class InitialScreenComplete extends StatelessWidget {
             ),
             SizedBox(height: 350),
             AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kOpenCamera);
+              context.push(AppRoutes.kOpenCamera, extra: userData);
             },),
           ]
         ),

@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class EmailVerification extends StatelessWidget {
-  const EmailVerification({super.key});
+  final Map<String, dynamic>nameData;
+
+  const EmailVerification({super.key, required this.nameData});
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +111,21 @@ class EmailVerification extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kMobileNumber);
-            },),
+            AppButtonWidget(
+            text: 'Confirm',
+            onTap: () {
+              final updatedData = {
+                ...nameData,
+                'email': emailController.text.trim(),
+              };
+
+              context.push(
+                AppRoutes.kMobileNumber,
+                extra: updatedData,
+              );
+            },
+          ),
+
           ],
         ),
       ),

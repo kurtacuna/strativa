@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class MobileVerification extends StatelessWidget {
-  const MobileVerification({super.key});
+  final Map<String, dynamic> userData;
+
+  const MobileVerification({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +14,7 @@ class MobileVerification extends StatelessWidget {
     final codeController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Back'),
-      ),
+      appBar: AppBar(title: const Text('Back')),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
@@ -63,8 +64,9 @@ class MobileVerification extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        "Send Code", style: TextStyle(color: Colors.white),
-                      )
+                        "Send Code",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -109,9 +111,16 @@ class MobileVerification extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kBirthday);
-            },),
+            AppButtonWidget(
+              text: 'Confirm',
+              onTap: () {
+                final updatedData = {
+                  ...userData, // keep previous data
+                  'phone_number': mobileController.text.trim(),
+                };
+                context.push(AppRoutes.kBirthday, extra: updatedData);
+              },
+            ),
           ],
         ),
       ),
