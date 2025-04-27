@@ -44,9 +44,7 @@ class TransferScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                const AppQRCardWidget(
-                  onTap: _noop,
-                ),
+                const AppQRCardWidget(onTap: _noop),
                 SizedBox(height: 30.h),
                 Text(
                   AppText.kFundTransfer,
@@ -63,21 +61,21 @@ class TransferScreen extends StatelessWidget {
                       iconPath: 'assets/icons/another_account.png',
                       label: AppText.kToAnotherAccount,
                       onTap: () {
-                        // TODO Navigate to Another Account Option
+                        context.push(AppRoutes.kTransferToAccount);
                       },
                     ),
                     AppIconGradientCardWidget(
                       iconPath: 'assets/icons/another_strativa_account.png',
                       label: AppText.kToAnotherStrativaAccount,
                       onTap: () {
-                        // TODO Navigate to Another Strativa Option
+                        context.push(AppRoutes.kTransferToStrativaAccount);
                       },
                     ),
                     AppIconGradientCardWidget(
                       iconPath: 'assets/icons/another_bank_account.png',
                       label: AppText.kToAnotherBankAccount,
                       onTap: () {
-                        // TODO Navigate to Another Bank Option
+                        context.push(AppRoutes.kTransferToBankAccount);
                       },
                     ),
                   ],
@@ -104,8 +102,8 @@ class TransferScreen extends StatelessWidget {
               ],
             ),
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
 import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
@@ -115,7 +117,7 @@ class ReviewTransferSubscreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: ConfirmButton(
                   onTap: () {
-                    // handle confirm
+                    context.push(AppRoutes.kSuccessTransfer);
                   },
                 ),
               ),

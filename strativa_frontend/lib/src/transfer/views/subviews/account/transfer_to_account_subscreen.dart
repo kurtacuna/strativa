@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class TransferToAccountSubscreen extends StatefulWidget {
   const TransferToAccountSubscreen({super.key});
 
   @override
-  State<TransferToAccountSubscreen> createState() => _TransferToAccountSubscreenState();
+  State<TransferToAccountSubscreen> createState() =>
+      _TransferToAccountSubscreenState();
 }
 
 class Account {
@@ -15,14 +19,23 @@ class Account {
   Account({required this.type, required this.number, required this.balance});
 }
 
-class _TransferToAccountSubscreenState extends State<TransferToAccountSubscreen> {
+class _TransferToAccountSubscreenState
+    extends State<TransferToAccountSubscreen> {
   Account? selectedFromAccount;
   Account? selectedToAccount;
 
   final List<Account> accounts = [
     Account(type: 'SAVINGS ACCOUNT', number: '0637892064', balance: '2,678.00'),
-    Account(type: 'CHECKING ACCOUNT', number: '0928374258', balance: '70,200.00'),
-    Account(type: 'TIME DEPOSIT ACCOUNT', number: '083654926', balance: '6,758.00'),
+    Account(
+      type: 'CHECKING ACCOUNT',
+      number: '0928374258',
+      balance: '70,200.00',
+    ),
+    Account(
+      type: 'TIME DEPOSIT ACCOUNT',
+      number: '083654926',
+      balance: '6,758.00',
+    ),
   ];
 
   void _showAccountSelector(BuildContext context, bool isFrom) {
@@ -43,13 +56,18 @@ class _TransferToAccountSubscreenState extends State<TransferToAccountSubscreen>
                   Row(
                     children: [
                       Icon(
-                        isFrom ? Icons.account_balance_wallet_rounded : Icons.swap_horiz_rounded,
+                        isFrom
+                            ? Icons.account_balance_wallet_rounded
+                            : Icons.swap_horiz_rounded,
                         color: Colors.orange,
                       ),
                       const SizedBox(width: 8),
                       Text(
                         isFrom ? 'Transfer from' : 'Transfer to',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -93,7 +111,10 @@ class _TransferToAccountSubscreenState extends State<TransferToAccountSubscreen>
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Transfer to own account', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        title: const Text(
+          'Transfer to own account',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
@@ -106,18 +127,27 @@ class _TransferToAccountSubscreenState extends State<TransferToAccountSubscreen>
             _TransferTile(
               label: 'Transfer from',
               title: selectedFromAccount?.type ?? 'Select account',
-              subtitle: selectedFromAccount != null ? '•••${selectedFromAccount!.number.substring(selectedFromAccount!.number.length - 4)} • PHP ${selectedFromAccount!.balance}' : null,
+              subtitle:
+                  selectedFromAccount != null
+                      ? '•••${selectedFromAccount!.number.substring(selectedFromAccount!.number.length - 4)} • PHP ${selectedFromAccount!.balance}'
+                      : null,
               onTap: () => _showAccountSelector(context, true),
             ),
             const SizedBox(height: 12),
             _TransferTile(
               label: 'Transfer to',
               title: selectedToAccount?.type ?? 'Select account',
-              subtitle: selectedToAccount != null ? '•••${selectedToAccount!.number.substring(selectedToAccount!.number.length - 4)} • PHP ${selectedToAccount!.balance}' : null,
+              subtitle:
+                  selectedToAccount != null
+                      ? '•••${selectedToAccount!.number.substring(selectedToAccount!.number.length - 4)} • PHP ${selectedToAccount!.balance}'
+                      : null,
               onTap: () => _showAccountSelector(context, false),
             ),
             const SizedBox(height: 24),
-            const Text('Transfer amount', style: TextStyle(fontWeight: FontWeight.w600)),
+            const Text(
+              'Transfer amount',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
@@ -154,21 +184,11 @@ class _TransferToAccountSubscreenState extends State<TransferToAccountSubscreen>
               ),
             ),
             const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[300],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  // handle continue
-                },
-                child: const Text('Continue', style: TextStyle(color: Colors.white)),
-              ),
+            AppButtonWidget(
+              text: 'Continue',
+              onTap: () {
+                context.push(AppRoutes.kReviewTransfer);
+              },
             ),
           ],
         ),
@@ -210,7 +230,14 @@ class _TransferTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.grey)),
+            Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                color: Colors.grey,
+              ),
+            ),
             const SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,8 +245,15 @@ class _TransferTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                    if (subtitle != null) Text(subtitle!, style: const TextStyle(fontSize: 14)),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    if (subtitle != null)
+                      Text(subtitle!, style: const TextStyle(fontSize: 14)),
                   ],
                 ),
                 const Icon(Icons.arrow_forward_ios_rounded, size: 16),
@@ -249,7 +283,10 @@ class _AccountTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(vertical: 4),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+      title: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
       subtitle: Text(accountNumber),
       trailing: Text('PHP $balance'),
       onTap: onTap,

@@ -27,24 +27,28 @@ void main() async {
   await dotenv.load(fileName: Environment.filename);
   await GetStorage.init();
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => AppThemeNotifier()),
-      ChangeNotifierProvider(create: (_) => BottomNavNotifier()),
-      ChangeNotifierProvider(create: (_) => PasswordNotifier()),
-      ChangeNotifierProvider(create: (_) => BalanceNotifier()),
-      ChangeNotifierProvider(create: (_) => TransactionTabNotifier()),
-      ChangeNotifierProvider(create: (_) => QrTabNotifier()),
-      ChangeNotifierProvider(create: (_) => JwtNotifier()),
-      ChangeNotifierProvider(create: (_) => UserDataNotifier()),
-      ChangeNotifierProvider(create: (_) => OtpNotifier()),
-      ChangeNotifierProvider(create: (_) => GenerateQrNotifier()),
-      ChangeNotifierProvider(create: (_) => AppTransferReceiveWidgetNotifier()),
-      ChangeNotifierProvider(create: (_) => ScanQrNotifier()),
-      ChangeNotifierProvider(create: (_) => TransferNotifier()),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppThemeNotifier()),
+        ChangeNotifierProvider(create: (_) => BottomNavNotifier()),
+        ChangeNotifierProvider(create: (_) => PasswordNotifier()),
+        ChangeNotifierProvider(create: (_) => BalanceNotifier()),
+        ChangeNotifierProvider(create: (_) => TransactionTabNotifier()),
+        ChangeNotifierProvider(create: (_) => QrTabNotifier()),
+        ChangeNotifierProvider(create: (_) => JwtNotifier()),
+        ChangeNotifierProvider(create: (_) => UserDataNotifier()),
+        ChangeNotifierProvider(create: (_) => OtpNotifier()),
+        ChangeNotifierProvider(create: (_) => GenerateQrNotifier()),
+        ChangeNotifierProvider(
+          create: (_) => AppTransferReceiveWidgetNotifier(),
+        ),
+        ChangeNotifierProvider(create: (_) => ScanQrNotifier()),
+        ChangeNotifierProvider(create: (_) => TransferNotifier()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -66,18 +70,16 @@ class _MyAppState extends State<MyApp> {
           onPressed: () {
             context.read<AppThemeNotifier>().toggleTheme();
           },
-          backgroundColor: Theme.of(context).brightness == Brightness.light
-            ? ColorsCommon.kDark
-            : ColorsCommon.kWhite,
+          backgroundColor:
+              Theme.of(context).brightness == Brightness.light
+                  ? ColorsCommon.kDark
+                  : ColorsCommon.kWhite,
           child: const Icon(Icons.switch_left_rounded),
         ),
         childWhenDragging: Container(),
-        onDragEnd:(details) {
+        onDragEnd: (details) {
           setState(() {
-            position = Offset(
-              details.offset.dx,
-              details.offset.dy,
-            );
+            position = Offset(details.offset.dx, details.offset.dy);
 
             print(position);
           });
@@ -86,9 +88,10 @@ class _MyAppState extends State<MyApp> {
           onPressed: () {
             context.read<AppThemeNotifier>().toggleTheme();
           },
-          backgroundColor: Theme.of(context).brightness == Brightness.light
-            ? ColorsCommon.kDark
-            : ColorsCommon.kWhite,
+          backgroundColor:
+              Theme.of(context).brightness == Brightness.light
+                  ? ColorsCommon.kDark
+                  : ColorsCommon.kWhite,
           child: const Icon(Icons.switch_left_rounded),
         ),
       ),
@@ -114,21 +117,21 @@ class _MyAppState extends State<MyApp> {
             return Overlay(
               initialEntries: [
                 OverlayEntry(
-                  builder:(context) {
+                  builder: (context) {
                     return Scaffold(
                       body: Stack(
                         children: [
                           child!,
                           // TODO: remove when change theme in settings is implemented
-                          _buildDraggableButton(context)
-                        ]
+                          _buildDraggableButton(context),
+                        ],
                       ),
                     );
                   },
-                )
+                ),
               ],
             );
-          }
+          },
         );
       },
       child: const Splashscreen(),
