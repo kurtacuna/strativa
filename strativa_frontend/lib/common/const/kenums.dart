@@ -11,6 +11,7 @@ enum TransactionTypes {
 enum VerifyOtpTypes {
   common,
   peekbalance,
+  scheduledpayment
 }
 
 enum AppTransferReceiveWidgetTypes {

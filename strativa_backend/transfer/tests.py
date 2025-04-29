@@ -15,6 +15,7 @@ class TransferViewTest(APITestCase):
             code="SA"
         )
         self.user1 = User.objects.create(username="testuser")
+        strativa_bank =my_accounts_models.StrativaBanks.objects.create(bank_name="Strativa")
         self.user1_account_details = my_accounts_models.UserAccounts.objects.create(
             user=self.user1,
             account_type=account_type,
@@ -110,6 +111,7 @@ class TransferViewTest(APITestCase):
                 }
             })
         )
+        print(response.content)
 
         self.user1_account_details.refresh_from_db()
         self.other_bank_account.refresh_from_db()

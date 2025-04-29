@@ -131,6 +131,7 @@ class OtpNotifier with ChangeNotifier {
       print(response.body);
 
       if (response.statusCode == 200) {
+        // For peek balance
         if (query == VerifyOtpTypes.peekbalance.name) {
           if (context.mounted) {
             CommonJsonModel model = commonJsonModelFromJson(response.body);
@@ -145,6 +146,11 @@ class OtpNotifier with ChangeNotifier {
               )
             );
           }
+        
+        // For scheduled payments
+        } else if (query == VerifyOtpTypes.scheduledpayment.name) {
+          // TODO: display confirmation message
+        // For common transfers
         } else {
           if (context.mounted) {
             Navigator.of(context).pop(response.statusCode);

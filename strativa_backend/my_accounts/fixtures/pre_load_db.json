@@ -167,6 +167,13 @@
         }
     },
     {
+        "model": "my_accounts.strativabanks",
+        "pk": 1,
+        "fields": {
+            "bank_name": "Strativa"
+        }
+    },
+    {
         "model": "my_accounts.useraccounts",
         "pk": 1,
         "fields": {
@@ -324,6 +331,27 @@
             "bank": 2,
             "full_name": "Juan Dela Cruz",
             "account_number": "123456789"
+        }
+    },
+    {
+        "model": "scheduled_payments.scheduledpayments",
+        "pk": 1,
+        "fields": {
+            "user": 4,
+            "transaction_type": 4,
+            "sender_account_number": "CW-174002EC87644764",
+            "sender_bank": "Strativa",
+            "receiver_account_number": "123456789",
+            "receiver_bank": "Banco de Oro",
+            "amount": "100.00",
+            "note": "payment",
+            "frequency": 10,
+            "start_date": "2025-04-28 18:37:59.123456+00:00",
+            "duration": 3,
+            "next_payment_date": "2025-05-8 18:37:59.123456+00:00",
+            "progress": 1,
+            "end_date": "2025-05-28 18:37:59.123456+00:00",
+            "status": "active"
         }
     }
 ]
