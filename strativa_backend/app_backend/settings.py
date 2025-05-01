@@ -86,7 +86,8 @@ WSGI_APPLICATION = 'app_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-dotenv_path = find_dotenv(filename='.env.development')
+# Construct the path to the .env.development file in the parent directory
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env.development')
 load_dotenv(dotenv_path=dotenv_path)
 DATABASES = {
     'default': {
@@ -97,6 +98,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
+        # 'HOST': 'localhost',
         'PORT': os.getenv('DB_PORT')
     }
 }

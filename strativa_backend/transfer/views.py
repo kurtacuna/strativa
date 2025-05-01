@@ -18,12 +18,12 @@ class TransferView(APIView):
 
     def post(self, request):
         # For testing only
-        transaction_details = request.data.get('transaction_details')
+        # transaction_details = request.data.get('transaction_details')
 
         # Uncomment when integrating with frontend
-        # transaction_details = request.query_params.get('transaction_details')
-        # transaction_details = json.loads(transaction_details)
-        # transaction_details = transaction_details.get('transaction_details')
+        transaction_details = request.query_params.get('transaction_details')
+        transaction_details = json.loads(transaction_details)
+        transaction_details = transaction_details.get('transaction_details')
         
         transaction_type = transaction_details.get('transaction_type', None)
         sender_data = transaction_details.get('sender', {})
@@ -36,6 +36,8 @@ class TransferView(APIView):
         receiver_bank = receiver_data.get('bank', None)
         amount = transaction_details.get('amount')
         note = transaction_details.get('note')
+
+        print(transaction_details)
 
         try:
             if sender_account_number == receiver_account_number:

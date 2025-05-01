@@ -8,7 +8,7 @@ from utils.const import BackendConstants
 
 class UserOtp(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    otp_secret = models.CharField(max_length=BackendConstants.otp_length)
+    otp_secret = models.CharField(max_length=50)
     valid_date = models.DateTimeField()
 
     def save(self, *args, **kwargs):

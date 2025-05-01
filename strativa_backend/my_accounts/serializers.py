@@ -50,9 +50,14 @@ class UserCardDetailsSerializer(serializers.ModelSerializer):
   
 class UserAccountsSerializer(serializers.ModelSerializer):
   account_type = serializers.SerializerMethodField()
+  bank = serializers.SerializerMethodField()
 
   def get_account_type(self, obj):
     serializer = AccountTypesSerializer(obj.account_type)
+    return serializer.data
+
+  def get_bank(self, obj):
+    serializer = StrativaBanksSerializer(obj.bank)
     return serializer.data
 
   class Meta:
@@ -64,3 +69,9 @@ class AccountTypesSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.AccountTypes
     fields = ['account_type']
+
+
+class StrativaBanksSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.StrativaBanks
+    exclude = ['id']

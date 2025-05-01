@@ -8,13 +8,17 @@ import pyotp
 from utils.const import BackendConstants
 from django.utils import timezone
 from my_accounts import models as my_accounts_models
-from utils.send_email import send_email
+from utils.celery_workers.send_email import send_email
 import pyotp
 from transfer import views as transfer_views
 from scheduled_payments import views as scheduled_payments_views
-        
+from rest_framework.permissions import AllowAny
+
 
 class VerifyOtpView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
     def post(self, request):
         # used for all otp verification
         account_number = request.data.get('account_number')
@@ -35,12 +39,13 @@ class VerifyOtpView(APIView):
                 digits=BackendConstants.otp_length,
                 interval=BackendConstants.otp_valid_duration
             )
-            if (totp.verify(otp) and user_otp.valid_date > timezone.now()):
+
+            if (totp.verify(otp, valid_window=2) and user_otp.valid_date > timezone.now()):
                 request.query_params._mutable = True
                 if (query == "peekbalance"):
                     request.query_params['account_number'] = account_number
                     peek_balance_view = PeekBalanceView.as_view()
-                    return peek_balance_view(request)
+                    return peek_balance_view(request._request)
                 
                 elif(query == "scheduledpayment"):
                     request.query_params['user_id'] = user_id
@@ -66,6 +71,9 @@ class VerifyOtpView(APIView):
         
 
 class CreateOtpView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
     def post(self, request):
         account_number = request.data.get('account_number')
 
@@ -76,8 +84,7 @@ class CreateOtpView(APIView):
             user_data = my_accounts_models.UserData.objects.get(user=account_data.user)
 
             user_otp, created = models.UserOtp.objects.update_or_create(
-                user=user_data.user, 
-                defaults={"otp_secret": pyotp.random_base32()}
+                user=user_data.user,   
             )
 
             otp = pyotp.TOTP(
@@ -85,8 +92,9 @@ class CreateOtpView(APIView):
                 digits=BackendConstants.otp_length,
                 interval=BackendConstants.otp_valid_duration
             ).now()
-        
-            send_email(
+
+            # .delay means it will be offloaded to celery
+            send_email.delay(
                 subject="Strativa OTP",
                 message=f"Your OTP is {otp}. This is valid for {BackendConstants.otp_valid_duration} seconds.",
                 recipients=[user_data.email]
@@ -100,6 +108,9 @@ class CreateOtpView(APIView):
 
 
 class PeekBalanceView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
     def post(self, request):
         account_number = request.query_params.get('account_number')
 

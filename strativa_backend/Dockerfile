@@ -6,6 +6,9 @@
 # Python base image
 FROM python:latest
 
+# Install postgres-client
+RUN apt-get update && apt-get install -y postgresql-client
+
 # Change to a directory
 WORKDIR /strativa_backend
 

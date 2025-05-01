@@ -35,6 +35,7 @@ class ScannedQrSubscreen extends StatelessWidget {
     String type = dataSplit[1];
     String accountNumber = dataSplit[2];
     String amountRequested = dataSplit[3];
+    String bank = dataSplit[4];
     
     void navigator() {
       context.read<ScanQrNotifier>().getScannerController.start();
@@ -146,11 +147,17 @@ class ScannedQrSubscreen extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               TransferModel model = TransferModel(
                                 transactionDetails: TransactionDetails(
-                                  transactionType: TransactionTypes.transfers.name, 
+                                  transactionType: TransactionTypes.transfers.name,
                                   amount: amountController.text, 
                                   note: noteController.text, 
-                                  sender: User(accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber),
-                                  receiver: User(accountNumber: accountNumber)
+                                  sender: User(
+                                    accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber,
+                                    bank: appTransferReceiveWidgetNotifier.getAccount.bank.bankName
+                                  ),
+                                  receiver: User(
+                                    accountNumber: accountNumber,
+                                    bank: bank
+                                  )
                                 )
                               );
                               String data = transferModelToJson(model);
@@ -175,8 +182,14 @@ class ScannedQrSubscreen extends StatelessWidget {
                                 transactionType: TransactionTypes.transfers.name, 
                                 amount: amountRequested, 
                                 note: "", 
-                                sender: User(accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber),
-                                receiver: User(accountNumber: accountNumber)
+                                sender: User(
+                                  accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber,
+                                  bank: appTransferReceiveWidgetNotifier.getAccount.bank.bankName
+                                ),
+                                receiver: User(
+                                  accountNumber: accountNumber,
+                                  bank: bank
+                                )
                               )
                             );
                             String data = transferModelToJson(model);

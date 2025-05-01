@@ -1,15 +1,53 @@
 import os
 import subprocess
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env.development")
+load_dotenv(dotenv_path=dotenv_path)
 
 def restart_db(project_path):
     if not os.path.isdir(project_path):
         print(f"Invalid project path: {project_path}")
         exit(1)
 
+    # For recreating postgres db
+    try:
+        db_name = os.environ.get('DB_NAME')
+        db_user = os.environ.get('DB_USER')
+        db_host = os.environ.get('DB_HOST')
+        db_port = os.environ.get('DB_PORT')
+        db_password = os.environ.get('DB_PASSWORD')
+
+        postgres_env = os.environ.copy()
+        postgres_env['PGPASSWORD'] = db_password
+
+        terminate_connections_command = f"""
+            psql -h '{db_host}' -p '{db_port}' -U '{db_user}' -d '{db_name}' -c "
+            SELECT pg_terminate_backend(pg_stat_activity.pid)
+            FROM pg_stat_activity
+            WHERE pg_stat_activity.datname = '{db_name}'
+                AND pid <> pg_backend_pid();"
+        """
+        drop_db_command = f"psql -h '{db_host}' -p '{db_port}' -U '{db_user}' -d 'template1' -c 'DROP DATABASE IF EXISTS {db_name} WITH (FORCE);'"
+        create_db_command = f"psql -h '{db_host}' -p '{db_port}' -U '{db_user}' -d 'template1' -c 'CREATE DATABASE {db_name}';"
+
+        if os.name == 'posix': # For posix/linux/unix
+            subprocess.run(["bash", "-c", terminate_connections_command], check=True, env=postgres_env)
+            subprocess.run(["bash", "-c", drop_db_command], check=True, env=postgres_env)
+            subprocess.run(["bash", "-c", create_db_command], check=True, env=postgres_env)
+        elif os.name == 'nt': # For windows
+            subprocess.run(["powershell", "-Command", terminate_connections_command], check=True, env=postgres_env)
+            subprocess.run(["powershell", "-Command", drop_db_command], check=True, env=postgres_env)
+            subprocess.run(["powershell", "-Command", create_db_command], check=True, env=postgres_env)
+    except subprocess.CalledProcessError as e:
+        print(f"Error while restarting db: {e}")
+        return
+
+
     for root, dirs, files in os.walk(project_path):
         if 'strativa_venv' in dirs:
             dirs.remove('strativa_venv')
-
+        
         if 'db.sqlite3' in files:
             try: 
                 db_path = os.path.join(root, 'db.sqlite3')
@@ -46,7 +84,7 @@ def restart_db(project_path):
             "django-admin loaddata pre_load_db"
         )
 
-        if os.name == 'posix':
+        if os.name == 'posix': # For posix/linux/unix
             subprocess.run(["bash", "-c", bash_command], check=True)
         elif os.name == 'nt': # For windows
             subprocess.run(["powershell", "-Command", powershell_command], check=True)

@@ -22,23 +22,27 @@ class AccountModalModel {
 
 class UserAccount {
     AccountType accountType;
+    Bank bank;
     String accountNumber;
     String balance;
 
     UserAccount({
         required this.accountType,
+        required this.bank,
         required this.accountNumber,
         required this.balance,
     });
 
     factory UserAccount.fromJson(Map<String, dynamic> json) => UserAccount(
         accountType: AccountType.fromJson(json["account_type"]),
+        bank: Bank.fromJson(json["bank"]),
         accountNumber: json["account_number"],
         balance: json["balance"],
     );
 
     Map<String, dynamic> toJson() => {
         "account_type": accountType.toJson(),
+        "bank": bank.toJson(),
         "account_number": accountNumber,
         "balance": balance,
     };
@@ -57,5 +61,21 @@ class AccountType {
 
     Map<String, dynamic> toJson() => {
         "account_type": accountType,
+    };
+}
+
+class Bank {
+    String bankName;
+
+    Bank({
+        required this.bankName,
+    });
+
+    factory Bank.fromJson(Map<String, dynamic> json) => Bank(
+        bankName: json["bank_name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "bank_name": bankName,
     };
 }

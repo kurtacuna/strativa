@@ -20,7 +20,7 @@ class GeneratedQrSubscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserDataModel userAccount = context.read<UserDataNotifier>().getUserData!;
+    UserDataModel userData = context.read<UserDataNotifier>().getUserData!;
 
     return Consumer<GenerateQrNotifier>(
       builder: (context, accountModalNotifier, child) {
@@ -53,7 +53,8 @@ class GeneratedQrSubscreen extends StatelessWidget {
                   type: account.accountType.accountType,
                   accountNumber: account.accountNumber,
                   amountRequested: accountModalNotifier.getAmountController.text,
-                  fullName: userAccount.fullName,
+                  fullName: userData.fullName,
+                  bank: account.bank.bankName
                 ),
         
                 SizedBox(height: 70.h),
