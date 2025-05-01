@@ -1,3 +1,5 @@
+<b>To run the backend, execute <code>docker-compose up</code> in the strativa_backend directory.</b>
+
 To clone, change directory to the desired directory and execute:<br>
     <code>git clone https://github.com/kurtacuna/strativa.git</code>
 
