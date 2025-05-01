@@ -34,12 +34,23 @@ def restart_db(project_path):
                         exit(1)
     
     try:
+        bash_command = (
+            "python manage.py makemigrations && "
+            "python manage.py migrate && "
+            "django-admin loaddata pre_load_db"
+        )
+
         powershell_command = (
             "python manage.py makemigrations; "
             "python manage.py migrate; "
             "django-admin loaddata pre_load_db"
         )
-        subprocess.run(["powershell", "-Command", powershell_command], check=True)
+
+        if os.name == 'posix':
+            subprocess.run(["bash", "-c", bash_command], check=True)
+        elif os.name == 'nt': # For windows
+            subprocess.run(["powershell", "-Command", powershell_command], check=True)
+
         print("Database Restarted")
     except subprocess.CalledProcessError as e:
         print(f"Error while restarting db: {e}")

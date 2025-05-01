@@ -1,0 +1,37 @@
+# To run, execute "docker-compose up"
+
+# Overview:
+# Starts a service for the postgres database,
+# then, starts the django app for development.
+
+services:
+  container_database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: strativa_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+      build: .
+      image: strativa-backend:latest
+      # restart_db.py is used for development only
+      command: sh -c "python restart_db.py && python manage.py runserver 0.0.0.0:8000"
+      environment:
+        PYTHONPATH: .
+        DJANGO_SETTINGS_MODULE: app_backend.settings
+      ports:
+        - '8000:8000'
+      depends_on:
+        - container_database
+      # /strativa_backend is the workdir defined in the Dockerfile
+      volumes:
+        - .:/strativa_backend
+
+# For container_database only
+volumes:
+  postgres_data:
