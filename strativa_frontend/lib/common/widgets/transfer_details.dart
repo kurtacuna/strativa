@@ -5,7 +5,26 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 
 class TransferDetails extends StatelessWidget {
-  const TransferDetails({super.key});
+  final String fromLabel;
+  final String fromAccountName;
+  final String fromAccountNumber;
+  final String toLabel;
+  final String toAccountName;
+  final String toAccountNumber;
+  final String currency;
+  final String amount;
+
+  const TransferDetails({
+    super.key,
+    required this.fromLabel,
+    required this.fromAccountName,
+    required this.fromAccountNumber,
+    required this.toLabel,
+    required this.toAccountName,
+    required this.toAccountNumber,
+    required this.currency,
+    required this.amount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +37,7 @@ class TransferDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppText.kTransferFrom,
+            fromLabel,
             style: styles.smallStyle.copyWith(
               color: ColorsCommon.kDarkGray,
               fontSize: 16.sp,
@@ -26,7 +45,7 @@ class TransferDetails extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            AppText.kSavingsAccount.toUpperCase(),
+            fromAccountName.toUpperCase(),
             style: styles.bigStyle.copyWith(
               color: ColorsCommon.kDark,
               fontWeight: FontWeight.w700,
@@ -36,12 +55,12 @@ class TransferDetails extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            '0637892064',
+            fromAccountNumber,
             style: styles.defaultStyle.copyWith(fontSize: 18.sp),
           ),
           SizedBox(height: 32.h),
           Text(
-            AppText.kTransferTo,
+            toLabel,
             style: styles.smallStyle.copyWith(
               color: ColorsCommon.kDarkGray,
               fontSize: 16.sp,
@@ -49,7 +68,7 @@ class TransferDetails extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            AppText.kTimeDepositAccount.toUpperCase(),
+            toAccountName.toUpperCase(),
             style: styles.bigStyle.copyWith(
               color: ColorsCommon.kDark,
               fontWeight: FontWeight.w700,
@@ -59,7 +78,7 @@ class TransferDetails extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            '0637892064',
+            toAccountNumber,
             style: styles.defaultStyle.copyWith(fontSize: 18.sp),
           ),
           SizedBox(height: 32.h),
@@ -75,14 +94,14 @@ class TransferDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "PHP ",
+                "$currency ",
                 style: styles.defaultStyle.copyWith(
                   color: ColorsCommon.kDark,
                   fontSize: 16.sp,
                 ),
               ),
               Text(
-                "1,000.00",
+                amount,
                 style: styles.amountStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   color: ColorsCommon.kDark,

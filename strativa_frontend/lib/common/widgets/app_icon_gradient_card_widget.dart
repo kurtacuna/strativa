@@ -14,7 +14,8 @@ class AppIconGradientCardWidget extends StatefulWidget {
   });
 
   @override
-  State<AppIconGradientCardWidget> createState() => _AppIconGradientCardWidgetState();
+  State<AppIconGradientCardWidget> createState() =>
+      _AppIconGradientCardWidgetState();
 }
 
 class _AppIconGradientCardWidgetState extends State<AppIconGradientCardWidget> {
@@ -36,7 +37,7 @@ class _AppIconGradientCardWidgetState extends State<AppIconGradientCardWidget> {
         child: Column(
           children: [
             AnimatedScale(
-              scale: _isHovered ? 1.05 : 1.0, 
+              scale: _isHovered ? 1.05 : 1.0,
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOut,
               child: Container(
@@ -75,10 +76,10 @@ class _AppIconGradientCardWidgetState extends State<AppIconGradientCardWidget> {
                 widget.label,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: _labelFontSize,
-                      color: _labelColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  fontSize: _labelFontSize,
+                  color: _labelColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],

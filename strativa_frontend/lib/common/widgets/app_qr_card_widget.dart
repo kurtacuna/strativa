@@ -28,9 +28,9 @@ class _AppQRCardWidgetState extends State<AppQRCardWidget> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
           child: Container(
-            height: 104.h,
+            height: 100.h,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             decoration: BoxDecoration(
               color: ColorsCommon.kAccentL2,
               borderRadius: BorderRadius.circular(6),
@@ -43,60 +43,47 @@ class _AppQRCardWidgetState extends State<AppQRCardWidget> {
                 ),
               ],
             ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Center(
-                          child: Image.asset(
-                            'assets/icons/QR_hands_icon.png',
-                            width: constraints.maxWidth * 0.9,
-                            height: constraints.maxHeight * 0.9,
-                            fit: BoxFit.contain,
-                          ),
-                        );
-                      },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 70.w,
+                  height: 70.w,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/icons/QR_hands_icon.png',
+                      width: 70.w,
+                      height: 70.w,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                SizedBox(width: 12.w),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Text(
-                              AppText.kScanGenerate,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.sp,
-                                    color: Colors.white,
-                                    letterSpacing: 0.8,
-                                  ),
-                            ),
-                            const SizedBox(width: 20),
-                            Text(
-                              ">",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24.sp,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        AppText.kScanGenerate,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.sp,
+                          color: Colors.white,
+                          letterSpacing: 0.8,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        ">",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.sp,
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

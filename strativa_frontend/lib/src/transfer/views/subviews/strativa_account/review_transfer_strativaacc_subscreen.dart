@@ -5,6 +5,8 @@ import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
 import 'package:strativa_frontend/common/widgets/transfer_info_masked_card.dart';
 import 'package:strativa_frontend/common/widgets/transfer_summary_with_fee.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:go_router/go_router.dart';
 
 class ReviewTransferStrativaaccSubscreen extends StatelessWidget {
   const ReviewTransferStrativaaccSubscreen({super.key});
@@ -92,7 +94,7 @@ class ReviewTransferStrativaaccSubscreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: ConfirmButton(
                   onTap: () {
-                    // handle confirm
+                    context.push(AppRoutes.kSuccessTransfer);
                   },
                 ),
               ),

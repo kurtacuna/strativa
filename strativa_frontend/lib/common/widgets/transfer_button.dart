@@ -55,7 +55,7 @@ class TransferButtons extends StatelessWidget {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                // TODO: Navigate to accounts screen
+                context.push(AppRoutes.kEntrypoint);
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: ColorsCommon.kAccentL3,

@@ -4,6 +4,8 @@ import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
 import 'package:strativa_frontend/common/widgets/transfer_summary_with_fee.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:go_router/go_router.dart';
 
 class ReviewTransferBankSubscreen extends StatelessWidget {
   const ReviewTransferBankSubscreen({super.key});
@@ -33,7 +35,6 @@ class ReviewTransferBankSubscreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
-              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -67,17 +68,15 @@ class ReviewTransferBankSubscreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // Transfer To (Chinabank)
               const TransferInfoCard(
                 label: AppText.kTransferTo,
                 iconPath: "assets/icons/transfer_to_icon.svg",
-                accountType: "Chinabank", // ✅ As requested
+                accountType: "Chinabank",
                 accountNumber: "083654926",
               ),
 
               const SizedBox(height: 32),
 
-              // Summary with Fee = ₱25.00
               const TransferSummaryWithFee(
                 transferAmount: "1,000.00",
                 feeAmount: "25.00",
@@ -86,12 +85,11 @@ class ReviewTransferBankSubscreen extends StatelessWidget {
 
               const SizedBox(height: 60),
 
-              // Confirm Button
               Align(
                 alignment: Alignment.center,
                 child: ConfirmButton(
                   onTap: () {
-                    // handle confirm
+                    context.push(AppRoutes.kSuccessTransfer);
                   },
                 ),
               ),
