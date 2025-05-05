@@ -5,24 +5,24 @@ import 'package:strativa_frontend/common/widgets/app_icon_gradient_card_widget.d
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
-//import 'package:strativa_frontend/common/const/kroutes.dart';
-//import 'package:go_router/go_router.dart';
 import 'package:go_router/go_router.dart';
-import 'package:strativa_frontend/common/const/kroutes.dart'; // Import your routes
+import 'package:strativa_frontend/common/const/kroutes.dart';
 
 class TransferScreen extends StatelessWidget {
   const TransferScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double spacing = 16.0;
+    final double spacing = 12.0.w;
     final styles = CustomTextStyles(context);
+
+    final double cardWidth = (1.sw - 2 * 20.w - 2 * spacing) / 3;
 
     return Scaffold(
       backgroundColor: ColorsLight.kWhite,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,9 +44,7 @@ class TransferScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                const AppQRCardWidget(
-                  onTap: _noop,
-                ),
+                const AppQRCardWidget(onTap: _noop),
                 SizedBox(height: 30.h),
                 Text(
                   AppText.kFundTransfer,
@@ -55,34 +53,47 @@ class TransferScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16.h),
+
+                /// Fund Transfer Options
                 Wrap(
                   spacing: spacing,
                   runSpacing: spacing,
                   children: [
-                    AppIconGradientCardWidget(
-                      iconPath: 'assets/icons/another_account.png',
-                      label: AppText.kToAnotherAccount,
-                      onTap: () {
-                        // TODO Navigate to Another Account Option
-                      },
+                    SizedBox(
+                      width: cardWidth,
+                      child: AppIconGradientCardWidget(
+                        iconPath: 'assets/icons/another_account.png',
+                        label: AppText.kToAnotherAccount,
+                        onTap: () {
+                          context.push(AppRoutes.kTransferToAccount);
+                        },
+                      ),
                     ),
-                    AppIconGradientCardWidget(
-                      iconPath: 'assets/icons/another_strativa_account.png',
-                      label: AppText.kToAnotherStrativaAccount,
-                      onTap: () {
-                        // TODO Navigate to Another Strativa Option
-                      },
+                    SizedBox(
+                      width: cardWidth,
+                      child: AppIconGradientCardWidget(
+                        iconPath: 'assets/icons/another_strativa_account.png',
+                        label: AppText.kToAnotherStrativaAccount,
+                        onTap: () {
+                          context.push(AppRoutes.kTransferToStrativaAccount);
+                        },
+                      ),
                     ),
-                    AppIconGradientCardWidget(
-                      iconPath: 'assets/icons/another_bank_account.png',
-                      label: AppText.kToAnotherBankAccount,
-                      onTap: () {
-                        // TODO Navigate to Another Bank Option
-                      },
+                    SizedBox(
+                      width: cardWidth,
+                      child: AppIconGradientCardWidget(
+                        iconPath: 'assets/icons/another_bank_account.png',
+                        label: AppText.kToAnotherBankAccount,
+                        onTap: () {
+                          context.push(AppRoutes.kTransferToBankAccount);
+                        },
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 30.h),
+
+                /// Deposit Section
                 Text(
                   AppText.kDeposit,
                   style: styles.biggerStyle.copyWith(
@@ -94,18 +105,21 @@ class TransferScreen extends StatelessWidget {
                   spacing: spacing,
                   runSpacing: spacing,
                   children: [
-                    AppIconGradientCardWidget(
-                      iconPath: 'assets/icons/deposit_check_icon.png',
-                      label: AppText.kDepositCheck,
-                      onTap: () {},
+                    SizedBox(
+                      width: cardWidth,
+                      child: AppIconGradientCardWidget(
+                        iconPath: 'assets/icons/deposit_check_icon.png',
+                        label: AppText.kDepositCheck,
+                        onTap: () {},
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-        )
-      )
+        ),
+      ),
     );
   }
 }

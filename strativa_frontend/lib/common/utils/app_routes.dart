@@ -34,6 +34,7 @@ import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/r
 import 'package:strativa_frontend/src/transfer/views/subviews/bank/review_transfer_bank_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/transfer_to_strativaacc_accnumber_subscreen.dart';
 import 'package:strativa_frontend/src/payload/views/subviews/bills/payload_bills_review_subscreen.dart';
+import 'package:strativa_frontend/src/transfer/views/success_transfer.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -156,7 +157,7 @@ final GoRouter _router = GoRouter(
       path: AppRoutes.kFaceScanVerification,
       builder: (context, state) => const FaceScanCameraScreen(),
     ),
-        GoRoute(
+    GoRoute(
       path: AppRoutes.kTransferToAccount,
       builder: (context, state) => const TransferToAccountSubscreen(),
     ),
@@ -170,9 +171,12 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kAccountDetails,
-      builder: (context, state) => const AccountDetails(bank: '',),
+      builder: (context, state) => const AccountDetails(bank: ''),
     ),
-
+    GoRoute(
+      path: AppRoutes.kSuccessTransfer,
+      builder: (context, state) => const SuccessTransferScreen(),
+    ),
   ],
 );
 
