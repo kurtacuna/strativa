@@ -8,21 +8,32 @@ import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/acc
 import 'package:http/http.dart' as http;
 
 class AppTransferReceiveWidgetNotifier with ChangeNotifier {
-  UserAccount? _account;
-  List<UserAccount>? _accounts;
+  UserAccount? _toAccount;
+  UserAccount? _fromAccount;
+  List<UserAccount> _accounts = [];
   bool _widgetIsBeingDisposed = false;
   bool _isLoading = false;
 
-  get getAccount => _account;
-  get getAccountsList => _accounts;
-  get getIsLoading => _isLoading;
+  UserAccount? get getToAccount => _toAccount;
+  UserAccount? get getFromAccount => _fromAccount;
+  List<UserAccount> get getAccountsList => _accounts;
+  bool get getIsLoading => _isLoading;
   
   set setWidgetIsBeingDisposed(bool state) {
     _widgetIsBeingDisposed = state;
   }
 
-  set setAccount(UserAccount? account) {
-    _account = account;
+  set setToAccount(UserAccount? toAccount) {
+    _toAccount = toAccount;
+    if (!_widgetIsBeingDisposed) {
+      notifyListeners();
+    } else {
+      _widgetIsBeingDisposed = false;
+    }
+  }
+
+  set setFromAccount(UserAccount? fromAccount) {
+    _fromAccount = fromAccount;
     if (!_widgetIsBeingDisposed) {
       notifyListeners();
     } else {
@@ -32,7 +43,7 @@ class AppTransferReceiveWidgetNotifier with ChangeNotifier {
 
   Future<void> fetchUserAccounts(BuildContext context) async {
     _isLoading = true;
-    _accounts = null;
+    _accounts = [];
     notifyListeners();
 
     try {

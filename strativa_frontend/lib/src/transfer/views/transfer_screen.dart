@@ -44,7 +44,11 @@ class TransferScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                const AppQRCardWidget(onTap: _noop),
+                AppQRCardWidget(
+                  onTap: () {
+                    context.push(AppRoutes.kQrScreen);
+                  }
+                ),
                 SizedBox(height: 30.h),
                 Text(
                   AppText.kFundTransfer,
@@ -123,5 +127,3 @@ class TransferScreen extends StatelessWidget {
     );
   }
 }
-
-void _noop() {}

@@ -12,7 +12,8 @@ Future<dynamic> showAppOtpModalBottomSheet({
   String? query,
   String? initialValue,
   bool? sendOtp,
-  String? transactionDetails
+  String? transactionDetails,
+  bool? enabled
 }) {
   return showModalBottomSheet(
     context: context,
@@ -21,7 +22,8 @@ Future<dynamic> showAppOtpModalBottomSheet({
       query: query,
       initialValue: initialValue,
       sendOtp: sendOtp,
-      transactionDetails: transactionDetails
+      transactionDetails: transactionDetails,
+      enabled: enabled,
     )
   );
 }
@@ -32,6 +34,7 @@ class ShowAppOtpModalBottomSheet extends StatefulWidget {
     this.initialValue,
     this.sendOtp,
     this.transactionDetails,
+    this.enabled,
     super.key
   });
 
@@ -39,6 +42,7 @@ class ShowAppOtpModalBottomSheet extends StatefulWidget {
   final String? initialValue;
   final bool? sendOtp;
   final String? transactionDetails;
+  final bool? enabled;
 
   @override
   State<ShowAppOtpModalBottomSheet> createState() => _ShowAppOtpModalBottomSheetState();
@@ -90,7 +94,8 @@ class _ShowAppOtpModalBottomSheetState extends State<ShowAppOtpModalBottomSheet>
                           accountNumberNode: _accountNumberNode,
                           accountNumberController: _accountNumberController,
                           initialValue: widget.initialValue,
-                          sendOtp: widget.sendOtp
+                          sendOtp: widget.sendOtp,
+                          enabled: widget.enabled
                         ),
                   
                         OtpPinputWidget(

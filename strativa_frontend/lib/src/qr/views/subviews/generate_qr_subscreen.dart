@@ -39,14 +39,14 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
     appTransferReceiveWidgetNotifier = Provider.of<AppTransferReceiveWidgetNotifier>(context, listen: false);
     generateQrNotifier = Provider.of<GenerateQrNotifier>(context, listen: false);
     generateQrNotifier!.setAmountController = _amountController;
-
+    
     super.initState();
   }
 
   @override
   void dispose() {
     appTransferReceiveWidgetNotifier!.setWidgetIsBeingDisposed = true;
-    appTransferReceiveWidgetNotifier!.setAccount = null;
+    appTransferReceiveWidgetNotifier!.setToAccount = null;
     generateQrNotifier!.setAmountController = null;
     _amountController.dispose();
 
@@ -59,7 +59,7 @@ class _GenerateQrSubscreenState extends State<GenerateQrSubscreen> {
       builder: (context, generateQrNotifier, child) {
         return Consumer<AppTransferReceiveWidgetNotifier>(
           builder: (context, appTransferReceiveWidgetNotifier, child) {
-            UserAccount? account = appTransferReceiveWidgetNotifier.getAccount;
+            UserAccount? account = appTransferReceiveWidgetNotifier.getToAccount;
 
             return Padding(
               padding: AppConstants.kAppPadding,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/kurls.dart';
 import 'package:strativa_frontend/common/utils/amount.dart';
@@ -34,7 +36,7 @@ class TransactionHistoryWidget extends StatelessWidget {
 
               return ListTile(
                 onTap: () {
-                  // TODO: go to specific transaction details
+                  context.push(AppRoutes.kTransactionPage(index));
                 },
                 leading: CircleAvatar(
                   radius: 25.sp,
@@ -90,6 +92,14 @@ class TransactionHistoryWidget extends StatelessWidget {
                       style: CustomTextStyles(context).numberStyle.copyWith(
                         fontSize: CustomTextStyles(context).defaultStyle.fontSize,
                         fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Text(
+                      context.watch<BalanceNotifier>().getShowBalance
+                        ? transaction.transaction.senderAccountNumber
+                        : "•••••••••••••••",
+                      style: CustomTextStyles(context).smallerStyle.copyWith(
+                        color: ColorsCommon.kDarkGray,
                       ),
                     ),
                     Text(

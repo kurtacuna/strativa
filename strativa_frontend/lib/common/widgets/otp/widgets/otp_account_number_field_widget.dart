@@ -18,6 +18,7 @@ class OtpAccountNumberFieldWidget extends StatefulWidget {
     required this.formKey,
     this.initialValue,
     this.sendOtp = false,
+    this.enabled,
     super.key
   });
 
@@ -26,6 +27,7 @@ class OtpAccountNumberFieldWidget extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final String? initialValue;
   final bool? sendOtp;
+  final bool? enabled;
 
   @override
   State<OtpAccountNumberFieldWidget> createState() => _OtpAccountNumberFieldWidgetState();
@@ -81,6 +83,7 @@ class _OtpAccountNumberFieldWidgetState extends State<OtpAccountNumberFieldWidge
                   hintText: AppText.kAccountNumber,
                   initialValue: widget.initialValue,
                   validatorText: AppText.kPleaseEnterAValidAccountNumber,
+                  enabled: widget.enabled,
                 ),
               ),
   

@@ -54,16 +54,20 @@ class TransactionDetails {
 
 class User {
     String accountNumber;
+    String bank;
 
     User({
         required this.accountNumber,
+        required this.bank,
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         accountNumber: json["account_number"],
+        bank: json["bank"]
     );
 
     Map<String, dynamic> toJson() => {
         "account_number": accountNumber,
+        "bank": bank
     };
 }

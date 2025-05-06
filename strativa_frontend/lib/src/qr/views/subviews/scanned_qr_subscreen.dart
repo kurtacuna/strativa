@@ -16,6 +16,7 @@ import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_w
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/common/widgets/otp/widgets/app_otp_modal_bottom_sheet.dart';
 import 'package:strativa_frontend/src/qr/controllers/scan_qr_notifier.dart';
+import 'package:strativa_frontend/src/qr/models/scanned_account_model.dart';
 import 'package:strativa_frontend/src/qr/widgets/scanned_qr_details_widget.dart';
 import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
 import 'package:strativa_frontend/src/transfer/models/transfer_model.dart';
@@ -31,10 +32,14 @@ class ScannedQrSubscreen extends StatelessWidget {
     String scannedQrData = context.read<ScanQrNotifier>().getScannedQrData;
 
     List dataSplit = scannedQrData.split(', ');
-    String fullName = dataSplit[0].toUpperCase();
-    String type = dataSplit[1];
-    String accountNumber = dataSplit[2];
-    String amountRequested = dataSplit[3];
+    
+    ScannedAccountModel scannedAccount = ScannedAccountModel(
+      fullname: dataSplit[0].toUpperCase(),
+      accountType: dataSplit[1],
+      accountNumber: dataSplit[2],
+      amountRequested: dataSplit[3],
+      bank: dataSplit[4]
+    );
     
     void navigator() {
       context.read<ScanQrNotifier>().getScannerController.start();
@@ -42,7 +47,7 @@ class ScannedQrSubscreen extends StatelessWidget {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<TransferNotifier>().checkIfAccountExists(context, accountNumber);
+      context.read<TransferNotifier>().checkIfAccountExists(context, scannedAccount.accountNumber);
     });
 
     return Scaffold(
@@ -100,16 +105,16 @@ class ScannedQrSubscreen extends StatelessWidget {
                 children: [
                   // Scanned QR Details
                   ScannedQrDetailsWidget(
-                    fullName: fullName,
-                    type: type,
-                    accountNumber: accountNumber,
-                    amountRequested: amountRequested
+                    fullName: scannedAccount.fullname,
+                    type: scannedAccount.accountType,
+                    accountNumber: scannedAccount.accountNumber,
+                    amountRequested: scannedAccount.amountRequested
                   ),
 
                   SizedBox(height: 50.h),
 
                   // Labeled Amount with Note Fields
-                 amountRequested.isEmpty
+                 scannedAccount.amountRequested.isEmpty
                     ? Column(
                       children: [
                         Form(
@@ -131,7 +136,8 @@ class ScannedQrSubscreen extends StatelessWidget {
                     builder: (context, appTransferReceiveWidgetNotifier, child) {
                       return AppButtonWidget(
                         onTap: () async {
-                          if (appTransferReceiveWidgetNotifier.getAccount == null) {
+                          // Check if there is no account to transfer from
+                          if (appTransferReceiveWidgetNotifier.getFromAccount == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               appErrorSnackBarWidget(
                                 context: context, 
@@ -141,24 +147,46 @@ class ScannedQrSubscreen extends StatelessWidget {
                             return;
                           }
 
+                          // Check if both accounts to transfer from and to are the same
+                          if (
+                            appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber == scannedAccount.accountNumber &&
+                            appTransferReceiveWidgetNotifier.getFromAccount!.bank.bankName == scannedAccount.bank
+                          ) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              appErrorSnackBarWidget(
+                                context: context, 
+                                text: AppText.kCantTransferToTheSameAccount
+                              )
+                            );
+
+                            return;
+                          }
+
                           // With no amount requested
-                          if (amountRequested.isEmpty) {
+                          if (scannedAccount.amountRequested.isEmpty) {
                             if (formKey.currentState!.validate()) {
                               TransferModel model = TransferModel(
                                 transactionDetails: TransactionDetails(
-                                  transactionType: TransactionTypes.transfers.name, 
+                                  transactionType: TransactionTypes.transfers.name,
                                   amount: amountController.text, 
                                   note: noteController.text, 
-                                  sender: User(accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber),
-                                  receiver: User(accountNumber: accountNumber)
+                                  sender: User(
+                                    accountNumber: appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
+                                    bank: appTransferReceiveWidgetNotifier.getFromAccount!.bank.bankName
+                                  ),
+                                  receiver: User(
+                                    accountNumber: scannedAccount.accountNumber,
+                                    bank: scannedAccount.bank
+                                  )
                                 )
                               );
                               String data = transferModelToJson(model);
                               int? statusCode = await showAppOtpModalBottomSheet(
                                 context: context,
-                                initialValue: appTransferReceiveWidgetNotifier.getAccount.accountNumber,
+                                initialValue: appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
                                 sendOtp: true,
-                                transactionDetails: data
+                                transactionDetails: data,
+                                enabled: true,
                               );
 
                               if (statusCode == 200) {
@@ -173,19 +201,26 @@ class ScannedQrSubscreen extends StatelessWidget {
                             TransferModel model = TransferModel(
                               transactionDetails: TransactionDetails(
                                 transactionType: TransactionTypes.transfers.name, 
-                                amount: amountRequested, 
+                                amount: scannedAccount.amountRequested, 
                                 note: "", 
-                                sender: User(accountNumber: appTransferReceiveWidgetNotifier.getAccount.accountNumber),
-                                receiver: User(accountNumber: accountNumber)
+                                sender: User(
+                                  accountNumber: appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
+                                  bank: appTransferReceiveWidgetNotifier.getFromAccount!.bank.bankName
+                                ),
+                                receiver: User(
+                                  accountNumber: scannedAccount.accountNumber,
+                                  bank: scannedAccount.bank
+                                )
                               )
                             );
                             String data = transferModelToJson(model);
 
                             int? statusCode = await showAppOtpModalBottomSheet(
                               context: context,
-                              initialValue: appTransferReceiveWidgetNotifier.getAccount.accountNumber,
+                              initialValue: appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
                               sendOtp: true,
-                              transactionDetails: data
+                              transactionDetails: data,
+                              enabled: false
                             );
 
                             if (statusCode == 200) {

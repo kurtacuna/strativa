@@ -6,29 +6,47 @@ import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 
 class SuccessTransferScreen extends StatelessWidget {
-  const SuccessTransferScreen({super.key});
+  const SuccessTransferScreen({
+    required this.fromAccountType,
+    required this.fromAccountNumber,
+    required this.toAccountType,
+    required this.toAccountNumber,
+    required this.amount,
+    this.note,
+    super.key
+  });
+
+  final String fromAccountType;
+  final String fromAccountNumber;
+  final String toAccountType;
+  final String toAccountNumber;
+  final String amount;
+  final String? note;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsCommon.kWhite,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            SuccessMessage(),
-            TransferDetails(
-              fromLabel: AppText.kTransferFrom,
-              fromAccountName: 'Savings Account',
-              fromAccountNumber: '0637892064',
-              toLabel: AppText.kTransferTo,
-              toAccountName: 'Time Deposit Account',
-              toAccountNumber: '1897421023',
-              currency: 'PHP',
-              amount: '1,000.00',
-            ),
-            TransferButtons(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SuccessMessage(),
+              TransferDetails(
+                fromLabel: AppText.kTransferFrom,
+                fromAccountName: fromAccountType,
+                fromAccountNumber: fromAccountNumber,
+                toLabel: AppText.kTransferTo,
+                toAccountName: toAccountType,
+                toAccountNumber: toAccountNumber,
+                currency: 'PHP',
+                amount: amount,
+                note: note
+              ),
+              TransferButtons(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,0 +1,83 @@
+# To run, execute "docker-compose up --build"
+# (add --build option to rebuild images that have code changes)
+
+# Overview:
+# Starts a service for the postgres database,
+# then, starts the django app for development.
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: strativa_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d strativa_db"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    ports:
+      - '8081:8081'
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    depends_on:
+      - redis
+
+
+  strativa_backend:
+      build: .
+      image: strativa-backend:latest
+      command: sh -c "python manage.py runserver 0.0.0.0:8000"
+      
+      # restart_db.py is used for development only
+
+      # Uncomment if executing restart_db.py on container start up.
+      # command: sh -c "python restart_db.py && python manage.py runserver 0.0.0.0:8000"
+
+      # Else, execute "docker-compose exec -it strativa_backend bash" to open a bash terminal for the backend container
+      # to manually execute "python restart_db.py"
+      
+      environment:
+        PYTHONPATH: .
+        DJANGO_SETTINGS_MODULE: app_backend.settings
+        PYTHONUNBUFFERED: 1
+      ports:
+        - '8000:8000'
+      depends_on:
+        postgres:
+          condition: service_healthy
+          restart: true
+        redis:
+          condition: service_started
+      # /strativa_backend is the workdir defined in the Dockerfile
+      volumes:
+        - .:/strativa_backend
+
+  celery_worker:
+    image: strativa-backend:latest
+    command: sh -c "celery -A app_backend.celery worker -l info -P gevent"
+    environment:
+      PYTHONPATH: .
+      DJANGO_SETTINGS_MODULE: app_backend.settings
+    depends_on:
+      - strativa_backend
+      - redis
+    volumes:
+        - .:/strativa_backend
+
+# For postgres only
+volumes:
+  postgres_data:

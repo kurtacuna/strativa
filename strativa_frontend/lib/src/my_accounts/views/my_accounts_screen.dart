@@ -46,7 +46,7 @@ class MyAccountsScreen extends StatelessWidget {
           userDataNotifier.getIsLoading || 
           transactionTabNotifier.getUserTransactions == null || 
           transactionTabNotifier.getIsLoading ||
-          appTransferReceiveWidgetNotifier.getAccountsList == null ||
+          appTransferReceiveWidgetNotifier.getAccountsList == [] ||
           appTransferReceiveWidgetNotifier.getIsLoading
         ) {
           return Scaffold(

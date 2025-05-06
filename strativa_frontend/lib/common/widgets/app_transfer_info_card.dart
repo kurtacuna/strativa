@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 
 class TransferInfoCard extends StatelessWidget {
@@ -7,6 +8,7 @@ class TransferInfoCard extends StatelessWidget {
   final String iconPath;
   final String accountType;
   final String accountNumber;
+  final String? note;
 
   const TransferInfoCard({
     super.key,
@@ -14,6 +16,7 @@ class TransferInfoCard extends StatelessWidget {
     required this.iconPath,
     required this.accountType,
     required this.accountNumber,
+    this.note
   });
 
   @override
@@ -49,6 +52,12 @@ class TransferInfoCard extends StatelessWidget {
             color: Colors.black54,
           ),
         ),
+        note == null || note == ''
+          ? Container()
+          : Text(
+            "Note: $note",
+            style: CustomTextStyles(context).defaultStyle
+          ),
         const Divider(color: ColorsCommon.kGray, thickness: 1, height: 24),
       ],
     );

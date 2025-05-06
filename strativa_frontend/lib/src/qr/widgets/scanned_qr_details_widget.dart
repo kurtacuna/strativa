@@ -48,7 +48,7 @@ class _ScannedQrDetailsWidgetState extends State<ScannedQrDetailsWidget> {
   @override
   void dispose() {
     notifier!.setWidgetIsBeingDisposed = true;
-    notifier!.setAccount = null;
+    notifier!.setFromAccount = null;
 
     super.dispose();
   }
@@ -57,7 +57,7 @@ class _ScannedQrDetailsWidgetState extends State<ScannedQrDetailsWidget> {
   Widget build(BuildContext context) {
     return Consumer<AppTransferReceiveWidgetNotifier>(
       builder: (context, appTransferReceiveWidgetNotifier, child) {
-        UserAccount? account = appTransferReceiveWidgetNotifier.getAccount;
+        UserAccount? account = appTransferReceiveWidgetNotifier.getFromAccount;
 
         return Container(
           width: ScreenUtil().screenWidth,

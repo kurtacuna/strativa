@@ -2,6 +2,7 @@ enum TransactionTypes {
   all,
   food,
   shopping,
+  bills,
   transport,
   transfers,
   other
@@ -10,6 +11,7 @@ enum TransactionTypes {
 enum VerifyOtpTypes {
   common,
   peekbalance,
+  scheduledpayment
 }
 
 enum AppTransferReceiveWidgetTypes {

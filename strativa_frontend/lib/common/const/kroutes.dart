@@ -43,4 +43,6 @@ class AppRoutes {
       '/payload_bills_review_subscreen';
   static const String kScannedQrSubscreen = '/scanned_qr';
   static const String kSuccessTransfer = '/success_transfer';
+  static const String kTransactionPageString = '/transaction/:index';
+  static String kTransactionPage(int index) => '/transaction/$index';
 }

@@ -35,6 +35,7 @@ import 'package:strativa_frontend/src/transfer/views/subviews/bank/review_transf
 import 'package:strativa_frontend/src/transfer/views/subviews/strativa_account/transfer_to_strativaacc_accnumber_subscreen.dart';
 import 'package:strativa_frontend/src/payload/views/subviews/bills/payload_bills_review_subscreen.dart';
 import 'package:strativa_frontend/src/transfer/views/success_transfer.dart';
+import 'package:strativa_frontend/src/transaction_history/widgets/transaction_item_page_widget.dart';
 
 final GoRouter _router = GoRouter(
   navigatorKey: AppGlobalKeys.navigatorKey,
@@ -78,7 +79,15 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kReviewTransfer,
-      builder: (context, state) => const ReviewTransferSubscreen(),
+      builder: (context, state) {
+        Map<String, dynamic> obj = state.extra as Map<String, dynamic>;
+        return ReviewTransferSubscreen(
+          toAccount: obj["toAccount"],
+          fromAccount: obj["fromAccount"],
+          amount: obj["amount"],
+          note: obj["note"]
+        );
+      },
     ),
     GoRoute(
       path: AppRoutes.kReviewTransferStrativaAccount,
@@ -175,7 +184,24 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kSuccessTransfer,
-      builder: (context, state) => const SuccessTransferScreen(),
+      builder: (context, state) {
+        Map<String, dynamic> obj = state.extra as Map<String, dynamic>;
+        return SuccessTransferScreen(
+          fromAccountType: obj["fromAccountType"],
+          fromAccountNumber: obj["fromAccountNumber"],
+          toAccountType: obj["toAccountType"],
+          toAccountNumber: obj["toAccountNumber"],
+          amount: obj["amount"],
+          note: obj["note"]
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.kTransactionPageString,
+      builder: (context, GoRouterState state) {
+        final String? transactionIndex = state.pathParameters['index'];
+        return TransactionItemPageWidget(index: transactionIndex!);
+      }
     ),
   ],
 );

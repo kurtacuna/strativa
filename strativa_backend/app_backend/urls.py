@@ -23,14 +23,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('auth/', include('djoser.urls')),
-    # path('auth/', include('djoser.urls.authtoken'))
     path('auth/', include('djoser.urls.jwt')),
 
+    # Every transaction must go through otp verification
     path('otp/', include('otp.urls')),
 
     path('api/my_accounts/', include('my_accounts.urls')),
     path('api/transaction/', include('transaction.urls')),
-    # path('api/transfer/', include('transfer.urls')),
+    path('api/other_banks/', include('other_banks.urls')),
+    path('api/scheduled_payments/', include('scheduled_payments.urls')),
+
+
+
+    # For testing only
+    path('api/transfer/', include('transfer.urls')),
 ]
 
 # For fetching images

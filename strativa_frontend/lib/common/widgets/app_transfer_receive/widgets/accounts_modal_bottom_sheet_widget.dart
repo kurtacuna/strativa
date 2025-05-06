@@ -28,7 +28,7 @@ Future<dynamic> showAccountsModalBottomSheet({
         builder: (context, appTransferReceiveWidgetNotifier, child) {
           List<UserAccount>? accounts = appTransferReceiveWidgetNotifier.getAccountsList;
 
-          if (appTransferReceiveWidgetNotifier.getAccountsList == null) {
+          if (appTransferReceiveWidgetNotifier.getAccountsList == []) {
             return SizedBox(
               width: double.infinity,
               height: 200.h,
@@ -40,7 +40,7 @@ Future<dynamic> showAccountsModalBottomSheet({
             type: type, 
             fromTitle: fromTitle,
             toTitle: toTitle,
-            accounts: accounts!
+            accounts: accounts
           );
         },
       );
@@ -145,7 +145,11 @@ class _AccountsModalBottomSheetState extends State<AccountsModalBottomSheet> {
                           )
                           : null,
                         onTap: () {
-                          context.read<AppTransferReceiveWidgetNotifier>().setAccount = widget.accounts[index];
+                          if (widget.type == AppTransferReceiveWidgetTypes.myaccounts.name) {
+                            context.read<AppTransferReceiveWidgetNotifier>().setFromAccount = widget.accounts[index];
+                          } else if (widget.type == AppTransferReceiveWidgetTypes.otheraccounts.name) {
+                            context.read<AppTransferReceiveWidgetNotifier>().setToAccount = widget.accounts[index];
+                          }
                           Navigator.of(context).pop();
                         },
                         child: Ink (

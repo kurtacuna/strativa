@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:strativa_frontend/common/utils/check_transfer_details.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
 
 class TransferToAccountSubscreen extends StatefulWidget {
   const TransferToAccountSubscreen({super.key});
@@ -11,34 +17,43 @@ class TransferToAccountSubscreen extends StatefulWidget {
       _TransferToAccountSubscreenState();
 }
 
-class Account {
-  final String type;
-  final String number;
-  final String balance;
-
-  Account({required this.type, required this.number, required this.balance});
-}
-
 class _TransferToAccountSubscreenState
     extends State<TransferToAccountSubscreen> {
-  Account? selectedFromAccount;
-  Account? selectedToAccount;
+  UserAccount? selectedFromAccount;
+  UserAccount? selectedToAccount;
 
-  final List<Account> accounts = [
-    Account(type: 'SAVINGS ACCOUNT', number: '0637892064', balance: '2,678.00'),
-    Account(
-      type: 'CHECKING ACCOUNT',
-      number: '0928374258',
-      balance: '70,200.00',
-    ),
-    Account(
-      type: 'TIME DEPOSIT ACCOUNT',
-      number: '083654926',
-      balance: '6,758.00',
-    ),
-  ];
+  late final GlobalKey<FormState> _formKey = AppGlobalKeys.transferToOwnAccountKey;
+  late final TextEditingController _amountController = TextEditingController();
+  late final TextEditingController _noteController = TextEditingController();
+
+  late final AppTransferReceiveWidgetNotifier appTransferReceiveWidgetNotifier;
+
+  @override
+  void initState() {
+    appTransferReceiveWidgetNotifier = Provider.of<AppTransferReceiveWidgetNotifier>(
+      context,
+      listen: false
+    );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _noteController.dispose();
+    
+    appTransferReceiveWidgetNotifier.setWidgetIsBeingDisposed = true;
+    appTransferReceiveWidgetNotifier.setFromAccount = null;
+    appTransferReceiveWidgetNotifier.setWidgetIsBeingDisposed = true;
+    appTransferReceiveWidgetNotifier.setToAccount = null;
+
+    super.dispose();
+  }
 
   void _showAccountSelector(BuildContext context, bool isFrom) {
+    List<UserAccount> accounts = context.read<AppTransferReceiveWidgetNotifier>().getAccountsList;
+
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -81,21 +96,23 @@ class _TransferToAccountSubscreenState
               const Divider(),
               ...accounts.map((account) {
                 return _AccountTile(
-                  title: account.type,
-                  accountNumber: account.number,
+                  title: account.accountType.accountType,
+                  accountNumber: account.accountNumber,
                   balance: account.balance,
                   onTap: () {
                     setState(() {
                       if (isFrom) {
                         selectedFromAccount = account;
+                        context.read<AppTransferReceiveWidgetNotifier>().setFromAccount = account;
                       } else {
                         selectedToAccount = account;
+                        context.read<AppTransferReceiveWidgetNotifier>().setToAccount = account;
                       }
                     });
                     Navigator.pop(context);
                   },
                 );
-              }).toList(),
+              })
             ],
           ),
         );
@@ -126,68 +143,60 @@ class _TransferToAccountSubscreenState
           children: [
             _TransferTile(
               label: 'Transfer from',
-              title: selectedFromAccount?.type ?? 'Select account',
+              title: selectedFromAccount?.accountType.accountType ?? 'Select account',
               subtitle:
                   selectedFromAccount != null
-                      ? '•••${selectedFromAccount!.number.substring(selectedFromAccount!.number.length - 4)} • PHP ${selectedFromAccount!.balance}'
+                      ? '•••${selectedFromAccount!.accountNumber
+                        .substring(selectedFromAccount!.accountNumber.length - 4)} • PHP ${selectedFromAccount!.balance}'
                       : null,
               onTap: () => _showAccountSelector(context, true),
             ),
             const SizedBox(height: 12),
             _TransferTile(
               label: 'Transfer to',
-              title: selectedToAccount?.type ?? 'Select account',
+              title: selectedToAccount?.accountType.accountType ?? 'Select account',
               subtitle:
                   selectedToAccount != null
-                      ? '•••${selectedToAccount!.number.substring(selectedToAccount!.number.length - 4)} • PHP ${selectedToAccount!.balance}'
+                      ? '•••${selectedToAccount!.accountNumber
+                        .substring(selectedToAccount!.accountNumber.length - 4)} • PHP ${selectedToAccount!.balance}'
                       : null,
               onTap: () => _showAccountSelector(context, false),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Transfer amount',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: const [
-                  Text('PHP', style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '0.00',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                hintText: 'Add Note (optional)',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+            Form(
+              key: _formKey,
+              child: AppLabeledAmountNoteFieldWidget(
+                text: "Transfer Amount", 
+                amountController: _amountController,
+                addNote: true,
+                addNoteController: _noteController,
+              )
             ),
             const Spacer(),
             AppButtonWidget(
               text: 'Continue',
               onTap: () {
-                context.push(AppRoutes.kReviewTransfer);
+                int statusCode = checkTransferDetails(
+                  context: context, 
+                  fromAccount: selectedFromAccount, 
+                  toAccount: selectedToAccount, 
+                  amount: _amountController.text,
+                  formKey: _formKey
+                );
+                // Fail
+                if (statusCode == -1) {
+                  return;
+                }
+
+                context.push(
+                  AppRoutes.kReviewTransfer,
+                  extra: {
+                    "fromAccount": selectedFromAccount,
+                    "toAccount": selectedToAccount,
+                    "amount": _amountController.text,
+                    "note": _noteController.text
+                  }
+                );
               },
             ),
           ],

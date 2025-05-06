@@ -4,7 +4,7 @@ String daysPastSinceDate(DateTime date) {
   int days = DateTime.now().difference(date).inDays;
 
   if (days == 0) {
-    return "Today, ${DateTime.now()}";
+    return "Today, ${DateFormat('yMMMMd').format(DateTime.now())}";
   } else {
     return "$days day${days > 1 ? "s" : ""} ago, ${DateFormat('yMMMMd').format(date)}";
   }

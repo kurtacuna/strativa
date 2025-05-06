@@ -43,7 +43,7 @@ class TransferButtons extends StatelessWidget {
                   ),
                   onPressed: () {
                     bottomNavNotifier.setIndex = 1;
-                    context.push(AppRoutes.kEntrypoint);
+                    context.go(AppRoutes.kEntrypoint);
                   },
                   child: Text(
                     AppText.kNewTransfer,
@@ -61,7 +61,7 @@ class TransferButtons extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {
                     bottomNavNotifier.setIndex = 0;
-                    context.push(AppRoutes.kEntrypoint);
+                    context.go(AppRoutes.kEntrypoint);
                   },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: ColorsCommon.kAccentL3,

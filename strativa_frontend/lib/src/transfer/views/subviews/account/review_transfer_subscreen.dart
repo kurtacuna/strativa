@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
@@ -7,9 +8,23 @@ import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
+import 'package:strativa_frontend/common/widgets/otp/widgets/app_otp_modal_bottom_sheet.dart';
+import 'package:strativa_frontend/src/transfer/models/transfer_model.dart';
 
 class ReviewTransferSubscreen extends StatelessWidget {
-  const ReviewTransferSubscreen({super.key});
+  const ReviewTransferSubscreen({
+    required this.fromAccount,
+    required this.toAccount,
+    required this.amount,
+    this.note,
+    super.key
+  });
+
+  final UserAccount fromAccount;
+  final UserAccount toAccount;
+  final String amount;
+  final String? note;
 
   @override
   Widget build(BuildContext context) {
@@ -50,26 +65,29 @@ class ReviewTransferSubscreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  EditButton(onTap: () {}),
+                  EditButton(onTap: () {
+                    context.pop();
+                  }),
                 ],
               ),
               const SizedBox(height: 40),
 
               // Transfer From
-              const TransferInfoCard(
+              TransferInfoCard(
                 label: AppText.kTransferFrom,
                 iconPath: "assets/icons/transfer_from_icon.svg",
-                accountType: AppText.kSavingsAccount,
-                accountNumber: "0637892064",
+                accountType: fromAccount.accountType.accountType,
+                accountNumber: fromAccount.accountNumber,
               ),
               const SizedBox(height: 20),
 
               // Transfer To
-              const TransferInfoCard(
+              TransferInfoCard(
                 label: AppText.kTransferTo,
                 iconPath: "assets/icons/transfer_to_icon.svg",
-                accountType: AppText.kTimeDepositAccount,
-                accountNumber: "083654926",
+                accountType: toAccount.accountType.accountType,
+                accountNumber: toAccount.accountNumber,
+                note: note,
               ),
               const SizedBox(height: 32),
 
@@ -100,13 +118,13 @@ class ReviewTransferSubscreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _buildAmountRow(AppText.kTransferAmount, "1,000.00"),
+                    _buildAmountRow(AppText.kTransferAmount, amount),
                     const Divider(
                       color: ColorsCommon.kGray, // pulled from kcolors.dart
                       thickness: 1,
                       height: 24,
                     ),
-                    _buildAmountRow(AppText.kTotal, "1,000.00"),
+                    _buildAmountRow(AppText.kTotal, amount),
                   ],
                 ),
               ),
@@ -116,8 +134,47 @@ class ReviewTransferSubscreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: ConfirmButton(
-                  onTap: () {
-                    context.push(AppRoutes.kSuccessTransfer);
+                  onTap: () async {
+                    TransferModel model = TransferModel(
+                      transactionDetails: TransactionDetails(
+                        transactionType: TransactionTypes.transfers.name, 
+                        amount: amount, 
+                        note: note ?? "", 
+                        sender: User(
+                          accountNumber: fromAccount.accountNumber,
+                          bank: fromAccount.bank.bankName
+                        ), 
+                        receiver: User(
+                          accountNumber: toAccount.accountNumber,
+                          bank: toAccount.bank.bankName
+                        )
+                      )
+                    );
+                    String data = transferModelToJson(model);
+
+                    int? statusCode = await showAppOtpModalBottomSheet(
+                      context: context,
+                      initialValue: fromAccount.accountNumber,
+                      sendOtp: true,
+                      transactionDetails: data,
+                      enabled: false
+                    );
+
+                    if (statusCode == 200) {
+                      if (context.mounted) {
+                        context.push(
+                          AppRoutes.kSuccessTransfer,
+                          extra: {
+                            "fromAccountType": fromAccount.accountType.accountType,
+                            "fromAccountNumber": fromAccount.accountNumber,
+                            "toAccountType": toAccount.accountType.accountType,
+                            "toAccountNumber": toAccount.accountNumber,
+                            "amount": amount,
+                            "note": note
+                          }
+                        );
+                      }
+                    }
                   },
                 ),
               ),

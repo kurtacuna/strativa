@@ -96,4 +96,10 @@ class AppText {
   static const kToAnotherBankAccount = "To another bank account";
   static const kDeposit = "Deposit";
   static const kDepositCheck = "Deposit Check";
+  static const kSentTo = "Sent To";
+  static const kReceivedFrom = "Received From";
+  static const kClose = "Close";
+  static const kAnAmountOf = "An amount of";
+  static const kCantTransferToTheSameAccount = "Can't transfer to the same account";
+  static const kPleaseSelectAnAccountToTransferFromAndTo = "Please select an account to transfer from and to";
 }

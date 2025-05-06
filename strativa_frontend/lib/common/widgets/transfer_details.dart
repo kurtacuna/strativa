@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
 import 'package:strativa_frontend/common/const/app_theme/custom_text_styles.dart';
+import 'package:strativa_frontend/common/utils/amount.dart';
 
 class TransferDetails extends StatelessWidget {
   final String fromLabel;
@@ -13,6 +14,7 @@ class TransferDetails extends StatelessWidget {
   final String toAccountNumber;
   final String currency;
   final String amount;
+  final String? note;
 
   const TransferDetails({
     super.key,
@@ -24,6 +26,7 @@ class TransferDetails extends StatelessWidget {
     required this.toAccountNumber,
     required this.currency,
     required this.amount,
+    this.note
   });
 
   @override
@@ -81,6 +84,13 @@ class TransferDetails extends StatelessWidget {
             toAccountNumber,
             style: styles.defaultStyle.copyWith(fontSize: 18.sp),
           ),
+          SizedBox(height: 5.h),
+          note == null || note == ''
+            ? Container()
+            : Text(
+                "Note: $note",
+                style: CustomTextStyles(context).bigStyle
+              ),
           SizedBox(height: 32.h),
           Text(
             AppText.kTransferAmount,
@@ -101,7 +111,7 @@ class TransferDetails extends StatelessWidget {
                 ),
               ),
               Text(
-                amount,
+                addCommaToAmount(double.parse(amount)),
                 style: styles.amountStyle.copyWith(
                   fontWeight: FontWeight.w600,
                   color: ColorsCommon.kDark,

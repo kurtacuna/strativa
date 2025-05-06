@@ -16,6 +16,7 @@ class UserIdFieldWidget extends StatelessWidget {
     this.showPrefixIcon = true,
     this.initialValue,
     this.validatorText,
+    this.enabled,
     super.key
   });
 
@@ -28,6 +29,7 @@ class UserIdFieldWidget extends StatelessWidget {
   final bool showPrefixIcon;
   final String? initialValue;
   final String? validatorText;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,10 @@ class UserIdFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         // TODO: handle error messages
         // errorText: ,
+        contentPadding: EdgeInsets.only(
+          left: 15
+        ),
+        enabled: enabled ?? true,
         hintText: hintText ?? AppText.kHintUserId,
         prefixIcon: showPrefixIcon
           ? prefixIcon ?? Padding(

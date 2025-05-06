@@ -21,6 +21,7 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
     required this.accountNumber,
     required this.amountRequested,
     required this.fullName,
+    required this.bank,
     super.key
   });
 
@@ -28,6 +29,7 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
   final String accountNumber;
   final String amountRequested;
   final String fullName;
+  final String bank;
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +56,14 @@ class GeneratedQrDetailsWidget extends StatelessWidget {
               children: [
                 SizedBox(height: 40.h),
 
-                // TODO: hash details?
+                // TODO: encrypt details?
                 // QR Code
                 Center(
                   child: SizedBox(
                     width: 200,
                     height: 200,
                     child: PrettyQrView.data(
-                      data: "$fullName, $type, $accountNumber, $amountRequested",
+                      data: "$fullName, $type, $accountNumber, $amountRequested, $bank",
                       decoration: const PrettyQrDecoration(
                         image: PrettyQrDecorationImage(
                           image: AssetImage(R.ASSETS_IMAGES_LOGO_PNG),
