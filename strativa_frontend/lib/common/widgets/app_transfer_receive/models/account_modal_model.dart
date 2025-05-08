@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 AccountModalModel accountModalModelFromJson(String str) => AccountModalModel.fromJson(json.decode(str));
-
 String accountModalModelToJson(AccountModalModel data) => json.encode(data.toJson());
+
+UserAccount userAccountFromJson(String str) => UserAccount.fromJson(json.decode(str));
+String userAccountToJson(UserAccount data) => json.encode(data.toJson());
 
 class AccountModalModel {
     List<UserAccount> userAccounts;

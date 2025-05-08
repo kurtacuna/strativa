@@ -353,5 +353,13 @@
             "end_date": "2025-05-28 18:37:59.123456+00:00",
             "status": "active"
         }
+    },
+    {
+        "model": "transfer.transferfees",
+        "pk": 1,
+        "fields": {
+            "type": "Transfer Fee",
+            "fee": "15.00"
+        }
     }
 ]

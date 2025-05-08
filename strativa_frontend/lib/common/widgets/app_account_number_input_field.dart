@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 
 class AppAccountNumberInputField extends StatelessWidget {
@@ -11,8 +10,7 @@ class AppAccountNumberInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: AppText.kAccountNumber,
         filled: true,

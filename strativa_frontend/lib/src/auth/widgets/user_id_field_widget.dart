@@ -52,8 +52,9 @@ class UserIdFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         // TODO: handle error messages
         // errorText: ,
-        contentPadding: EdgeInsets.only(
-          left: 15
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 16
         ),
         enabled: enabled ?? true,
         hintText: hintText ?? AppText.kHintUserId,

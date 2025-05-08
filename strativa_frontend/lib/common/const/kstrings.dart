@@ -45,7 +45,7 @@ class AppText {
   static const kTotal = "Total";
   static const kConfirm = "Confirm";
   static const kTransferToAnotherStrativaAcc =
-      "Transfer to antoher Strativa Account";
+      "Transfer to another Strativa Account";
   static const kAccountNumber = "Account Number";
   static const kNoTransactionsYet = "No transactions yet";
   static const kSendOtp = "Send OTP";

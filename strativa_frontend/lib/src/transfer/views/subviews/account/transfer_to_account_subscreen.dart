@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
+import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/utils/check_transfer_details.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_widget.dart';
@@ -166,7 +167,7 @@ class _TransferToAccountSubscreenState
             Form(
               key: _formKey,
               child: AppLabeledAmountNoteFieldWidget(
-                text: "Transfer Amount", 
+                text: AppText.kTransferAmount, 
                 amountController: _amountController,
                 addNote: true,
                 addNoteController: _noteController,

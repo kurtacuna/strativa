@@ -79,7 +79,8 @@ class ReviewTransferBankSubscreen extends StatelessWidget {
 
               const TransferSummaryWithFee(
                 transferAmount: "1,000.00",
-                feeAmount: "25.00",
+                // TODO: change
+                transferFees: [],
                 total: "1,025.00",
               ),
 
