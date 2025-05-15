@@ -104,8 +104,6 @@ class TransferNotifier with ChangeNotifier {
       if (response.statusCode == 200) {
         TransferFeesModel model = transferFeesModelFromJson(response.body);
         _transferFees = model.fees;
-
-        print(transferFeesModelToJson(model));
       } else if (response.statusCode == 401) {
         if (context.mounted) {
           await refetch(

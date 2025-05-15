@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/const/kenums.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
+import 'package:strativa_frontend/common/widgets/otp/widgets/app_otp_modal_bottom_sheet.dart';
 import 'package:strativa_frontend/common/widgets/transfer_info_masked_card.dart';
 import 'package:strativa_frontend/common/widgets/transfer_summary_with_fee.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
 import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
+import 'package:strativa_frontend/src/transfer/models/transfer_model.dart';
 
 class ReviewTransferStrativaaccSubscreen extends StatefulWidget {
   const ReviewTransferStrativaaccSubscreen({
@@ -42,14 +45,18 @@ class _ReviewTransferStrativaaccSubscreenState extends State<ReviewTransferStrat
 
   @override
   Widget build(BuildContext context) {
-    final List<Fee> transferFees = context.read<TransferNotifier>().getTransferFees ?? [];
-    double totalFee = 0 + double.parse(widget.amount);
-    for (int i = 0; i < transferFees.length; i++) {
-      totalFee += double.parse(transferFees[i].fee);
-    }
+    // TODO: Copy this over to another bank transfer
+    // final List<Fee> transferFees = context.read<TransferNotifier>().getTransferFees ?? [];
+    // double totalFee = 0 + double.parse(widget.amount);
+    // for (int i = 0; i < transferFees.length; i++) {
+    //   totalFee += double.parse(transferFees[i].fee);
+    // }
 
-    // TODO: HEEEEEEEEEEEEEEEEY
-    // fix the bug where transfer fees are not being added on the first initialize of the page
+    if (context.watch<TransferNotifier>().getIsLoading) {
+      return Center(
+        child: AppCircularProgressIndicatorWidget()
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -129,8 +136,8 @@ class _ReviewTransferStrativaaccSubscreenState extends State<ReviewTransferStrat
                   // Summary with Fee
                   TransferSummaryWithFee(
                     transferAmount: widget.amount,
-                    transferFees: transferFees,
-                    total: "$totalFee"
+                    transferFees: [],
+                    total: widget.amount
                   ),
 
                   const SizedBox(height: 60),
@@ -139,8 +146,47 @@ class _ReviewTransferStrativaaccSubscreenState extends State<ReviewTransferStrat
                   Align(
                     alignment: Alignment.center,
                     child: ConfirmButton(
-                      onTap: () {
-                        context.push(AppRoutes.kSuccessTransfer);
+                      onTap: () async {
+                        TransferModel model = TransferModel(
+                          transactionDetails: TransactionDetails(
+                            transactionType: TransactionTypes.transfers.name, 
+                            amount: widget.amount, 
+                            note: widget.note ?? "", 
+                            sender: User(
+                              accountNumber: widget.fromAccount.accountNumber,
+                              bank: widget.fromAccount.bank.bankName
+                            ), 
+                            receiver: User(
+                              accountNumber: widget.toAccount.accountNumber,
+                              bank: widget.toAccount.bank.bankName
+                            )
+                          )
+                        );
+                        String data = transferModelToJson(model);
+
+                        int? statusCode = await showAppOtpModalBottomSheet(
+                          context: context,
+                          initialValue: widget.fromAccount.accountNumber,
+                          sendOtp: true,
+                          transactionDetails: data,
+                          enabled: false
+                        );
+
+                        if (statusCode == 200) {
+                          if (context.mounted) {
+                            context.push(
+                              AppRoutes.kSuccessTransfer,
+                              extra: {
+                                "fromAccountType": widget.fromAccount.accountType.accountType,
+                                "fromAccountNumber": widget.fromAccount.accountNumber,
+                                "toAccountType": widget.toAccount.accountType.accountType,
+                                "toAccountNumber": widget.toAccount.accountNumber,
+                                "amount": widget.amount,
+                                "note": widget.note
+                              }
+                            );
+                          }
+                        }
                       },
                     ),
                   ),
