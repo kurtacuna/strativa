@@ -7,9 +7,10 @@ import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/acc
 int checkTransferDetails({
   required BuildContext context,
   required UserAccount? fromAccount,
-  required UserAccount? toAccount,
+  required dynamic toAccount,
   required String amount,
   required GlobalKey<FormState> formKey,
+  double totalFee = 0,
   String? note
 }) {
   // -1 means fail
@@ -47,7 +48,7 @@ int checkTransferDetails({
   // Check if there's enough balance
   if (
     double.parse(fromAccount.balance) < 
-    double.parse(removeCommaFromAmount(amount))
+    double.parse(removeCommaFromAmount(amount)) + totalFee
   ) {
     ScaffoldMessenger.of(context).showSnackBar(
       appErrorSnackBarWidget(

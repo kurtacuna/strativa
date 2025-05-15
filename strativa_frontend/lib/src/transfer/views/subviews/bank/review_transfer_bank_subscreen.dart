@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_edit_button.dart';
 import 'package:strativa_frontend/common/widgets/app_confirm_button.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_info_card.dart';
+import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
 import 'package:strativa_frontend/common/widgets/transfer_summary_with_fee.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
+import 'package:strativa_frontend/src/transfer/models/check_if_other_bank_account_exists_model.dart';
+import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
 
-class ReviewTransferBankSubscreen extends StatelessWidget {
-  const ReviewTransferBankSubscreen({super.key});
+class ReviewTransferBankSubscreen extends StatefulWidget {
+  const ReviewTransferBankSubscreen({
+    required this.fromAccount,
+    required this.toAccount,
+    required this.amount,
+    this.note,
+    super.key
+  });
+
+  final UserAccount fromAccount;
+  final OtherBankAccountDetails toAccount;
+  final String amount;
+  final String? note;
 
   @override
+  State<ReviewTransferBankSubscreen> createState() => _ReviewTransferBankSubscreenState();
+}
+
+class _ReviewTransferBankSubscreenState extends State<ReviewTransferBankSubscreen> {
+  @override
   Widget build(BuildContext context) {
+    final List<Fee> transferFees = context.read<TransferNotifier>().getTransferFees ?? [];
+    double totalFee = 0 + double.parse(widget.amount);
+    for (int i = 0; i < transferFees.length; i++) {
+      totalFee += double.parse(transferFees[i].fee);
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,29 +86,29 @@ class ReviewTransferBankSubscreen extends StatelessWidget {
               const SizedBox(height: 40),
 
               // Transfer From
-              const TransferInfoCard(
+              TransferInfoCard(
                 label: AppText.kTransferFrom,
                 iconPath: "assets/icons/transfer_from_icon.svg",
-                accountType: AppText.kSavingsAccount,
-                accountNumber: "0637892064",
+                accountType: widget.fromAccount.accountType.accountType,
+                accountNumber: widget.fromAccount.accountNumber,
               ),
 
               const SizedBox(height: 20),
 
-              const TransferInfoCard(
+              TransferInfoCard(
                 label: AppText.kTransferTo,
                 iconPath: "assets/icons/transfer_to_icon.svg",
-                accountType: "Chinabank",
-                accountNumber: "083654926",
+                accountType: widget.toAccount.bank,
+                accountNumber: widget.toAccount.accountNumber,
+                fullName: widget.toAccount.fullName,
               ),
 
               const SizedBox(height: 32),
 
-              const TransferSummaryWithFee(
-                transferAmount: "1,000.00",
-                // TODO: change
-                transferFees: [],
-                total: "1,025.00",
+              TransferSummaryWithFee(
+                transferAmount: widget.amount,
+                transferFees: transferFees,
+                total: "$totalFee",
               ),
 
               const SizedBox(height: 60),

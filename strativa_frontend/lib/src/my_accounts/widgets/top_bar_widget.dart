@@ -21,24 +21,26 @@ class TopBarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 10,
-            children: [
-              Text(
-                greetUserByTimeOfDay(),
-                style: CustomTextStyles(context).bigStyle,
-              ),
-
-              Text(
-                context.read<UserDataNotifier>().getUserData!.firstName,
-                style: CustomTextStyles(context).bigStyle.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: ColorsCommon.kAccentL1,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 10,
+              children: [
+                Text(
+                  greetUserByTimeOfDay(),
+                  style: CustomTextStyles(context).bigStyle,
                 ),
-              ),
-            ],
+            
+                Text(
+                  context.read<UserDataNotifier>().getUserData!.firstName,
+                  style: CustomTextStyles(context).bigStyle.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: ColorsCommon.kAccentL1,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           Row(

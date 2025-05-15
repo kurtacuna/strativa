@@ -49,6 +49,22 @@ class UserCardDetailsSerializer(serializers.ModelSerializer):
 
   
 class UserAccountsSerializer(serializers.ModelSerializer):
+  def __init__(self, *args, **kwargs):
+    filter = kwargs.pop("filter", {})
+    include_fields = filter.get('include_fields')
+    exclude_fields = filter.get('exclude_fields')
+    super().__init__(*args, **kwargs)
+
+    if include_fields is not None:
+      all_fields = set(self.fields)
+      included_fields = set(include_fields)
+      for field in all_fields - included_fields:
+        self.fields.pop(field, None)
+
+    if exclude_fields is not None:
+      for field in exclude_fields:
+        self.fields.pop(field, None)
+
   account_type = serializers.SerializerMethodField()
   bank = serializers.SerializerMethodField()
 

@@ -10,7 +10,7 @@ Future<void> refetch({
   int status = await refreshAccessToken();
 
   if (status == -1) {
-    // TODO: log out the user; clear access and refresh from local
+    // TODO: log out the user; clear access and refresh tokens from local
     print('session expired');
   } else {
     await fetch();

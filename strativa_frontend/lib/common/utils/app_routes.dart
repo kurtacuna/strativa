@@ -103,7 +103,15 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kReviewTransferBankAccount,
-      builder: (context, state) => const ReviewTransferBankSubscreen(),
+      builder: (context, state) {
+        Map<String, dynamic> obj = state.extra as Map<String, dynamic>;
+        return ReviewTransferBankSubscreen(
+          fromAccount: obj["fromAccount"],
+          toAccount: obj["toAccount"],
+          amount: obj["amount"],
+          note: obj["note"]
+        );
+      },
     ),
     GoRoute(
       path: AppRoutes.kTransferToAnotherStrativaAccNumber,

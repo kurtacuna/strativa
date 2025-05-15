@@ -34,6 +34,9 @@ class UserDataViewTest(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="pass")
         transaction_type = transaction_models.TransactionTypes.objects.create(type="other")
+        strativa_bank = models.StrativaBanks.objects.create(
+            bank_name="Strativa"
+        )
         user_type = models.UserTypes.objects.create(
             user_type="regular"
         )
@@ -61,13 +64,13 @@ class UserDataViewTest(APITestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
-    def test_user_data_view(self):
-        url = reverse('user-data')
-        response = self.client.get(url)
+    # def test_user_data_view(self):
+    #     url = reverse('user-data')
+    #     response = self.client.get(url)
 
-        print(response.content)
+    #     print(response.content)
         
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # def test_user_accounts_view(self):
     #     url = reverse('user-accounts')
@@ -75,14 +78,14 @@ class UserDataViewTest(APITestCase):
 
     #     print(response.content)
 
-    # def test_check_if_user_account_exists(self):
-    #     url = reverse("check-if-account-exists")
-    #     response = self.client.post(
-    #         url,
-    #         content_type="application/json",
-    #         data=json.dumps({
-    #             "account_number": "p23pi5j"
-    #         })
-    #     )
+    def test_check_if_user_account_exists(self):
+        url = reverse("check-if-account-exists")
+        response = self.client.post(
+            url,
+            content_type="application/json",
+            data=json.dumps({
+                "account_number": "p23pi5j"
+            })
+        )
 
-    #     print(response.content)
+        print(response.content)

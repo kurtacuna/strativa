@@ -8,6 +8,7 @@ class TransferInfoCard extends StatelessWidget {
   final String iconPath;
   final String accountType;
   final String accountNumber;
+  final String? fullName;
   final String? note;
 
   const TransferInfoCard({
@@ -16,6 +17,7 @@ class TransferInfoCard extends StatelessWidget {
     required this.iconPath,
     required this.accountType,
     required this.accountNumber,
+    this.fullName,
     this.note
   });
 
@@ -36,7 +38,11 @@ class TransferInfoCard extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          accountType,
+          "$accountType${
+            fullName != null
+              ? " - $fullName"
+              : ""
+          }",
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 13,

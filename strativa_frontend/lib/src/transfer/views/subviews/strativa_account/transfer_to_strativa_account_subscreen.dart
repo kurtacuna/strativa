@@ -10,6 +10,7 @@ import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_w
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/controllers/app_transfer_receive_widget_notifier.dart';
 import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/account_modal_model.dart';
 import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
+import 'package:strativa_frontend/src/transfer/models/check_if_account_exists_model.dart';
 
 class TransferToStrativaAccountSubscreen extends StatefulWidget {
   const TransferToStrativaAccountSubscreen({super.key});
@@ -22,7 +23,7 @@ class TransferToStrativaAccountSubscreen extends StatefulWidget {
 class _TransferToAccountSubscreenState
     extends State<TransferToStrativaAccountSubscreen> {
   UserAccount? selectedFromAccount;
-  UserAccount? selectedToAccount;
+  CheckedAccountModel? selectedToAccount;
 
   late final GlobalKey<FormState> _formKey = AppGlobalKeys.transferToAnotherStrativaAccountKey;
   late final TextEditingController _amountController = TextEditingController();
@@ -168,7 +169,7 @@ class _TransferToAccountSubscreenState
               title: selectedToAccount?.accountType.accountType ?? 'Select account',
               subtitle:
                   selectedToAccount != null
-                      ? '•••${selectedToAccount!.accountNumber.substring(selectedToAccount!.accountNumber.length - 4)} • PHP ${selectedToAccount!.balance}'
+                      ? '•••${selectedToAccount!.accountNumber.substring(selectedToAccount!.accountNumber.length - 4)}'
                       : null,
               onTap: () {
                 context.push(AppRoutes.kTransferToAnotherStrativaAccNumber);

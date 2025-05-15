@@ -321,7 +321,7 @@
         "fields": {
             "bank": 1,
             "full_name": "Juan Dela Cruz",
-            "account_number": "123456789"
+            "account_number": "1234"
         }
     },
     {
@@ -330,7 +330,7 @@
         "fields": {
             "bank": 2,
             "full_name": "Juan Dela Cruz",
-            "account_number": "123456789"
+            "account_number": "1234"
         }
     },
     {
@@ -359,7 +359,7 @@
         "pk": 1,
         "fields": {
             "type": "Transfer Fee",
-            "fee": "15.00"
+            "fee": "25.00"
         }
     }
 ]

@@ -110,7 +110,11 @@ class TransactionItemPageWidget extends StatelessWidget {
                       
                       Center(
                         child: Text(
-                          "${AppText.kCurrencySign} ${transaction.transaction.amount}",
+                          "${
+                            transaction.direction == "send"
+                              ? "- "
+                              : ""
+                          } ${AppText.kCurrencySign} ${transaction.transaction.amount}",
                           style: CustomTextStyles(context).numberStyle.copyWith(
                             fontSize: 30.sp,
                             color: transaction.direction == "send"
@@ -119,6 +123,38 @@ class TransactionItemPageWidget extends StatelessWidget {
                           )
                         )
                       ),
+
+                      transaction.transaction.note != ""
+                        ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 10.h),
+                              AppDividerWidget(),
+                              SizedBox(height: 10.h),
+
+                              Text.rich(
+                                TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: "Note: ",
+                                      style: CustomTextStyles(context).defaultStyle.copyWith(
+                                        fontWeight: FontWeight.w900
+                                      )
+                                    ),
+                                    TextSpan(
+                                      text: transaction.transaction.note,
+                                      style: CustomTextStyles(context).defaultStyle
+                                    )
+                                  ]
+                                )
+                              ),
+                              
+                              SizedBox(height: 10.h),
+                              AppDividerWidget(),
+                              SizedBox(height: 10.h),
+                            ],  
+                          )
+                        : Container(),
               
                       SizedBox(height: 20.h),
               

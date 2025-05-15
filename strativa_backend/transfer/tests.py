@@ -53,10 +53,10 @@ class TransferViewTest(APITestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
     
-    def test_transfer_fees(self):
-        url = reverse("transfer-fees")
-        response = self.client.get(url)
-        print(response.content)
+    # def test_transfer_fees(self):
+    #     url = reverse("transfer-fees")
+    #     response = self.client.get(url)
+    #     print(response.content)
     
     # def test_transfer_view(self):
     #     url = reverse('transfer')
@@ -97,42 +97,42 @@ class TransferViewTest(APITestCase):
 
     #     print(response.content)
 
-    # def test_other_bank_account_transfer(self):
-    #     url = reverse('transfer')
+    def test_other_bank_account_transfer(self):
+        url = reverse('transfer')
 
-    #     print(f"sender before balance: {self.user1_account_details.balance}")
-    #     print(f"receiver before balance: {self.other_bank_account.balance}")
+        print(f"sender before balance: {self.user1_account_details.balance}")
+        print(f"receiver before balance: {self.other_bank_account.balance}")
 
-    #     response = self.client.post(
-    #         url,
-    #         content_type="application/json",
-    #         data=json.dumps({
-    #             "transaction_details": {
-    #                 "transaction_type": "transfers",
-    #                 "amount": "125",
-    #                 "note": "payment",
-    #                 "sender": {
-    #                     "account_number": "SA-456LJK54",
-    #                     "bank": "Strativa"
-    #                 },
-    #                 "receiver": {
-    #                     "bank": "Banco de Oro",
-    #                     "account_number": "1234"
-    #                 }
-    #             }
-    #         })
-    #     )
-    #     print(response.content)
+        response = self.client.post(
+            url,
+            content_type="application/json",
+            data=json.dumps({
+                "transaction_details": {
+                    "transaction_type": "transfers",
+                    "amount": "125",
+                    "note": "payment",
+                    "sender": {
+                        "account_number": "SA-456LJK54",
+                        "bank": "Strativa"
+                    },
+                    "receiver": {
+                        "bank": "Banco de Oro",
+                        "account_number": "1234"
+                    }
+                }
+            })
+        )
+        print(response.content)
 
-    #     self.user1_account_details.refresh_from_db()
-    #     self.other_bank_account.refresh_from_db()
+        self.user1_account_details.refresh_from_db()
+        self.other_bank_account.refresh_from_db()
 
-    #     print(f"sender after balance: {self.user1_account_details.balance}")
-    #     print(f"receiver after balance: {self.other_bank_account.balance}")
+        print(f"sender after balance: {self.user1_account_details.balance}")
+        print(f"receiver after balance: {self.other_bank_account.balance}")
 
-    #     print(transaction_models.Transactions.objects.all().values())
+        print(transaction_models.Transactions.objects.all().values())
         
-    #     url = reverse("user-transactions") + "?type=all"
-    #     response = self.client.get(url)
+        url = reverse("user-transactions") + "?type=all"
+        response = self.client.get(url)
 
-    #     print(response.content)
+        print(response.content)

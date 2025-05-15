@@ -28,11 +28,13 @@ class CheckIfOtherBankAccountExistsView(APIView):
         other_bank_account_details = request.data.get('other_bank_account_details')
         other_bank_account_bank = other_bank_account_details.get('bank')
         other_bank_account_number = other_bank_account_details.get('account_number')
+        other_bank_account_full_name = other_bank_account_details.get('full_name')
 
         try:
             other_bank_account = models.OtherBankAccounts.objects.get(
                 bank__bank_name=other_bank_account_bank,
-                account_number=other_bank_account_number
+                account_number=other_bank_account_number,
+                full_name=other_bank_account_full_name
             )
             return Response(status=status.HTTP_200_OK)
         except models.OtherBankAccounts.DoesNotExist:

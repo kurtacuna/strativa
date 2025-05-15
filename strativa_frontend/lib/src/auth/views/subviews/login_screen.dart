@@ -26,8 +26,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late final TextEditingController _userIdController = TextEditingController();
-  late final TextEditingController _passwordController = TextEditingController();
+  late final TextEditingController _userIdController = TextEditingController(
+    // TODO: for convenience only; remove once done
+    text: "test2"
+  );
+  late final TextEditingController _passwordController = TextEditingController(
+    // TODO: for convenience only; remove once done
+    text: "teststrativa"
+  );
   final FocusNode _passwordNode = FocusNode();
   final _formKey = AppGlobalKeys.loginFormKey;
 
@@ -65,10 +71,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height:20.h),
                     
                 UserIdFieldWidget(
-                    controller: _userIdController,
-                    onEditingComplete: () {
-                      FocusScope.of(context).requestFocus(_passwordNode);
-                    },
+                  controller: _userIdController,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordNode);
+                  },
                 ),
                 
                 PasswordFieldWidget(

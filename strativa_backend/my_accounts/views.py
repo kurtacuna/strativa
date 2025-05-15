@@ -49,7 +49,7 @@ class CheckIfAccountExistsView(APIView):
 
         try:
             account = models.UserAccounts.objects.get(account_number=account_number)
-            serializer = serializers.UserAccountsSerializer(account)
+            serializer = serializers.UserAccountsSerializer(account, filter={"exclude_fields": ["balance"]})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except models.UserAccounts.DoesNotExist:
             return return_user_not_found()

@@ -54,13 +54,26 @@ class UserTransactionsViewTest(APITestCase):
     def setUp(self):
         sender = User.objects.create(username="testsender")
         receiver = User.objects.create(username="testreceiver")
-        user_card_details=my_accounts_models.UserCardDetails.objects.create(user=User.objects.get(id=1), balance=1)
+        user_type = my_accounts_models.UserTypes.objects.create(
+            user_type="regular"
+        )
+        user_card_details=my_accounts_models.UserCardDetails.objects.create(user=User.objects.get(id=1))
         sender_data = my_accounts_models.UserData.objects.create(
             user=User.objects.get(id=1), 
             first_name="hello", 
             last_name="hello", 
             user_card_details=my_accounts_models.UserCardDetails.objects.get(user=User.objects.get(id=1))
         )
+        account_type = my_accounts_models.AccountTypes.objects.create(
+            account_type="Savings",
+            code="S"
+        )
+        user_account = my_accounts_models.UserAccounts.objects.create(
+            user=sender,
+            account_type=account_type,
+            account_number="p23pi5j",
+        )
+
         transaction_type = models.TransactionTypes.objects.create(type="shopping")
         transaction_type = models.TransactionTypes.objects.create(type="food")
         types = models.TransactionTypes.objects.all()
