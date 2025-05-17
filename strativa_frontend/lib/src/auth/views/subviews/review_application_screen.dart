@@ -112,7 +112,7 @@ class _ReviewApplicationScreenState extends State<ReviewApplicationScreen> {
               {'label': 'Address', 'controller': addressController},
             ]),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 39),
             _buildDeclaration(),
 
             const SizedBox(height: 24),
