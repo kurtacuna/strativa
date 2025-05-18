@@ -355,10 +355,10 @@
         }
     },
     {
-        "model": "transfer.transferfees",
+        "model": "transaction.transactionfees",
         "pk": 1,
         "fields": {
-            "type": "Transfer Fee",
+            "type": "OtherBank Transfer Fee",
             "fee": "25.00"
         }
     }

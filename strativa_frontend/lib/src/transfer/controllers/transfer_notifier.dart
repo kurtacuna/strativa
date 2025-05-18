@@ -7,20 +7,20 @@ import 'package:strativa_frontend/common/utils/refresh/refresh_access_token.dart
 import 'package:strativa_frontend/common/widgets/app_error_snack_bar_widget.dart';
 import 'package:strativa_frontend/src/transfer/models/check_if_account_exists_model.dart';
 import 'package:strativa_frontend/src/transfer/models/other_banks_model.dart';
-import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
+import 'package:strativa_frontend/src/transfer/models/transaction_fees_model.dart';
 
 class TransferNotifier with ChangeNotifier {
   bool _isLoading = false;
   int _statusCode = -1;
   CheckedAccountModel? _checkedAccount;
   bool _widgetIsBeingDisposed = false;
-  List<Fee>? _transferFees;
+  List<Fee>? _transactionFees;
   List<OtherBanksModel>? _otherBanks;
 
   bool get getIsLoading => _isLoading;
   int get getStatusCode => _statusCode;
   CheckedAccountModel? get getCheckedAccount => _checkedAccount;
-  List<Fee>? get getTransferFees => _transferFees;
+  List<Fee>? get getTransactionFees => _transactionFees;
   List<OtherBanksModel>? get getOtherBanks => _otherBanks;
 
   set setCheckedAccount(CheckedAccountModel? account) {
@@ -87,7 +87,7 @@ class TransferNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> fetchTransferFees(
+  Future<void> fetchTransactionFees(
     BuildContext context
   ) async {
     _isLoading = true;
@@ -95,7 +95,7 @@ class TransferNotifier with ChangeNotifier {
     
     try {
       String? accessToken = Storage().getString(StorageKeys.accessTokenKey);
-      var url = Uri.parse(ApiUrls.transferFeesUrl);
+      var url = Uri.parse(ApiUrls.transactionFeesUrl);
       var response = await http.get(
         url,
         headers: {
@@ -105,12 +105,12 @@ class TransferNotifier with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        TransferFeesModel model = transferFeesModelFromJson(response.body);
-        _transferFees = model.fees;
+        TransactionFeesModel model = transactionFeesModelFromJson(response.body);
+        _transactionFees = model.fees;
       } else if (response.statusCode == 401) {
         if (context.mounted) {
           await refetch(
-            fetch: () => fetchTransferFees(context)
+            fetch: () => fetchTransactionFees(context)
           );
         }
       } else {

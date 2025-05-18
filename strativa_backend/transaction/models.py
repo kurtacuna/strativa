@@ -36,6 +36,7 @@ class Transactions(models.Model):
     receiver_account_number = models.CharField(max_length=30)
     receiver_bank = models.CharField(max_length=255)
     note = models.CharField(max_length=255, blank=True)
+    transaction_fees_applied = models.BooleanField()
 
     def __str__(self):
         return self.reference_id
@@ -70,6 +71,34 @@ class Transactions(models.Model):
     class Meta:
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
+
+
+# The transaction fees applied to a particular transaction
+class TransactionFeesInTransaction(models.Model):
+    transaction_id = models.ForeignKey(Transactions, on_delete=models.PROTECT)
+    transaction_reference_id = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
+    fee = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.transaction_id
+
+    class Meta:
+        verbose_name = 'Transaction Fees in Transaction'
+        verbose_name_plural = 'Transaction Fees in Transactions'
+
+
+# Holds all transaction fees
+class TransactionFees(models.Model):
+    type = models.CharField(max_length=255)
+    fee = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name = "Transaction Fee"
+        verbose_name_plural = "Transaction Fees"
 
 
 class TransactionTypes(models.Model):

@@ -95,7 +95,7 @@ class CreateOtpView(APIView):
 
             # .delay means it will be offloaded to celery
             send_email.delay(
-                subject="Strativa OTP",
+                subject=f"Strativa OTP: {otp}",
                 message=f"Your OTP is {otp}. This is valid for {BackendConstants.otp_valid_duration} seconds.",
                 recipients=[user_data.email]
             )

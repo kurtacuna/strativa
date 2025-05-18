@@ -39,3 +39,41 @@ class UserTransactionsView(APIView):
             return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return return_server_error(e)
+        
+
+class TransactionFeesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            transaction_fees = models.TransactionFees.objects.all()
+            serializer = serializers.TransactionFeesSerializer(transaction_fees, many=True)
+            return Response({"fees": serializer.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return return_server_error(e)
+        
+
+class TransactionFeesInTransactionView(APIView):
+    premission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user_id = request.user.id
+        transaction_reference_id = request.query_params.get("reference_id")
+
+        try:
+            sender = models.UserTransactions.objects.get(
+                user=user_id,
+                transaction__reference_id=transaction_reference_id,
+                direction=models.UserTransactions.Direction.SEND
+            )
+
+            transaction_fees_in_transaction = models.TransactionFeesInTransaction.objects.filter(
+                transaction_reference_id=transaction_reference_id
+            )
+            serializer = serializers.TransactionFeesInTransactionSerializer(transaction_fees_in_transaction, many=True)
+            
+            return Response({"fees": serializer.data}, status=status.HTTP_200_OK)
+        except sender.DoesNotExist:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            return return_server_error(e)

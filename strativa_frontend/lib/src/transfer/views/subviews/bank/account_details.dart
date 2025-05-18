@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
 import 'package:strativa_frontend/src/transfer/models/check_if_other_bank_account_exists_model.dart';
-import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
 
 class AccountDetails extends StatefulWidget {
   final String bank;
-  final Fee? transferFee;
+  final double totalFee;
 
   const AccountDetails({
     super.key, 
     required this.bank,
-    this.transferFee
+    this.totalFee = 0
   });
 
   @override
@@ -147,10 +147,10 @@ class _AccountDetailsState extends State<AccountDetails> {
                   children: [
                     Icon(Icons.info_outline, size: 18, color: Colors.orange),
                     SizedBox(width: 6),
-                    widget.transferFee != null
+                    widget.totalFee != 0
                       ? Expanded(
                           child: Text(
-                            'A PHP ${widget.transferFee?.fee} ${widget.transferFee?.type.toLowerCase()} shall be deducted in your account.',
+                            'A total of PHP ${addCommaToAmount(widget.totalFee)} transfer fee shall be deducted from your account.',
                             style: TextStyle(color: Colors.orange, fontSize: 12),
                           ),
                         )

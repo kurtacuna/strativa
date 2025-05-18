@@ -54,6 +54,7 @@ class TransactionTransaction {
     DateTime datetime;
     String amount;
     String? note;
+    bool transactionFeesApplied;
 
     TransactionTransaction({
         required this.transactionType,
@@ -65,6 +66,7 @@ class TransactionTransaction {
         required this.datetime,
         required this.amount,
         this.note = "",
+        required this.transactionFeesApplied
     });
 
     factory TransactionTransaction.fromJson(Map<String, dynamic> json) => TransactionTransaction(
@@ -76,7 +78,8 @@ class TransactionTransaction {
         referenceId: json["reference_id"],
         datetime: DateTime.parse(json["datetime"]),
         amount: json["amount"],
-        note: json["note"]
+        note: json["note"],
+        transactionFeesApplied: json["transaction_fees_applied"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -88,7 +91,8 @@ class TransactionTransaction {
         "reference_id": referenceId,
         "datetime": datetime.toIso8601String(),
         "amount": amount,
-        "note": note
+        "note": note,
+        "transaction_fees_applied": transactionFeesApplied
     };
 }
 

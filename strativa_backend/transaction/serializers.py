@@ -29,7 +29,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
     def get_sender(self, obj):
         user_data = getattr(obj.sender, 'userdata', None)
         full_name = user_data.full_name if user_data else "Deleted"
-        profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
+        profile_picture = user_data.profile_picture.url if user_data else "/media/images/logo.png"
         serializer = UserSerializer(obj.sender)
         data = serializer.data
         data['full_name'] = full_name
@@ -40,7 +40,7 @@ class TransactionsSerializer(serializers.ModelSerializer):
         if obj.receiver_bank == 'Strativa':
             user_data = getattr(obj.receiver, 'userdata', None)
             full_name = user_data.full_name if user_data else "Deleted"
-            profile_picture = user_data.profile_picture.url if user_data else "/images/logo.png"
+            profile_picture = user_data.profile_picture.url if user_data else "/media/images/logo.png"
             serializer = UserSerializer(obj.receiver)
             data = serializer.data
             data['full_name'] = full_name
@@ -52,7 +52,11 @@ class TransactionsSerializer(serializers.ModelSerializer):
                 account_number=obj.receiver_account_number
             )
             serializer = other_banks_serializers.OtherBankAccountsSerializer(other_bank_account_data)
-            return serializer.data
+            serializer.fields.pop("balance")
+            data = serializer.data
+            data["username"] = other_bank_account_data.user.username
+            data["profile_picture"] = "/media/images/logo.png"
+            return data
 
     class Meta:
         model = models.Transactions
@@ -63,3 +67,15 @@ class TransactionTypesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TransactionTypes
         fields = ['type']
+
+
+class TransactionFeesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TransactionFees
+        exclude = ["id"]
+
+
+class TransactionFeesInTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TransactionFeesInTransaction
+        exclude = ["id", "transaction_id", "transaction_reference_id"]

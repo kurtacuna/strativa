@@ -39,9 +39,13 @@ class TransferViewTest(APITestCase):
             account_number="1234"
         )
 
-        transfer_models.TransferFees.objects.create(
-            type="Transaction Fee",
-            fee="15"
+        transaction_models.TransactionFees.objects.create(
+            type="OtherBank Transfer Fee",
+            fee="25"
+        )
+        transaction_models.TransactionFees.objects.create(
+            type="OtherBank Miscellaneous Fee",
+            fee="25"
         )
 
         transaction_models.TransactionTypes.objects.create(type="transfers")
@@ -130,9 +134,15 @@ class TransferViewTest(APITestCase):
         print(f"sender after balance: {self.user1_account_details.balance}")
         print(f"receiver after balance: {self.other_bank_account.balance}")
 
+        print("Transactions:")
         print(transaction_models.Transactions.objects.all().values())
+        print("TransactionFees")
+        print(transaction_models.TransactionFees.objects.all().values())
+        print("TransactionFeeInTransaction")
+        print(transaction_models.TransactionFeesInTransaction.objects.all().values())
         
         url = reverse("user-transactions") + "?type=all"
         response = self.client.get(url)
 
+        print("response.content:")
         print(response.content)

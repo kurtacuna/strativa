@@ -12,7 +12,7 @@ import json
 from other_banks import models as other_banks_models
 from transfer.utils.transfer_logic import transfer_logic
 from utils.const import BackendConstants
-from . import models, serializers
+from . import models
 
 
 class TransferView(APIView):
@@ -36,9 +36,10 @@ class TransferView(APIView):
         receiver_data = transaction_details.get('receiver', {})
         receiver_account_number = receiver_data.get('account_number', None)
         receiver_bank = receiver_data.get('bank', None)
-        amount = transaction_details.get('amount')
+        amount = Decimal(transaction_details.get('amount'))
         note = transaction_details.get('note')
 
+        print("TransferView:")
         print(transaction_details)
 
         try:
@@ -67,17 +68,5 @@ class TransferView(APIView):
             return Response(status=status.HTTP_200_OK)
         except my_accounts_models.UserAccounts.DoesNotExist:
             return return_user_not_found()
-        except Exception as e:
-            return return_server_error(e)
-        
-
-class TransferFeeView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        try:
-            transfer_fees = models.TransferFees.objects.all()
-            serializer = serializers.TransferFeesSerializer(transfer_fees, many=True)
-            return Response({"fees": serializer.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return return_server_error(e)

@@ -186,13 +186,22 @@ class ScannedQrSubscreen extends StatelessWidget {
                                 initialValue: appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
                                 sendOtp: true,
                                 transactionDetails: data,
-                                enabled: true,
+                                enabled: false,
                               );
 
                               if (statusCode == 200) {
-                                // TODO: show success screen
                                 if (context.mounted) {
-                                  context.go(AppRoutes.kEntrypoint);
+                                  context.go(
+                                    AppRoutes.kSuccessTransfer,
+                                    extra: {
+                                      "fromAccountType": appTransferReceiveWidgetNotifier.getFromAccount!.accountType.accountType,
+                                      "fromAccountNumber": appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
+                                      "toAccountType": scannedAccount.accountType,
+                                      "toAccountNumber": scannedAccount.accountNumber,
+                                      "amount": amountController.text,
+                                      "note": noteController.text
+                                    }
+                                  );
                                 }
                               }
                             }
@@ -224,9 +233,18 @@ class ScannedQrSubscreen extends StatelessWidget {
                             );
 
                             if (statusCode == 200) {
-                              // TODO: show success screen
                               if (context.mounted) {
-                                context.go(AppRoutes.kEntrypoint);
+                                context.go(
+                                  AppRoutes.kSuccessTransfer,
+                                  extra: {
+                                    "fromAccountType": appTransferReceiveWidgetNotifier.getFromAccount!.accountType.accountType,
+                                    "fromAccountNumber": appTransferReceiveWidgetNotifier.getFromAccount!.accountNumber,
+                                    "toAccountType": scannedAccount.accountType,
+                                    "toAccountNumber": scannedAccount.accountNumber,
+                                    "amount": scannedAccount.amountRequested,
+                                    "note": noteController.text
+                                  }
+                                );
                               }
                             }
                           }

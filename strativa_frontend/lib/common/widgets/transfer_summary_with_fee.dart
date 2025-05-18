@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
 import 'package:strativa_frontend/common/widgets/app_amount_widget.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
-import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
+import 'package:strativa_frontend/src/transfer/models/transaction_fees_model.dart';
 
 class TransferSummaryWithFee extends StatelessWidget {
   final String transferAmount;
   final String total;
-  final List<Fee> transferFees;
+  final List<Fee> transactionFees;
 
   const TransferSummaryWithFee({
     super.key,
     required this.transferAmount,
     required this.total,
-    required this.transferFees
+    required this.transactionFees
   });
 
   @override
@@ -38,11 +38,11 @@ class TransferSummaryWithFee extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildAmountRow(AppText.kTransferAmount, transferAmount),
-          transferFees.isEmpty
+          transactionFees.isEmpty
             ? Container()
             : Column(
-                children: List.generate(transferFees.length, (index) {
-                  return _buildAmountRow(transferFees[index].type, transferFees[index].fee);
+                children: List.generate(transactionFees.length, (index) {
+                  return _buildAmountRow(transactionFees[index].type, transactionFees[index].fee);
                 })    
               ),
           const Divider(color: ColorsCommon.kGray, thickness: 1, height: 24),

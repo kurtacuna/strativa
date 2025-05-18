@@ -118,7 +118,7 @@ class ReviewTransferStrativaaccSubscreen extends StatelessWidget {
                   // Summary with Fee
                   TransferSummaryWithFee(
                     transferAmount: amount,
-                    transferFees: [],
+                    transactionFees: [],
                     total: amount
                   ),
 

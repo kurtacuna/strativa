@@ -9,9 +9,10 @@ def log_transaction(
     receiver,
     receiver_account_number,
     receiver_bank,
-    note
+    note,
+    other_bank_transaction_fees,
 ):
-    transaction_models.Transactions.objects.create(
+    transaction = transaction_models.Transactions.objects.create(
         amount=amount,
         transaction_type=transaction_models.TransactionTypes.objects.get(type=transaction_type),
         sender=sender,
@@ -20,5 +21,17 @@ def log_transaction(
         receiver=receiver,
         receiver_account_number=receiver_account_number,
         receiver_bank=receiver_bank,
-        note=note
+        note=note,
+        transaction_fees_applied=(
+            True if other_bank_transaction_fees.exists() else False
+        )
     )
+
+    if other_bank_transaction_fees.exists():
+        for transaction_fee in other_bank_transaction_fees:
+            transaction_models.TransactionFeesInTransaction.objects.create(
+                transaction_id=transaction,
+                transaction_reference_id=transaction.reference_id,
+                type=transaction_fee.type,
+                fee=transaction_fee.fee
+            )

@@ -19,7 +19,10 @@ class ApiUrls {
   }
   static String userAccountsUrl = "$_appBaseUrl/api/my_accounts/me/accounts";
   static String checkIfAccountExistsUrl = "$_appBaseUrl/api/my_accounts/check_account/";
-  static String transferFeesUrl = "$_appBaseUrl/api/transfer/transfer_fees";
+  static String transactionFeesUrl = "$_appBaseUrl/api/transaction/transaction_fees";
   static String otherBanksUrl = "$_appBaseUrl/api/other_banks/other_banks";
   static String checkIfOtherBankAccountExistsUrl = "$_appBaseUrl/api/other_banks/check_other_bank_account/";
+  static String transactionFeesInTransactionUrl({required String referenceId}) {
+    return "$_appBaseUrl/api/transaction/transaction_fees_in_transaction/?reference_id=$referenceId";
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
+import 'package:strativa_frontend/common/utils/amount.dart';
 import 'package:strativa_frontend/common/utils/check_transfer_details.dart';
 import 'package:strativa_frontend/common/widgets/app_circular_progress_indicator_widget.dart';
 import 'package:strativa_frontend/common/widgets/app_labeled_amount_note_field_widget.dart';
@@ -10,7 +11,7 @@ import 'package:strativa_frontend/common/widgets/app_transfer_receive/models/acc
 import 'package:strativa_frontend/src/transfer/controllers/transfer_notifier.dart';
 import 'package:strativa_frontend/src/transfer/models/check_if_other_bank_account_exists_model.dart';
 import 'package:strativa_frontend/src/transfer/models/other_banks_model.dart';
-import 'package:strativa_frontend/src/transfer/models/transfer_fees_model.dart';
+import 'package:strativa_frontend/src/transfer/models/transaction_fees_model.dart';
 import 'account_details.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
@@ -34,7 +35,7 @@ class _TransferToAccountSubscreenState
 
   late final AppTransferReceiveWidgetNotifier appTransferReceiveWidgetNotifier;
 
-  Fee? transferFee;
+  double? totalFee;
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class _TransferToAccountSubscreenState
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<TransferNotifier>().fetchOtherBanks(context);
-      context.read<TransferNotifier>().fetchTransferFees(context);
+      context.read<TransferNotifier>().fetchTransactionFees(context);
     });
 
     super.initState();
@@ -206,7 +207,7 @@ class _TransferToAccountSubscreenState
                                     builder:
                                         (_) => AccountDetails(
                                           bank: filteredBanks[index].bankName,
-                                          transferFee: transferFee,
+                                          totalFee: totalFee!,
                                         ),
                                   ),
                                 );
@@ -242,10 +243,11 @@ class _TransferToAccountSubscreenState
 
   @override
   Widget build(BuildContext context) {
-    List<Fee> transferFees = context.read<TransferNotifier>().getTransferFees ?? [];
-    for (Fee fee in transferFees) {
-      if (fee.type == "Transfer Fee") {
-        transferFee = fee;
+    List<Fee> transactionFees = context.read<TransferNotifier>().getTransactionFees ?? [];
+    totalFee = 0;
+    for (Fee fee in transactionFees) {
+      if (fee.type.contains("OtherBank")) {
+        totalFee = totalFee! + double.parse(fee.fee);
       }
     }
     
@@ -316,10 +318,10 @@ class _TransferToAccountSubscreenState
                       children: [
                         Icon(Icons.info_outline, color: Colors.orange, size: 18),
                         SizedBox(width: 8),
-                        transferFee != null
+                        totalFee != 0
                           ? Expanded(
                               child: Text(
-                                'A PHP ${transferFee?.fee} ${transferFee?.type.toLowerCase()} shall be deducted in your account.',
+                                'A total of PHP ${addCommaToAmount(totalFee!)} transfer fee shall be deducted from your account.',
                                 style: TextStyle(fontSize: 13, color: Colors.black87),
                               ),
                             )
@@ -366,7 +368,7 @@ class _TransferToAccountSubscreenState
                     toAccount: toOtherBankAccount, 
                     amount: _amountController.text, 
                     formKey: _formKey,
-                    totalFee: double.parse(transferFee?.fee ?? "0")
+                    totalFee: totalFee!
                   );
                   if (statusCode == -1) {
                     return;

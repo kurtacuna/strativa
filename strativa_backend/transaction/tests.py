@@ -52,11 +52,12 @@ from django.db.models import Q, Prefetch
 
 class UserTransactionsViewTest(APITestCase):
     def setUp(self):
-        sender = User.objects.create(username="testsender")
+        self.sender = User.objects.create(username="testsender")
         receiver = User.objects.create(username="testreceiver")
         user_type = my_accounts_models.UserTypes.objects.create(
             user_type="regular"
         )
+        strativa_bank = my_accounts_models.StrativaBanks.objects.create(bank_name="Strativa")
         user_card_details=my_accounts_models.UserCardDetails.objects.create(user=User.objects.get(id=1))
         sender_data = my_accounts_models.UserData.objects.create(
             user=User.objects.get(id=1), 
@@ -69,7 +70,7 @@ class UserTransactionsViewTest(APITestCase):
             code="S"
         )
         user_account = my_accounts_models.UserAccounts.objects.create(
-            user=sender,
+            user=self.sender,
             account_type=account_type,
             account_number="p23pi5j",
         )
@@ -80,23 +81,26 @@ class UserTransactionsViewTest(APITestCase):
         serializer1 = serializers.TransactionTypesSerializer(types, many=True)
         print(serializer1.data)
         
-        transaction = models.Transactions.objects.create(
+        self.transaction = models.Transactions.objects.create(
             amount=100,
             transaction_type=models.TransactionTypes.objects.get(id=1),
             sender=User.objects.get(id=1),
             receiver=User.objects.get(id=2),
+            transaction_fees_applied=True
         )
         transaction2 = models.Transactions.objects.create(
             amount=100,
             transaction_type=models.TransactionTypes.objects.get(id=2),
             sender=User.objects.get(id=1),
             receiver=User.objects.get(id=2),
+            transaction_fees_applied=False
         )
         transaction3 = models.Transactions.objects.create(
             amount=100,
             transaction_type=models.TransactionTypes.objects.get(id=2),
             sender=User.objects.get(id=1),
             receiver=User.objects.get(id=2),
+            transaction_fees_applied=False
         )
         
         user_transction = models.UserTransactions.objects.create(
@@ -119,15 +123,20 @@ class UserTransactionsViewTest(APITestCase):
         )
 
         self.client = APIClient()
-        self.user = User.objects.get(id=1)
-        refresh = RefreshToken.for_user(self.user)
+        self.sender = User.objects.get(id=1)
+        refresh = RefreshToken.for_user(self.sender)
         self.token = str(refresh.access_token)
 
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
-    def test_user_transaction_view(self):
-        url = reverse('user-transactions') + '?type=food'
-        response = self.client.get(url)
+    # def test_user_transaction_view(self):
+    #     url = reverse('user-transactions') + '?type=food'
+    #     response = self.client.get(url)
 
-        print(response.status_code)
-        print(response.content)
+    #     print(response.status_code)
+    #     print(response.content)
+
+    # TODO: fetch transaction fees in a transaction
+    def test_transaction_fees_in_transaction_view(self):
+        url = reverse('transaction-fees-in-transaction') + f'?reference_id={self.transaction}'
+        response = self.client.get(url)
