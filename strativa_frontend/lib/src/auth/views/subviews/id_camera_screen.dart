@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CameraOpeningScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -23,22 +24,30 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
   }
 
   Future<void> _initializeCamera() async {
-    try {
-      final cameras = await availableCameras();
-      final firstCamera = cameras.first;
-
-      _controller = CameraController(
-        firstCamera,
-        ResolutionPreset.medium,
+  try {
+    var status = await Permission.camera.request();
+    if (!status.isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Camera permission is required.')),
       );
-
-      _initializeControllerFuture = _controller!.initialize();
-      await _initializeControllerFuture;
-      setState(() {});
-    } catch (e) {
-      debugPrint("Camera initialization failed: $e");
+      return;
     }
+
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+
+    _controller = CameraController(
+      firstCamera,
+      ResolutionPreset.medium,
+    );
+
+    _initializeControllerFuture = _controller!.initialize();
+    await _initializeControllerFuture;
+    setState(() {});
+  } catch (e) {
+    debugPrint("Camera initialization failed: $e");
   }
+}
 
   @override
   void dispose() {
