@@ -157,7 +157,7 @@ class _ReviewApplicationScreenState extends State<ReviewApplicationScreen> {
                 print('-----------------------------');
 
                 // Navigate to next screen or handle data submission here.
-                // context.push(AppRoutes.kAccountNumber);
+                context.push(AppRoutes.kAccountNumber);
               },
             ),
           ],
