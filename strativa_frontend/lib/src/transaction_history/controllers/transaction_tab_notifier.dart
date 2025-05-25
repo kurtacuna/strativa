@@ -55,8 +55,6 @@ class TransactionTabNotifier with ChangeNotifier {
         }
       );
 
-      print(response.body);
-
       if (response.statusCode == 200) {
         _userTransactions = transactionHistoryModelFromJson(response.body);
       } else if (response.statusCode == 401) {
