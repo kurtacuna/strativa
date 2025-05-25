@@ -24,14 +24,23 @@ class UserTransactionsSerializer(serializers.ModelSerializer):
 
 class TransactionsSerializer(serializers.ModelSerializer):
     transaction_type = serializers.SerializerMethodField()
+    datetime = serializers.SerializerMethodField()
+    amount = serializers.SerializerMethodField()
     sender = serializers.SerializerMethodField()
     sender_account_number = serializers.SerializerMethodField()
     receiver = serializers.SerializerMethodField()
     receiver_account_number = serializers.SerializerMethodField()
+    note = serializers.SerializerMethodField()
 
     def get_transaction_type(self, obj):
         serializer = TransactionTypesSerializer(obj.transaction_type)
         return serializer.data
+    
+    def get_datetime(self, obj):
+        return aes.decrypt(obj.datetime)
+    
+    def get_amount(self, obj):
+        return aes.decrypt(obj.amount)
     
     def get_sender(self, obj):
         user_data = getattr(obj.sender, 'userdata', None)
@@ -70,6 +79,9 @@ class TransactionsSerializer(serializers.ModelSerializer):
         
     def get_receiver_account_number(self, obj):
         return aes.decrypt(obj.receiver_account_number)
+
+    def get_note(self, obj):
+        return aes.decrypt(obj.note)
 
     class Meta:
         model = models.Transactions

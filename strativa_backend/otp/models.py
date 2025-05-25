@@ -4,17 +4,21 @@ import pyotp
 from datetime import timedelta
 from django.utils import timezone
 from utils.const import BackendConstants
+import utils.aes_encryption_decryption as aes
 
 
 class UserOtp(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    otp_secret = models.CharField(max_length=50)
+    otp_secret = models.TextField()
     valid_date = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.user.username)
 
     def save(self, *args, **kwargs):
         otp_secret, valid_date = self.create_otp()
         if not self.otp_secret:
-            self.otp_secret = otp_secret
+            self.otp_secret = aes.encrypt(otp_secret)
         self.valid_date = valid_date
         super().save(*args, **kwargs)
 

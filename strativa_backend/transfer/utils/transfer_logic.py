@@ -55,7 +55,7 @@ def transfer_logic(
         receiver_account_details.save()
 
         log_transaction(
-            amount=original_amount,
+            amount=aes.encrypt(original_amount),
             transaction_type=transaction_type,
             sender=sender_account_details.user,
             sender_account_number=sender_account_details.account_number,
@@ -63,7 +63,7 @@ def transfer_logic(
             receiver=receiver_account_details.user,
             receiver_account_number=receiver_account_details.account_number,
             receiver_bank=receiver_account_details.bank.bank_name,
-            note=note,
+            note=aes.encrypt(note),
             other_bank_transaction_fees=other_bank_transaction_fees
         )
 

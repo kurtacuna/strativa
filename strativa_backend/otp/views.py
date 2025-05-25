@@ -39,7 +39,7 @@ class VerifyOtpView(APIView):
             ).user
             user_otp = models.UserOtp.objects.get(user=user)
             totp = pyotp.TOTP(
-                user_otp.otp_secret, 
+                aes.decrypt(user_otp.otp_secret), 
                 digits=BackendConstants.otp_length,
                 interval=BackendConstants.otp_valid_duration
             )
@@ -92,7 +92,7 @@ class CreateOtpView(APIView):
             )
 
             otp = pyotp.TOTP(
-                user_otp.otp_secret,
+                aes.decrypt(user_otp.otp_secret),
                 digits=BackendConstants.otp_length,
                 interval=BackendConstants.otp_valid_duration
             ).now()
