@@ -138,7 +138,7 @@ class UserCardDetails(models.Model):
 class UserAccounts(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   account_type = models.ForeignKey('AccountTypes', on_delete=models.CASCADE)
-  account_number = models.CharField(max_length=30, unique=True)
+  account_number = models.TextField(unique=True)
   balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
   bank = models.ForeignKey('StrativaBanks', on_delete=models.CASCADE, default=1)
 

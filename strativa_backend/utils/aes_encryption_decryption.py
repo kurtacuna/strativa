@@ -17,6 +17,11 @@ def encrypt(data: str):
     cipher = AES.new(key, AES.MODE_GCM)
     nonce = cipher.nonce
     ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
+
+    # Encode to base64
+    nonce = base64.urlsafe_b64encode(nonce).decode('utf-8')
+    ciphertext = base64.urlsafe_b64encode(ciphertext).decode('utf-8')
+    tag = base64.urlsafe_b64encode(tag).decode('utf-8')
     return nonce, ciphertext, tag
 
 
@@ -26,6 +31,11 @@ def decrypt(nonce, ciphertext, tag):
         return: the plaintext if verified, otherwise, raise an error
     """
 
+    # Decode from base64
+    nonce = base64.urlsafe_b64decode(nonce.encode('utf-8'))
+    ciphertext = base64.urlsafe_b64decode(ciphertext.encode('utf-8'))
+    tag = base64.urlsafe_b64decode(tag.encode('utf-8'))
+
     cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
     try:
         plaintext_bytes = cipher.decrypt_and_verify(ciphertext, tag)
@@ -33,3 +43,10 @@ def decrypt(nonce, ciphertext, tag):
     except Exception as e:
         print(e)
         raise
+
+
+while True:
+    nonce, ciphertext, tag = encrypt(input("enter data: "))
+    plaintext = decrypt(nonce, ciphertext, tag)
+    print(f"to store in db: {nonce}:{ciphertext}:{tag}")
+    print(f"plaintext: {plaintext}")
