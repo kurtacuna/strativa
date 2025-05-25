@@ -35,17 +35,32 @@ class FaceVerification extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 32),
-            Center(
-              child: AppIcons.kFaceID, 
-              ),
+            Center(child: AppIcons.kFaceID),
             const SizedBox(height: 32),
-            const InstructionItem(text: 'Ensure your face is well-lit and clearly visible against the background.'),
+            const InstructionItem(
+              text:
+                  'Ensure your face is well-lit and clearly visible against the background.',
+            ),
             const InstructionItem(text: 'Hold your device at eye level.'),
-            const InstructionItem(text: 'Align your face within the frame and follow the on-screen instructions.'),
+            const InstructionItem(
+              text:
+                  'Align your face within the frame and follow the on-screen instructions.',
+            ),
             const Spacer(),
-            AppButtonWidget(text: 'Start', onTap: (){
-              context.push(AppRoutes.kFaceScanVerification, extra: userData);
-            },),
+            AppButtonWidget(
+              text: 'Start',
+              onTap: () {
+                context.push(
+                  AppRoutes.kFaceScanVerification,
+                  extra: {
+                    ...userData,
+                    if (userData['id_image_path'] != null)
+                      'id_image_path': userData['id_image_path'],
+                    // Don't overwrite with null!
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -65,12 +80,7 @@ class InstructionItem extends StatelessWidget {
         children: [
           const Icon(Icons.shield_outlined, color: Colors.grey),
           const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
         ],
       ),
     );

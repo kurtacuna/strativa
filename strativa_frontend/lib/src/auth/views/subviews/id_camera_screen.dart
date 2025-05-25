@@ -50,13 +50,20 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
       final image = await _controller!.takePicture();
 
       final updatedUserData = {
-        ...widget.userData, // <--- now this works
-        'selfie_image_path': image.path, // <--- now 'image' is defined too
+        ...widget.userData,
+        'id_image_path': image.path,
       };
+
+      // 🟨 Debug output
+      print('--- Captured ID Image and User Data ---');
+      updatedUserData.forEach((key, value) {
+        print('$key: $value');
+      });
+      print('----------------------------------------');
 
       context.push(AppRoutes.kFaceVerification, extra: updatedUserData);
     } catch (e) {
-      if (!mounted) return; // to avoid 'BuildContext after async' error
+      if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error capturing image: $e')));
@@ -79,29 +86,26 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child:
-                  _initializeControllerFuture != null
-                      ? FutureBuilder(
-                        future: _initializeControllerFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: CameraPreview(_controller!),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text('Error loading camera'));
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      )
-                      : const Center(child: CircularProgressIndicator()),
+              child: _initializeControllerFuture != null
+                  ? FutureBuilder(
+                      future: _initializeControllerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CameraPreview(_controller!),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text('Error loading camera'));
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                  : const Center(child: CircularProgressIndicator()),
             ),
-
             const SizedBox(height: 25),
             const Text(
               "Make sure your government-issued ID is clear and readable; otherwise, it will be considered invalid.",

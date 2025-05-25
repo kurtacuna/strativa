@@ -63,15 +63,20 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
         capturedImagePath = image.path;
       });
 
+      // 🟨 Debug output
+      print('--- Captured Selfie Image ---');
+      print('Image path: $capturedImagePath');
+      print('-----------------------------');
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Selfie captured successfully!')),
       );
     } catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to capture image: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to capture image: $e')));
     }
   }
 
@@ -88,23 +93,28 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
       body: Column(
         children: [
           Expanded(
-            child: _initializeControllerFuture != null
-                ? FutureBuilder(
-                    future: _initializeControllerFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: CameraPreview(_controller!),
-                        );
-                      } else if (snapshot.hasError) {
-                        return const Center(child: Text('Error loading camera'));
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  )
-                : const Center(child: CircularProgressIndicator()),
+            child:
+                _initializeControllerFuture != null
+                    ? FutureBuilder(
+                      future: _initializeControllerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: CameraPreview(_controller!),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('Error loading camera'),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                    : const Center(child: CircularProgressIndicator()),
           ),
           const SizedBox(height: 20),
           AppButtonWidget(text: 'Capture', onTap: _takeSelfie),
@@ -116,11 +126,23 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
                 final updatedUserData = {
                   ...widget.userData,
                   'selfie_image_path': capturedImagePath,
+                  // Ensure id_image_path is preserved if it exists
+                  'id_image_path': widget.userData['id_image_path'],
                 };
+
+                // 🟨 Debug output
+                print('--- Proceeding with User Data ---');
+                updatedUserData.forEach((key, value) {
+                  print('$key: $value');
+                });
+                print('----------------------------------');
+
                 context.push(AppRoutes.kGenderMarital, extra: updatedUserData);
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Please capture a selfie first!')),
+                  const SnackBar(
+                    content: Text('Please capture a selfie first!'),
+                  ),
                 );
               }
             },
