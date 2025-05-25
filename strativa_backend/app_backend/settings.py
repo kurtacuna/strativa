@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'transfer',
     'other_banks',
     'scheduled_payments',
-    'logs',
+    # 'logs',
+    'logs.apps.LogsConfig',
 ]
 
 MIDDLEWARE = [
@@ -177,4 +178,4 @@ SIMPLE_JWT = {
 }
 
 TIME_ZONE = 'Asia/Manila'
-USE_TZ = True  # Optional: Use timezone-aware datetimes
+USE_TZ = True
