@@ -15,43 +15,45 @@ class InitialScreenComplete extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Back'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              child: Column(
-                children: [
-                  AppIcons.kComplete
-                ],
-              )
-              ),
-            Center(
-              child: Column(
-                children: [ // spacing between image and text
-                  Text(
-                    "Verifying your information done!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                child: Column(
+                  children: [
+                    AppIcons.kComplete
+                  ],
+                )
+                ),
+              Center(
+                child: Column(
+                  children: [ // spacing between image and text
+                    Text(
+                      "Verifying your information done!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Next, we'll verify your identification",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
+                    Text(
+                      "Next, we'll verify your identification",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 350),
-            AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kOpenCamera, extra: userData);
-            },),
-          ]
+              SizedBox(height: 350),
+              AppButtonWidget(text: 'Confirm', onTap: (){
+                context.push(AppRoutes.kOpenCamera, extra: userData);
+              },),
+            ]
+          ),
         ),
-      ),
+      )
     );
   }
 }

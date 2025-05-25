@@ -13,7 +13,7 @@ class FaceScanCameraScreen extends StatefulWidget {
   State<FaceScanCameraScreen> createState() => _FaceScanCameraScreenState();
 }
 
-class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
+class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> with WidgetsBindingObserver {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   String? capturedImagePath;
@@ -21,34 +21,61 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initializeCamera();
   }
 
   Future<void> _initializeCamera() async {
     try {
       final cameras = await availableCameras();
+      if (cameras.isEmpty) {
+        debugPrint("No available cameras found!");
+        return;
+      }
+
       final frontCamera = cameras.firstWhere(
         (camera) => camera.lensDirection == CameraLensDirection.front,
         orElse: () => cameras.first,
       );
 
       _controller = CameraController(frontCamera, ResolutionPreset.medium);
-      _initializeControllerFuture = _controller!.initialize();
-      await _initializeControllerFuture;
+      _initializeControllerFuture = _controller!.initialize(); // Assign first
+
+      await _initializeControllerFuture; // Now await the initialization
 
       if (mounted) {
-        setState(() {});
+        setState(() {}); // Make sure we only rebuild if mounted
       }
     } catch (e) {
-      debugPrint('Error initializing front camera: $e');
+      debugPrint("Camera initialization failed: $e");
     }
   }
 
+
+  Future<void> _disposeCameraSafely() async {
+    await Future.delayed(Duration(milliseconds: 300)); // Short delay
+    if (_controller != null && _controller!.value.isInitialized) {
+      await _controller!.dispose();
+    }
+  }
+
+
   @override
   void dispose() {
-    _controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    if (_controller != null) {
+      if (_controller!.value.isInitialized) {
+        try {
+          _disposeCameraSafely();
+        } catch (e) {
+          debugPrint("Error disposing camera controller: $e");
+        }
+      }
+    }
     super.dispose();
   }
+
+
 
   Future<void> _takeSelfie() async {
     if (_controller == null || !_controller!.value.isInitialized) return;
@@ -94,7 +121,7 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
         children: [
           Expanded(
             child:
-                _initializeControllerFuture != null
+                _initializeControllerFuture != null && _controller != null
                     ? FutureBuilder(
                       future: _initializeControllerFuture,
                       builder: (context, snapshot) {

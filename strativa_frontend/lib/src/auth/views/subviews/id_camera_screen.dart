@@ -12,35 +12,67 @@ class CameraOpeningScreen extends StatefulWidget {
   State<CameraOpeningScreen> createState() => _CameraOpeningScreenState();
 }
 
-class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
+class _CameraOpeningScreenState extends State<CameraOpeningScreen> with WidgetsBindingObserver{
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initializeCamera();
   }
 
   Future<void> _initializeCamera() async {
     try {
       final cameras = await availableCameras();
-      final firstCamera = cameras.first;
+      if (cameras.isEmpty) {
+        debugPrint("No available cameras found!");
+        return;
+      }
 
-      _controller = CameraController(firstCamera, ResolutionPreset.medium);
+      final frontCamera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.front,
+        orElse: () => cameras.first,
+      );
 
-      _initializeControllerFuture = _controller!.initialize();
-      setState(() {});
+      _controller = CameraController(frontCamera, ResolutionPreset.medium);
+      _initializeControllerFuture = _controller!.initialize(); // Assign first
+
+      await _initializeControllerFuture; // Now await the initialization
+
+      if (mounted) {
+        setState(() {}); // Make sure we only rebuild if mounted
+      }
     } catch (e) {
       debugPrint("Camera initialization failed: $e");
     }
   }
 
+
+  Future<void> _disposeCameraSafely() async {
+    await Future.delayed(Duration(milliseconds: 300)); // Short delay
+    if (_controller != null && _controller!.value.isInitialized) {
+      await _controller!.dispose();
+    }
+  }
+
   @override
   void dispose() {
-    _controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    if (_controller != null) {
+      if (_controller!.value.isInitialized) {
+        try {
+          _disposeCameraSafely();
+        } catch (e) {
+          debugPrint("Error disposing camera controller: $e");
+        }
+      }
+    }
     super.dispose();
   }
+
+
 
   Future<void> _takePicture() async {
     if (_controller == null || !_controller!.value.isInitialized) return;
@@ -90,7 +122,7 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
                   ? FutureBuilder(
                       future: _initializeControllerFuture,
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.connectionState == ConnectionState.done && _controller != null) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: CameraPreview(_controller!),

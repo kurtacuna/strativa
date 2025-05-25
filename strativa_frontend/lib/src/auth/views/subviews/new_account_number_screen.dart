@@ -27,71 +27,74 @@ class _NewAccountNumberScreenState extends State<NewAccountNumberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Back')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 16),
-              AppIcons.kSuccessfulIcon,
-              const SizedBox(height: 32),
-              const Text(
-                'Set up your username!',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Create a unique username that you’ll use to log in to your account.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.black54),
-              ),
-              const SizedBox(height: 24),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Username',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16),
+                AppIcons.kSuccessfulIcon,
+                const SizedBox(height: 32),
+                const Text(
+                  'Set up your username!',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter your username',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 8),
+                const Text(
+                  'Create a unique username that you’ll use to log in to your account.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                ),
+                const SizedBox(height: 24),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Username',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
                 ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a username';
-                  }
-                  return null;
-                },
-              ),
-              const Spacer(),
-              AppButtonWidget(
-                text: 'Next',
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    final mergedData = {
-                      ...widget.userData,
-                      'username': _usernameController.text.trim(),
-                    };
-
-                    context.push(
-                      AppRoutes.kCreatePassword,
-                      extra: mergedData,
-                    );
-                  }
-                },
-              ),
-            ],
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your username',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter a username';
+                    }
+                    return null;
+                  },
+                ),
+                // const Spacer(),
+                SizedBox(height: 50),
+                AppButtonWidget(
+                  text: 'Next',
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      final mergedData = {
+                        ...widget.userData,
+                        'username': _usernameController.text.trim(),
+                      };
+        
+                      context.push(
+                        AppRoutes.kCreatePassword,
+                        extra: mergedData,
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
