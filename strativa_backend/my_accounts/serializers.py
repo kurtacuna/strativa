@@ -2,6 +2,8 @@ from rest_framework import serializers
 from . import models
 from utils.common_serializers import UserSerializer
 from transaction import serializers as transaction_serializers
+import utils.aes_encryption_decryption as aes
+from datetime import datetime
 
 class UserDataSerializer(serializers.ModelSerializer):
   user = serializers.SerializerMethodField()
@@ -43,6 +45,53 @@ class UserTypesSerializer(serializers.ModelSerializer):
 
 
 class UserCardDetailsSerializer(serializers.ModelSerializer):
+  strativa_card_number = serializers.SerializerMethodField()
+  strativa_card_created = serializers.SerializerMethodField()
+  strativa_card_expiry = serializers.SerializerMethodField()
+  strativa_card_cvv = serializers.SerializerMethodField()
+
+  is_online_card_active = serializers.SerializerMethodField()
+  online_card_number = serializers.SerializerMethodField()
+  online_card_created = serializers.SerializerMethodField()
+  online_card_expiry = serializers.SerializerMethodField()
+  online_card_cvv = serializers.SerializerMethodField()
+
+  def get_strativa_card_number(self, obj):
+      return aes.decrypt(obj.strativa_card_number)
+
+  def get_strativa_card_created(self, obj):
+      return aes.decrypt(obj.strativa_card_created)
+
+  def get_strativa_card_expiry(self, obj):
+      return aes.decrypt(obj.strativa_card_expiry)
+
+  def get_strativa_card_cvv(self, obj):
+      return aes.decrypt(obj.strativa_card_cvv)
+  
+  def get_is_online_card_active(self, obj):
+      return True if aes.decrypt(obj.is_online_card_active) == "True" else False
+
+  def get_online_card_number(self, obj):
+      if not obj.online_card_number:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_number)
+
+  def get_online_card_created(self, obj):
+      if not obj.online_card_created:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_created)
+
+  def get_online_card_expiry(self, obj):
+      if not obj.online_card_expiry:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_expiry)
+
+  def get_online_card_cvv(self, obj):
+      if not obj.online_card_cvv:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_cvv)
+
+  
   class Meta:
     model = models.UserCardDetails
     exclude = ['user']
@@ -67,6 +116,8 @@ class UserAccountsSerializer(serializers.ModelSerializer):
 
   account_type = serializers.SerializerMethodField()
   bank = serializers.SerializerMethodField()
+  account_number = serializers.SerializerMethodField()
+  balance = serializers.SerializerMethodField()
 
   def get_account_type(self, obj):
     serializer = AccountTypesSerializer(obj.account_type)
@@ -75,10 +126,16 @@ class UserAccountsSerializer(serializers.ModelSerializer):
   def get_bank(self, obj):
     serializer = StrativaBanksSerializer(obj.bank)
     return serializer.data
+  
+  def get_account_number(self, obj):
+    return aes.decrypt(obj.account_number)
+  
+  def get_balance(self, obj):
+    return aes.decrypt(obj.balance)
 
   class Meta:
     model = models.UserAccounts
-    exclude = ['id', 'user']
+    exclude = ['id', 'user', 'hashed_account_number']
 
 
 class AccountTypesSerializer(serializers.ModelSerializer):

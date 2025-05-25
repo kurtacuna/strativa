@@ -124,11 +124,11 @@
         "model": "my_accounts.usercarddetails",
         "pk": 4,
         "fields": {
-            "strativa_card_number": "0234567890123456",
-            "strativa_card_created": "2025-04-07T09:27:09Z",
-            "strativa_card_expiry": "2025-04-08T16:40:40Z",
-            "strativa_card_cvv": "123",
-            "is_online_card_active": false,
+            "strativa_card_number": "j9sORONmMR0FHNxNa03xRA==:NDmdG6ydT0aad20ApE_Eqw==:P1zC5I8Hxq54BqJHCiB63Q==",
+            "strativa_card_created": "_yjf8i_Vux8Qice8TO-uJQ==:wbYJmkv2CswyvM2cd5ReRHKMmys=:Gzvmx__ok8mtA4L3Rq848g==",
+            "strativa_card_expiry": "5YcDvVa13MDEHk6z1-TZPw==:6SDfUIcmiQ-mJT4mAmSzr4r5o74=:RxwUuWrpvYC0LoUDmhF0cA==",
+            "strativa_card_cvv": "JuZqryXO-Mzk7CtmlBo6Jg==:YG1P:cR7yh9ozxBUaXY4tkWUrLA==",
+            "is_online_card_active": "s1xVfTIKPh1HO-AMfT2oww==:9W8HJww=:ryGIEedoqd7BaUbS6J1q-Q==",
             "online_card_number": null,
             "online_card_created": null,
             "online_card_expiry": null,
@@ -139,11 +139,11 @@
         "model": "my_accounts.usercarddetails",
         "pk": 5,
         "fields": {
-            "strativa_card_number": "1234567890123456",
-            "strativa_card_created": "2025-04-07T09:27:09Z",
-            "strativa_card_expiry": "2025-04-08T16:40:40Z",
-            "strativa_card_cvv": "123",
-            "is_online_card_active": false,
+            "strativa_card_number": "dCzzUkNK0u3l6c1QoPmMKw==:Hr_dYmsROdmueZCklrmRBg==:iKbx0UgVqHSgtoRUa23-rQ==",
+            "strativa_card_created": "BYBt7pGEZW-9elxtUzUvqQ==:o1pRngsO3gMRhNSZslHtMQigM_0=:FlQJ8HEhDdsM08r-OIrm5Q==",
+            "strativa_card_expiry": "KRlGBosOn9ihyi-5Lj_lUw==:G5TaEfJV_ycP0hvWJvLdnVaaGuI=:-cflHpZushK0ZP3egneRbQ==",
+            "strativa_card_cvv": "VqvrSKaAEBq41mb1Vqz64w==:dGfB:ROgHb1zouz8GDdmqikTksQ==",
+            "is_online_card_active": "s1xVfTIKPh1HO-AMfT2oww==:9W8HJww=:ryGIEedoqd7BaUbS6J1q-Q==",
             "online_card_number": null,
             "online_card_created": null,
             "online_card_expiry": null,
@@ -179,6 +179,7 @@
         "fields": {
             "user": 4,
             "account_type": 1,
+            "hashed_account_number": "59a09d05083133176ee3eb837d5f9cc5f9c9a933b7c143864be199719eb70f0b",
             "account_number": "J8qFH3a8IppyhWCHTV3z1g==:RRLVYXtziZPnyKTT4zKw3QFWJQ==:fpr-OIabasIZIbMkE8ML9A==",
             "balance": "_Mb10MN8EHNkOg4XlZLmCg==:vDl4Inm1:aAA8SblsKHQYc_cN3oID5g=="
         }
@@ -189,6 +190,7 @@
         "fields": {
             "user": 5,
             "account_type": 1,
+            "hashed_account_number": "d4e5ee725dbd0e81d0071bbffbfb595ceaee6699b0d9bf56fca9a923b99c08b9",
             "account_number": "6edsP549oR-GE5QvdCrBig==:0pGjEIylR0KtDnY3gDZHts7HrA==:KCio2EsSneJ0KwDFS3cgrg==",
             "balance": "ZIbmzUfQA_55c3wzze8uVQ==:gUzYk61j:153170Tch7OTJ7ak7ac0IA=="
         }
@@ -199,6 +201,7 @@
         "fields": {
             "user": 5,
             "account_type": 2,
+            "hashed_account_number": "28067410e38bbb1f8416ff6fce07fa541d90c33aa468dc5ef553f2b145b14d5c",
             "account_number": "8CNMZ4E9aK_yHLvy7v6jjA==:YkxirEk=:QYl6wpicrxiRYoTI-RZxVg==",
             "balance": "UTaCerYZByDGfoFl_R8iJA==:WNbbjBJO:uuLgM1tyyDztOJJkM1ZhOg=="
         }
@@ -321,7 +324,8 @@
         "fields": {
             "bank": 1,
             "full_name": "Juan Dela Cruz",
-            "account_number": "1234"
+            "account_number": "1234",
+            "balance": "vh8f9lsgkVnxdbu_HrPBdg==:qQ==:hRW-UJIPFhHwjqdBT_jtdA=="
         }
     },
     {
@@ -330,7 +334,8 @@
         "fields": {
             "bank": 2,
             "full_name": "Juan Dela Cruz",
-            "account_number": "1234"
+            "account_number": "1234",
+            "balance": "vh8f9lsgkVnxdbu_HrPBdg==:qQ==:hRW-UJIPFhHwjqdBT_jtdA=="
         }
     },
     {

@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from . import models, serializers
 from utils.server_error import return_server_error
 from my_accounts.utils.user_not_found import return_user_not_found
+import utils.hash_function as h
 
 class UserDataView(APIView):
   permission_classes = [IsAuthenticated]
@@ -48,7 +49,8 @@ class CheckIfAccountExistsView(APIView):
         account_number = request.data.get('account_number')
 
         try:
-            account = models.UserAccounts.objects.get(account_number=account_number)
+            account = models.UserAccounts.objects.get(
+              hashed_account_number=h.hash_data(account_number))
             serializer = serializers.UserAccountsSerializer(account, filter={"exclude_fields": ["balance"]})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except models.UserAccounts.DoesNotExist:

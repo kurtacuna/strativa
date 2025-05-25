@@ -39,9 +39,6 @@ class TransferView(APIView):
         amount = Decimal(transaction_details.get('amount'))
         note = transaction_details.get('note')
 
-        print("TransferView:")
-        print(transaction_details)
-
         try:
             if sender_account_number == receiver_account_number:
                 return Response(

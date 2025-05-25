@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'transfer',
     'other_banks',
     'scheduled_payments',
+    # 'logs',
+    'logs.apps.LogsConfig',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'logs.middleware.RequestLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'app_backend.urls'
@@ -174,3 +177,5 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ('Bearer',),
 }
 
+TIME_ZONE = 'Asia/Manila'
+USE_TZ = True

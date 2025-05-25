@@ -4,6 +4,7 @@ from django.utils import timezone
 from utils.const import BackendConstants
 from my_accounts import models as my_accounts_models
 from decimal import Decimal
+import utils.aes_encryption_decryption as aes
 
 
 class UserTransactions(models.Model):
@@ -14,7 +15,7 @@ class UserTransactions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction = models.ForeignKey('Transactions', on_delete=models.CASCADE)
     direction = models.CharField(max_length=20, choices=Direction.choices)
-    resulting_balance = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)
+    resulting_balance = models.TextField()
 
     def __str__(self):
         return self.user.username
@@ -26,16 +27,16 @@ class UserTransactions(models.Model):
 
 class Transactions(models.Model):
     reference_id = models.CharField(max_length=32, unique=True)
-    datetime = models.DateTimeField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    datetime = models.TextField()
+    amount = models.TextField()
     transaction_type = models.ForeignKey('TransactionTypes', on_delete=models.SET_DEFAULT, default=1)
     sender = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='sender_transactions_set')
-    sender_account_number = models.CharField(max_length=30)
+    sender_account_number = models.TextField()
     sender_bank = models.CharField(max_length=255)
     receiver = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='receiver_transactions_set')
-    receiver_account_number = models.CharField(max_length=30)
+    receiver_account_number = models.TextField()
     receiver_bank = models.CharField(max_length=255)
-    note = models.CharField(max_length=255, blank=True)
+    note = models.TextField(blank=True)
     transaction_fees_applied = models.BooleanField()
 
     def __str__(self):
@@ -43,7 +44,7 @@ class Transactions(models.Model):
     
     def save(self, *args, **kwargs):
         self.reference_id = BackendConstants.get_uuid()
-        self.datetime = timezone.now()
+        self.datetime = aes.encrypt(timezone.now())
 
         super().save(*args, **kwargs)
         
@@ -54,7 +55,7 @@ class Transactions(models.Model):
             user=self.sender,
             transaction=self,
             direction=UserTransactions.Direction.SEND,
-            resulting_balance=Decimal(sender_account_balance)
+            resulting_balance=sender_account_balance
         )
         
         if self.receiver_bank == "Strativa":
@@ -65,7 +66,7 @@ class Transactions(models.Model):
                 user=self.receiver,
                 transaction=self,
                 direction=UserTransactions.Direction.RECEIVE,
-                resulting_balance=Decimal(receiver_account_balance)
+                resulting_balance=receiver_account_balance
             )
     
     class Meta:
