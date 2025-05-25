@@ -4,15 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class EmailVerification extends StatelessWidget {
-  const EmailVerification({super.key});
+  final Map<String, dynamic> nameData;
+
+  const EmailVerification({super.key, required this.nameData});
 
   @override
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
-    final codeController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Back'),
+      appBar: AppBar(
+        title: const Text('Back'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(25),
@@ -25,58 +27,15 @@ class EmailVerification extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              "We will send you an OTP verification. So that we\nmake sure that it’s you.",
+              "Please enter your email address so we can proceed with the registration.",
             ),
             const SizedBox(height: 30),
             const Text("Email Address"),
             const SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      hintText: "Enter email address",
-                      fillColor: const Color(0xFFEFF3F0),
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Connect to backend here
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF00B1AC),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        "Send Code", style: TextStyle(color: Colors.white),
-                      )
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Text("Input Field"),
-            const SizedBox(height: 5),
             TextField(
-              controller: codeController,
+              controller: emailController,
               decoration: InputDecoration(
-                hintText: "Enter Code",
+                hintText: "Enter email address",
                 fillColor: const Color(0xFFEFF3F0),
                 filled: true,
                 border: OutlineInputBorder(
@@ -85,33 +44,21 @@ class EmailVerification extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Connect to backend here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00B1AC),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                child: const Text(
-                  "Verify email address",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
             const Spacer(),
-            AppButtonWidget(text: 'Confirm', onTap: (){
-              context.push(AppRoutes.kMobileNumber);
-            },),
+            AppButtonWidget(
+              text: 'Confirm',
+              onTap: () {
+                final updatedData = {
+                  ...nameData,
+                  'email': emailController.text.trim(),
+                };
+
+                context.push(
+                  AppRoutes.kMobileNumber,
+                  extra: updatedData,
+                );
+              },
+            ),
           ],
         ),
       ),

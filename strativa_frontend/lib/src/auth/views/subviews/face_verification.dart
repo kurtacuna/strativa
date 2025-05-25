@@ -5,7 +5,8 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class FaceVerification extends StatelessWidget {
-  const FaceVerification({super.key});
+  final Map<String, dynamic> userData;
+  const FaceVerification({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class FaceVerification extends StatelessWidget {
             const InstructionItem(text: 'Align your face within the frame and follow the on-screen instructions.'),
             const Spacer(),
             AppButtonWidget(text: 'Start', onTap: (){
-              context.push(AppRoutes.kFaceScanVerification);
+              context.push(AppRoutes.kFaceScanVerification, extra: userData);
             },),
           ],
         ),

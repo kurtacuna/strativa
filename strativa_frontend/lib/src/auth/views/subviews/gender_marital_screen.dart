@@ -4,7 +4,9 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class GenderMaritalScreen extends StatefulWidget {
-  const GenderMaritalScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const GenderMaritalScreen({super.key, required this.userData});
 
   @override
   State<GenderMaritalScreen> createState() => _GenderMaritalScreenState();
@@ -60,8 +62,7 @@ class _GenderMaritalScreenState extends State<GenderMaritalScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                         decoration: BoxDecoration(
                           color: isSelected ? Colors.teal : Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -104,8 +105,7 @@ class _GenderMaritalScreenState extends State<GenderMaritalScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                         decoration: BoxDecoration(
                           color: isSelected ? Colors.teal : Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -133,16 +133,21 @@ class _GenderMaritalScreenState extends State<GenderMaritalScreen> {
               AppButtonWidget(
                 text: 'Confirm',
                 onTap: () {
-                  _formKey.currentState?.save();
+                  if (_selectedGender != null && _selectedStatus != null) {
+                    final updatedUserData = {
+                      ...widget.userData,
+                      'gender': _selectedGender,
+                      'marital_status': _selectedStatus,
+                    };
 
-                  final data = {
-                    'gender': _selectedGender,
-                    'marital_status': _selectedStatus,
-                  };
+                    debugPrint('Updated UserData: $updatedUserData');
 
-                  debugPrint('Saved Gender/Marital JSON: $data');
-
-                  context.push(AppRoutes.kAddressForm);
+                    context.push(AppRoutes.kAddressForm, extra: updatedUserData);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please select both gender and marital status')),
+                    );
+                  }
                 },
               ),
             ],

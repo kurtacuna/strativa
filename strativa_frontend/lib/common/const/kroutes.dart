@@ -9,8 +9,9 @@ class AppRoutes {
   static const String kBirthday = '/birthday';
   static const String kInitialComplete = '/inital_complete';
   static const String kOpenCamera = '/open_camera';
-  static const String kFaceVerification = '/face_verification';
-  static const String kFaceScanVerification = '/face_scan_verify';
+  static const String kFaceVerification= '/face_verification';
+  static const String kFaceScanVerification = '/face_scan_verification';
+  static const String kIdCamera = '/id_camera';
   static const String kGenderMarital = '/gender_marital';
   static const String kAddressForm = '/address';
   static const String kReviewApplication = '/review_application';

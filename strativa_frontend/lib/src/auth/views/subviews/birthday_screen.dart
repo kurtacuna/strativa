@@ -5,7 +5,9 @@ import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:intl/intl.dart';
 
 class BirthdayScreen extends StatefulWidget {
-  const BirthdayScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const BirthdayScreen({super.key, required this.userData});
 
   @override
   State<BirthdayScreen> createState() => _BirthdayScreenState();
@@ -17,19 +19,19 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   final cityOfBirthController = TextEditingController();
 
   OutlineInputBorder _defaultBorder() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(color: Colors.transparent),
-      );
+    borderRadius: BorderRadius.circular(6),
+    borderSide: const BorderSide(color: Colors.transparent),
+  );
 
   OutlineInputBorder _focusedBorder() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(color: Colors.blue, width: 2),
-      );
+    borderRadius: BorderRadius.circular(6),
+    borderSide: const BorderSide(color: Colors.blue, width: 2),
+  );
 
   OutlineInputBorder _errorBorder() => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(color: Colors.red, width: 2),
-      );
+    borderRadius: BorderRadius.circular(6),
+    borderSide: const BorderSide(color: Colors.red, width: 2),
+  );
 
   InputDecoration _inputDecoration(String hintText) {
     return InputDecoration(
@@ -120,14 +122,18 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                   if (_formKey.currentState?.validate() ?? false) {
                     _formKey.currentState?.save();
 
-                    final birthdayData = {
+                    final updatedData = {
+                      ...widget.userData, // keep old data
                       'date_of_birth': dateOfBirthController.text.trim(),
                       'city_of_birth': cityOfBirthController.text.trim(),
                     };
 
-                    debugPrint('Saved Birthday JSON: $birthdayData');
+                    debugPrint('Saved Full JSON: $updatedData');
 
-                    context.push(AppRoutes.kInitialComplete);
+                    context.push(
+                      AppRoutes.kInitialComplete,
+                      extra: updatedData,
+                    );
                   }
                 },
               ),

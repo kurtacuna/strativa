@@ -1,11 +1,32 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:go_router/go_router.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 import 'package:strativa_frontend/common/const/kicons.dart';
 
-class NewAccountNumberScreen extends StatelessWidget {
-  const NewAccountNumberScreen({super.key});
+class NewAccountNumberScreen extends StatefulWidget {
+  final Map<String, dynamic> userData;
+
+  const NewAccountNumberScreen({super.key, required this.userData});
+
+  @override
+  State<NewAccountNumberScreen> createState() => _NewAccountNumberScreenState();
+}
+
+class _NewAccountNumberScreenState extends State<NewAccountNumberScreen> {
+  late final String _accountNumber;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 11‑digit number that starts with “30”
+    final rnd = Random();
+    final buffer = StringBuffer('30');
+    for (int i = 0; i < 9; i++) buffer.write(rnd.nextInt(10));
+    _accountNumber = buffer.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +38,7 @@ class NewAccountNumberScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 16),
-            AppIcons.kSuccessfulIcon, // image function
+            AppIcons.kSuccessfulIcon,
             const SizedBox(height: 32),
             const Text(
               'Fund your new account now!',
@@ -33,10 +54,8 @@ class NewAccountNumberScreen extends StatelessWidget {
             const SizedBox(height: 24),
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'Account number',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
+              child: Text('Account number',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             ),
             const SizedBox(height: 8),
             Container(
@@ -47,21 +66,30 @@ class NewAccountNumberScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: Offset(0, 2),
-                  ),
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: Offset(0, 2)),
                 ],
               ),
-              child: const Text(
-                '30123418392',
-                style: TextStyle(fontSize: 16),
-              ),
+              child: SelectableText(_accountNumber,
+                  style: const TextStyle(fontSize: 16)),
             ),
             const Spacer(),
-            AppButtonWidget(text: 'Next', onTap: (){
-              context.push(AppRoutes.kCreatePassword);
-            },),
+            AppButtonWidget(
+              text: 'Next',
+              onTap: () {
+                // merge previous data + account number without mutating original
+                final mergedData = {
+                  ...widget.userData,
+                  'account_number': _accountNumber,
+                };
+
+                context.push(
+                  AppRoutes.kCreatePassword,
+                  extra: mergedData,
+                );
+              },
+            ),
           ],
         ),
       ),

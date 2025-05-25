@@ -5,7 +5,9 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class FaceScanCameraScreen extends StatefulWidget {
-  const FaceScanCameraScreen({super.key});
+  final Map<String, dynamic> userData;
+
+  const FaceScanCameraScreen({super.key, required this.userData});
 
   @override
   State<FaceScanCameraScreen> createState() => _FaceScanCameraScreenState();
@@ -14,6 +16,7 @@ class FaceScanCameraScreen extends StatefulWidget {
 class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
+  String? capturedImagePath;
 
   @override
   void initState() {
@@ -22,16 +25,23 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
   }
 
   Future<void> _initializeCamera() async {
-    final cameras = await availableCameras();
-    final frontCamera = cameras.firstWhere(
-      (camera) => camera.lensDirection == CameraLensDirection.front,
-      orElse: () => cameras.first,
-    );
+    try {
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.front,
+        orElse: () => cameras.first,
+      );
 
-    _controller = CameraController(frontCamera, ResolutionPreset.medium);
-    _initializeControllerFuture = _controller!.initialize();
-    await _initializeControllerFuture;
-    setState(() {});
+      _controller = CameraController(frontCamera, ResolutionPreset.medium);
+      _initializeControllerFuture = _controller!.initialize();
+      await _initializeControllerFuture;
+
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      debugPrint('Error initializing front camera: $e');
+    }
   }
 
   @override
@@ -46,11 +56,19 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
     try {
       await _initializeControllerFuture;
       final image = await _controller!.takePicture();
-      // Optionally save or process image.path
+
+      if (!mounted) return;
+
+      setState(() {
+        capturedImagePath = image.path;
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Selfie captured: ${image.path}')),
+        const SnackBar(content: Text('Selfie captured successfully!')),
       );
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to capture image: $e')),
       );
@@ -60,13 +78,17 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Face Scan')),
+      appBar: AppBar(
+        leading: const BackButton(color: Colors.black),
+        title: const Text('Face Scan', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      backgroundColor: Colors.grey[50],
       body: Column(
         children: [
           Expanded(
-            child: _controller != null &&
-                    _controller!.value.isInitialized &&
-                    _initializeControllerFuture != null
+            child: _initializeControllerFuture != null
                 ? FutureBuilder(
                     future: _initializeControllerFuture,
                     builder: (context, snapshot) {
@@ -75,6 +97,8 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
                           borderRadius: BorderRadius.circular(12),
                           child: CameraPreview(_controller!),
                         );
+                      } else if (snapshot.hasError) {
+                        return const Center(child: Text('Error loading camera'));
                       } else {
                         return const Center(child: CircularProgressIndicator());
                       }
@@ -88,7 +112,17 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> {
           AppButtonWidget(
             text: 'Next',
             onTap: () {
-              context.push(AppRoutes.kGenderMarital);
+              if (capturedImagePath != null) {
+                final updatedUserData = {
+                  ...widget.userData,
+                  'selfie_image_path': capturedImagePath,
+                };
+                context.push(AppRoutes.kGenderMarital, extra: updatedUserData);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please capture a selfie first!')),
+                );
+              }
             },
           ),
           const SizedBox(height: 20),

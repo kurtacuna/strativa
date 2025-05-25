@@ -5,7 +5,8 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class CameraOpeningScreen extends StatefulWidget {
-  const CameraOpeningScreen({super.key});
+  final Map<String, dynamic> userData;
+  const CameraOpeningScreen({super.key, required this.userData});
 
   @override
   State<CameraOpeningScreen> createState() => _CameraOpeningScreenState();
@@ -77,25 +78,36 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: _controller != null &&
-                      _controller!.value.isInitialized &&
-                      _initializeControllerFuture != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: CameraPreview(_controller!),
-                    )
-                  : const Center(child: CircularProgressIndicator()),
+              child:
+                  _initializeControllerFuture != null
+                      ? FutureBuilder(
+                        future: _initializeControllerFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CameraPreview(_controller!),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text('Error loading camera'));
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                      : const Center(child: CircularProgressIndicator()),
             ),
+
             const SizedBox(height: 25),
             const Text(
               "Make sure your government-issued ID is clear and readable; otherwise, it will be considered invalid.",
               style: TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 20),
-            AppButtonWidget(
-              text: 'Take Picture',
-              onTap: _takePicture,
-            ),
+            AppButtonWidget(text: 'Take Picture', onTap: _takePicture),
             const SizedBox(height: 20),
           ],
         ),

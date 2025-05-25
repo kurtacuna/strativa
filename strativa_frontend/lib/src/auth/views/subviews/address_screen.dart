@@ -5,7 +5,9 @@ import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/widgets/app_button_widget.dart';
 
 class AddressForm extends StatefulWidget {
-  const AddressForm({super.key});
+  final Map<String, dynamic>? previousData;
+
+  const AddressForm({super.key, this.previousData});
 
   @override
   State<AddressForm> createState() => _AddressFormState();
@@ -48,10 +50,14 @@ class _AddressFormState extends State<AddressForm> {
         'unit': _unit,
         'street': _street,
       };
+      final mergedData = {
+        ...?widget.previousData, // <- existing gender/marital data
+        ...addressData, // <- new address data
+      };
 
-      debugPrint('Saved Address JSON: $addressData');
+      debugPrint('Merged JSON to send: $mergedData');
 
-      context.push(AppRoutes.kReviewApplication);
+      context.push(AppRoutes.kReviewApplication, extra: mergedData);
     }
   }
 
@@ -152,11 +158,7 @@ class _AddressFormState extends State<AddressForm> {
                   onSaved: (value) => _street = value,
                 ),
                 const SizedBox(height: 24),
-
-                AppButtonWidget(
-                  text: 'Confirm',
-                  onTap: _saveForm,
-                ),
+                AppButtonWidget(text: 'Confirm', onTap: _saveForm),
               ],
             ),
           ),

@@ -98,23 +98,27 @@ class _NameScreenState extends State<NameScreen> {
               ),
               const Spacer(),
               AppButtonWidget(
-                text: 'Confirm',
-                onTap: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    _formKey.currentState?.save();
+              text: 'Confirm',
+              onTap: () {
+                if (_formKey.currentState?.validate() ?? false) {
+                  _formKey.currentState?.save();
 
-                    final nameData = {
-                      'first_name': firstNameController.text.trim(),
-                      'middle_name': middleNameController.text.trim(),
-                      'last_name': lastNameController.text.trim(),
-                    };
+                  final nameData = {
+                    'first_name': firstNameController.text.trim(),
+                    'middle_name': middleNameController.text.trim(),
+                    'last_name': lastNameController.text.trim(),
+                  };
 
-                    debugPrint("Saved Name JSON: $nameData");
+                  debugPrint("Saved Name JSON: $nameData");
 
-                    context.push(AppRoutes.kEmailVerify);
-                  }
-                },
-              ),
+                  context.push(
+                    AppRoutes.kEmailVerify, 
+                    extra: nameData,  // <-- Pass the name data to the next screen
+                  );
+                }
+              },
+            ),
+
             ],
           ),
         ),

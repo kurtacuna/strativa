@@ -14,9 +14,9 @@ import 'package:strativa_frontend/src/auth/views/subviews/gender_marital_screen.
 import 'package:strativa_frontend/src/auth/views/subviews/id_camera_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/initial_screen_complete.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/mobile_verification.dart';
+import 'package:strativa_frontend/src/auth/views/subviews/review_application_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/new_account_number_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/register_screen.dart';
-import 'package:strativa_frontend/src/auth/views/subviews/review_application_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/select_id_screen.dart';
 import 'package:strativa_frontend/src/auth/views/subviews/username_screen.dart';
 import 'package:strativa_frontend/src/entrypoint/views/entrypoint.dart';
@@ -135,51 +135,88 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kEmailVerify,
-      builder: (context, state) => const EmailVerification(),
+      builder: (context, state) {
+        final nameData = state.extra as Map<String, dynamic>;
+        return EmailVerification(nameData: nameData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kMobileNumber,
-      builder: (context, state) => const MobileVerification(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return MobileVerification(userData: userData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kBirthday,
-      builder: (context, state) => const BirthdayScreen(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return BirthdayScreen(userData: userData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kInitialComplete,
-      builder: (context, state) => const InitialScreenComplete(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return InitialScreenComplete(userData: userData);
+      },
     ),
+
     GoRoute(
       path: AppRoutes.kOpenCamera,
-      builder: (context, state) => const CameraOpeningScreen(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return CameraOpeningScreen(userData: userData);
+      },
     ),
+
     GoRoute(
       path: AppRoutes.kFaceVerification,
-      builder: (context, state) => const FaceVerification(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return FaceVerification(userData: userData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kGenderMarital,
-      builder: (context, state) => const GenderMaritalScreen(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return GenderMaritalScreen(userData: userData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kAddressForm,
-      builder: (context, state) => const AddressForm(),
+      builder:
+          (context, state) =>
+              AddressForm(previousData: state.extra as Map<String, dynamic>?),
     ),
     GoRoute(
       path: AppRoutes.kReviewApplication,
-      builder: (context, state) => const ReviewApplicationScreen(),
+      builder: (context, state) {
+        final formData = state.extra as Map<String, dynamic>;
+        return ReviewApplicationScreen(userData: formData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kAccountNumber,
-      builder: (context, state) => const NewAccountNumberScreen(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>? ?? {};
+        return NewAccountNumberScreen(userData: data);
+      },
     ),
     GoRoute(
       path: AppRoutes.kCreatePassword,
-      builder: (context, state) => const CreatePasswordScreen(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>? ?? {};
+        return CreatePasswordScreen(mergedData: data);
+      },
     ),
     GoRoute(
       path: AppRoutes.kFaceScanVerification,
-      builder: (context, state) => const FaceScanCameraScreen(),
+      builder: (context, state) {
+        final userData = state.extra as Map<String, dynamic>;
+        return FaceScanCameraScreen(userData: userData);
+      },
     ),
     GoRoute(
       path: AppRoutes.kTransferToAccount,
