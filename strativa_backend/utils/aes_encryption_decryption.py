@@ -43,3 +43,10 @@ def decrypt(nonce, ciphertext, tag):
     except Exception as e:
         print(e)
         raise
+
+
+while True:
+    nonce, ciphertext, tag = encrypt(input("enter data: "))
+    plaintext = decrypt(nonce, ciphertext, tag)
+    print(f"to store in db: {nonce}:{ciphertext}:{tag}")
+    print(f"plaintext: {plaintext}")
