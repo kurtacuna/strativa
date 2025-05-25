@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'transfer',
     'other_banks',
     'scheduled_payments',
-    'logs',
+    # 'logs',
+    'logs.apps.LogsConfig',
 ]
 
 MIDDLEWARE = [
