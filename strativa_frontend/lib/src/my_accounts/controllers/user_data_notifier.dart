@@ -29,6 +29,8 @@ class UserDataNotifier with ChangeNotifier {
         }
       );
 
+      print(response.body);
+
       if (response.statusCode == 200) {
         _userData = userDataModelFromJson(response.body);
       } else if (response.statusCode == 401) {

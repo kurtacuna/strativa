@@ -3,6 +3,7 @@ from . import models
 from utils.common_serializers import UserSerializer
 from transaction import serializers as transaction_serializers
 import utils.aes_encryption_decryption as aes
+from datetime import datetime
 
 class UserDataSerializer(serializers.ModelSerializer):
   user = serializers.SerializerMethodField()
@@ -44,6 +45,53 @@ class UserTypesSerializer(serializers.ModelSerializer):
 
 
 class UserCardDetailsSerializer(serializers.ModelSerializer):
+  strativa_card_number = serializers.SerializerMethodField()
+  strativa_card_created = serializers.SerializerMethodField()
+  strativa_card_expiry = serializers.SerializerMethodField()
+  strativa_card_cvv = serializers.SerializerMethodField()
+
+  is_online_card_active = serializers.SerializerMethodField()
+  online_card_number = serializers.SerializerMethodField()
+  online_card_created = serializers.SerializerMethodField()
+  online_card_expiry = serializers.SerializerMethodField()
+  online_card_cvv = serializers.SerializerMethodField()
+
+  def get_strativa_card_number(self, obj):
+      return aes.decrypt(obj.strativa_card_number)
+
+  def get_strativa_card_created(self, obj):
+      return aes.decrypt(obj.strativa_card_created)
+
+  def get_strativa_card_expiry(self, obj):
+      return aes.decrypt(obj.strativa_card_expiry)
+
+  def get_strativa_card_cvv(self, obj):
+      return aes.decrypt(obj.strativa_card_cvv)
+  
+  def get_is_online_card_active(self, obj):
+      return bool(aes.decrypt(obj.is_online_card_active))
+
+  def get_online_card_number(self, obj):
+      if not obj.online_card_number:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_number)
+
+  def get_online_card_created(self, obj):
+      if not obj.online_card_created:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_created)
+
+  def get_online_card_expiry(self, obj):
+      if not obj.online_card_expiry:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_expiry)
+
+  def get_online_card_cvv(self, obj):
+      if not obj.online_card_cvv:
+         return obj.online_card_cvv
+      return aes.decrypt(obj.online_card_cvv)
+
+  
   class Meta:
     model = models.UserCardDetails
     exclude = ['user']

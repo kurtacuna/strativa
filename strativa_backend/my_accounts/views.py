@@ -16,6 +16,8 @@ class UserDataView(APIView):
       user_data = models.UserData.objects.select_related('user_card_details').get(user=user_id)
       serializer = serializers.UserDataSerializer(user_data)
 
+      print(serializer.data)
+
       return Response(serializer.data, status=status.HTTP_200_OK)
     except models.UserData.DoesNotExist:
       return return_user_not_found()
