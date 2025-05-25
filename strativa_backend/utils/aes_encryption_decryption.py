@@ -14,6 +14,9 @@ def encrypt(data: str):
     param data: the piece of data to encrypt
     return: returns tuple of nonce, ciphertext, and tag to store in the database
     """
+
+    data = str(data)
+
     cipher = AES.new(key, AES.MODE_GCM)
     nonce = cipher.nonce
     ciphertext, tag = cipher.encrypt_and_digest(data.encode('utf-8'))
@@ -22,14 +25,20 @@ def encrypt(data: str):
     nonce = base64.urlsafe_b64encode(nonce).decode('utf-8')
     ciphertext = base64.urlsafe_b64encode(ciphertext).decode('utf-8')
     tag = base64.urlsafe_b64encode(tag).decode('utf-8')
-    return nonce, ciphertext, tag
+    return f"{nonce}:{ciphertext}:{tag}"
 
 
-def decrypt(nonce, ciphertext, tag):
+def decrypt(data):
     """
         param nonce, ciphertext, tag: comes from the database
         return: the plaintext if verified, otherwise, raise an error
     """
+    data = str(data)
+
+    if len(data.split(":")) == 1:
+        return data
+
+    nonce, ciphertext, tag = data.split(':')
 
     # Decode from base64
     nonce = base64.urlsafe_b64decode(nonce.encode('utf-8'))
@@ -45,8 +54,10 @@ def decrypt(nonce, ciphertext, tag):
         raise
 
 
-while True:
-    nonce, ciphertext, tag = encrypt(input("enter data: "))
-    plaintext = decrypt(nonce, ciphertext, tag)
-    print(f"to store in db: {nonce}:{ciphertext}:{tag}")
-    print(f"plaintext: {plaintext}")
+if __name__ == "__main__":
+    while True:
+        data = encrypt(input("enter data: "))
+        nonce, ciphertext, tag = data.split(":")
+        plaintext = decrypt(data)
+        print(f"to store in db: {nonce}:{ciphertext}:{tag}")
+        print(f"plaintext: {plaintext}")

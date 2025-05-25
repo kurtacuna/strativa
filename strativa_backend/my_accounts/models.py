@@ -5,6 +5,8 @@ import random
 import os
 from utils.const import BackendConstants
 from transaction import models as transaction_models
+import utils.aes_encryption_decryption as aes
+import utils.hash_function as h
 
 # Create your models here.
 class UserData(models.Model):
@@ -138,8 +140,9 @@ class UserCardDetails(models.Model):
 class UserAccounts(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   account_type = models.ForeignKey('AccountTypes', on_delete=models.CASCADE)
-  account_number = models.CharField(max_length=30, unique=True)
-  balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+  hashed_account_number = models.TextField(blank=True)
+  account_number = models.TextField(unique=True, blank=True)
+  balance = models.TextField(blank=True)
   bank = models.ForeignKey('StrativaBanks', on_delete=models.CASCADE, default=1)
 
   def __str__(self):
@@ -148,7 +151,12 @@ class UserAccounts(models.Model):
   def save(self, *args, **kwargs):
     if not self.account_number:
       account_type_code = AccountTypes.objects.get(account_type=self.account_type).code
-      self.account_number = f"{account_type_code}-{BackendConstants.get_uuid(half=True)}"
+      account_number = f"{account_type_code}-{BackendConstants.get_uuid(half=True)}"
+      self.hashed_account_number = h.hash_data(account_number)
+      self.account_number = aes.encrypt(account_number)
+    
+    if not self.balance:
+      self.balance = aes.encrypt(0)
     
     super().save(*args, **kwargs)
 

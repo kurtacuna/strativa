@@ -13,6 +13,8 @@ import pyotp
 from transfer import views as transfer_views
 from scheduled_payments import views as scheduled_payments_views
 from rest_framework.permissions import AllowAny
+import utils.hash_function as h
+import utils.aes_encryption_decryption as aes
 
 
 class VerifyOtpView(APIView):
@@ -32,7 +34,9 @@ class VerifyOtpView(APIView):
         transaction_details = request.data.get('transaction_details')
         
         try:
-            user = my_accounts_models.UserAccounts.objects.get(account_number=account_number).user
+            user = my_accounts_models.UserAccounts.objects.get(
+                hashed_account_number=h.hash_data(account_number)
+            ).user
             user_otp = models.UserOtp.objects.get(user=user)
             totp = pyotp.TOTP(
                 user_otp.otp_secret, 
@@ -79,7 +83,7 @@ class CreateOtpView(APIView):
 
         try:
             account_data = my_accounts_models.UserAccounts.objects.select_related('user').get(
-                account_number=account_number
+                hashed_account_number=h.hash_data(account_number)
             )
             user_data = my_accounts_models.UserData.objects.get(user=account_data.user)
 
@@ -115,9 +119,11 @@ class PeekBalanceView(APIView):
         account_number = request.query_params.get('account_number')
 
         try:
-            user_balance = my_accounts_models.UserAccounts.objects.get(account_number=account_number).balance
+            user_balance = my_accounts_models.UserAccounts.objects.get(
+                hashed_account_number=h.hash_data(account_number)
+            ).balance
             return Response(
-                {"detail": f"PHP {user_balance}"},
+                {"detail": f"PHP {aes.decrypt(user_balance)}"},
                 status=status.HTTP_200_OK
             )
         except models.UserOtp.DoesNotExist:

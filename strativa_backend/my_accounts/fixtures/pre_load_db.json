@@ -179,8 +179,9 @@
         "fields": {
             "user": 4,
             "account_type": 1,
-            "account_number": "CW-174002EC87644764",
-            "balance": "123.00"
+            "hashed_account_number": "59a09d05083133176ee3eb837d5f9cc5f9c9a933b7c143864be199719eb70f0b",
+            "account_number": "J8qFH3a8IppyhWCHTV3z1g==:RRLVYXtziZPnyKTT4zKw3QFWJQ==:fpr-OIabasIZIbMkE8ML9A==",
+            "balance": "_Mb10MN8EHNkOg4XlZLmCg==:vDl4Inm1:aAA8SblsKHQYc_cN3oID5g=="
         }
     },
     {
@@ -189,8 +190,9 @@
         "fields": {
             "user": 5,
             "account_type": 1,
-            "account_number": "CW-274002EC87644764",
-            "balance": "456.00"
+            "hashed_account_number": "d4e5ee725dbd0e81d0071bbffbfb595ceaee6699b0d9bf56fca9a923b99c08b9",
+            "account_number": "6edsP549oR-GE5QvdCrBig==:0pGjEIylR0KtDnY3gDZHts7HrA==:KCio2EsSneJ0KwDFS3cgrg==",
+            "balance": "ZIbmzUfQA_55c3wzze8uVQ==:gUzYk61j:153170Tch7OTJ7ak7ac0IA=="
         }
     },
     {
@@ -199,8 +201,9 @@
         "fields": {
             "user": 5,
             "account_type": 2,
-            "account_number": "S-123",
-            "balance": "789.00"
+            "hashed_account_number": "28067410e38bbb1f8416ff6fce07fa541d90c33aa468dc5ef553f2b145b14d5c",
+            "account_number": "8CNMZ4E9aK_yHLvy7v6jjA==:YkxirEk=:QYl6wpicrxiRYoTI-RZxVg==",
+            "balance": "UTaCerYZByDGfoFl_R8iJA==:WNbbjBJO:uuLgM1tyyDztOJJkM1ZhOg=="
         }
     },
     {
@@ -321,7 +324,8 @@
         "fields": {
             "bank": 1,
             "full_name": "Juan Dela Cruz",
-            "account_number": "1234"
+            "account_number": "1234",
+            "balance": "vh8f9lsgkVnxdbu_HrPBdg==:qQ==:hRW-UJIPFhHwjqdBT_jtdA=="
         }
     },
     {
@@ -330,7 +334,8 @@
         "fields": {
             "bank": 2,
             "full_name": "Juan Dela Cruz",
-            "account_number": "1234"
+            "account_number": "1234",
+            "balance": "vh8f9lsgkVnxdbu_HrPBdg==:qQ==:hRW-UJIPFhHwjqdBT_jtdA=="
         }
     },
     {
