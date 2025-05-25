@@ -69,7 +69,7 @@ class UserCardDetailsSerializer(serializers.ModelSerializer):
       return aes.decrypt(obj.strativa_card_cvv)
   
   def get_is_online_card_active(self, obj):
-      return bool(aes.decrypt(obj.is_online_card_active))
+      return True if aes.decrypt(obj.is_online_card_active) == "True" else False
 
   def get_online_card_number(self, obj):
       if not obj.online_card_number:
