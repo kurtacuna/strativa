@@ -129,11 +129,17 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.kAccountNumber,
-      builder: (context, state) => const NewAccountNumberScreen(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>? ?? {};
+        return NewAccountNumberScreen(userData: data);
+      },
     ),
     GoRoute(
       path: AppRoutes.kCreatePassword,
-      builder: (context, state) => const CreatePasswordScreen(),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>? ?? {};
+        return CreatePasswordScreen(mergedData: data);
+      },
     ),
     GoRoute(
       path: AppRoutes.kFaceScanVerification,
