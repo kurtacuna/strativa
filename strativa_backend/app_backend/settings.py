@@ -175,3 +175,5 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ('Bearer',),
 }
 
+TIME_ZONE = 'Asia/Manila'
+USE_TZ = True

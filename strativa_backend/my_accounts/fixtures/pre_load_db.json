@@ -179,8 +179,8 @@
         "fields": {
             "user": 4,
             "account_type": 1,
-            "account_number": "J8qFH3a8IppyhWCHTV3z1g==:RRLVYXtziZPnyKTT4zKw3QFWJQ==:fpr-OIabasIZIbMkE8ML9A==",
-            "balance": "_Mb10MN8EHNkOg4XlZLmCg==:vDl4Inm1:aAA8SblsKHQYc_cN3oID5g=="
+            "account_number": "CW-174002EC87644764",
+            "balance": "123.00"
         }
     },
     {
@@ -189,8 +189,8 @@
         "fields": {
             "user": 5,
             "account_type": 1,
-            "account_number": "6edsP549oR-GE5QvdCrBig==:0pGjEIylR0KtDnY3gDZHts7HrA==:KCio2EsSneJ0KwDFS3cgrg==",
-            "balance": "ZIbmzUfQA_55c3wzze8uVQ==:gUzYk61j:153170Tch7OTJ7ak7ac0IA=="
+            "account_number": "CW-274002EC87644764",
+            "balance": "456.00"
         }
     },
     {
@@ -199,8 +199,8 @@
         "fields": {
             "user": 5,
             "account_type": 2,
-            "account_number": "8CNMZ4E9aK_yHLvy7v6jjA==:YkxirEk=:QYl6wpicrxiRYoTI-RZxVg==",
-            "balance": "UTaCerYZByDGfoFl_R8iJA==:WNbbjBJO:uuLgM1tyyDztOJJkM1ZhOg=="
+            "account_number": "S-123",
+            "balance": "789.00"
         }
     },
     {
