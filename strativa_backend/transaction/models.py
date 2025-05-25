@@ -81,7 +81,7 @@ class TransactionFeesInTransaction(models.Model):
     fee = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.transaction_id
+        return str(self.transaction_id)
 
     class Meta:
         verbose_name = 'Transaction Fees in Transaction'
