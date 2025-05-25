@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:strativa_frontend/common/const/global_keys.dart';
 import 'package:strativa_frontend/common/const/kcolors.dart';
+import 'package:strativa_frontend/common/const/kroutes.dart';
 import 'package:strativa_frontend/common/utils/app_routes.dart';
 import 'package:strativa_frontend/common/const/app_theme/app_theme_notifier.dart';
 import 'package:strativa_frontend/common/const/kstrings.dart';
@@ -86,7 +89,8 @@ class _MyAppState extends State<MyApp> {
         },
         child: FloatingActionButton(
           onPressed: () {
-            context.read<AppThemeNotifier>().toggleTheme();
+            // context.read<AppThemeNotifier>().toggleTheme();
+            AppGlobalKeys.navigatorKey.currentContext!.go(AppRoutes.kLandingScreen);
           },
           backgroundColor:
               Theme.of(context).brightness == Brightness.light
