@@ -103,7 +103,7 @@ class TransactionHistoryWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      DateFormat('MMM d, y H:m').format(DateTime.parse(transaction.transaction.datetime.toString())),
+                      DateFormat('MMM d, y H:m').format(DateTime.parse(transaction.transaction.datetime.add(Duration(hours: 8)).toString())),
                       style: CustomTextStyles(context).smallStyle.copyWith(
                         color: ColorsCommon.kDarkGray,
                       ),

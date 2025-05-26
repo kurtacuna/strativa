@@ -134,18 +134,16 @@ class MyAccountsScreen extends StatelessWidget {
                               : 3
                           );
                         } else {
-                          return Expanded(
-                            child: Column(
-                              children: [
-                                SizedBox(height: 100.h),
-                                AppEmptyWidget(),
-                              ],
-                            ),
+                          return Column(
+                            children: [
+                              SizedBox(height: 100.h),
+                              AppEmptyWidget(),
+                            ],
                           );
                         }
                       }
                     ),
-
+                
                     SizedBox(height: 50)
                   ],
                 ),
