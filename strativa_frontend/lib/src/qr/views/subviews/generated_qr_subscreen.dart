@@ -41,47 +41,51 @@ class GeneratedQrSubscreen extends StatelessWidget {
             ),
           ),
         
-          body: Padding(
-            padding: EdgeInsets.only(
-              top: 0,
-              left: AppConstants.kAppPadding.left,
-              right: AppConstants.kAppPadding.right,
-            ),
-            child: Column(
-              children: [
-                GeneratedQrDetailsWidget(
-                  type: account!.accountType.accountType,
-                  accountNumber: account.accountNumber,
-                  amountRequested: accountModalNotifier.getAmountController.text,
-                  fullName: userData.fullName,
-                  bank: account.bank.bankName
+          body: SafeArea (
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: 0,
+                  left: AppConstants.kAppPadding.left,
+                  right: AppConstants.kAppPadding.right,
                 ),
-        
-                SizedBox(height: 70.h),
-        
-                // Generate New QR Code Button
-                AppButtonWidget(
-                  onTap: () {
-                    accountModalNotifier.getAmountController.clear();
-                    Navigator.of(context).pop();
-                  },
-                  text: AppText.kGenerateNewQrCode,
+                child: Column(
+                  children: [
+                    GeneratedQrDetailsWidget(
+                      type: account!.accountType.accountType,
+                      accountNumber: account.accountNumber,
+                      amountRequested: accountModalNotifier.getAmountController.text,
+                      fullName: userData.fullName,
+                      bank: account.bank.bankName
+                    ),
+                      
+                    SizedBox(height: 70.h),
+                      
+                    // Generate New QR Code Button
+                    AppButtonWidget(
+                      onTap: () {
+                        accountModalNotifier.getAmountController.clear();
+                        Navigator.of(context).pop();
+                      },
+                      text: AppText.kGenerateNewQrCode,
+                    ),
+                      
+                    SizedBox(height: 5.h),
+              
+                    // Go To Home Button
+                    AppButtonWidget(
+                      onTap: () {
+                        context.go(AppRoutes.kEntrypoint);
+                      },
+                      text: AppText.kGoToHome,
+                      showBorder: true,
+                      firstColor: Colors.transparent,
+                      secondColor: Colors.transparent,
+                      color: ColorsCommon.kPrimaryL3,
+                    ),
+                  ],
                 ),
-        
-                SizedBox(height: 5.h),
-
-                // Go To Home Button
-                AppButtonWidget(
-                  onTap: () {
-                    context.go(AppRoutes.kEntrypoint);
-                  },
-                  text: AppText.kGoToHome,
-                  showBorder: true,
-                  firstColor: Colors.transparent,
-                  secondColor: Colors.transparent,
-                  color: ColorsCommon.kPrimaryL3,
-                ),
-              ],
+              ),
             ),
           ),
         );

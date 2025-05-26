@@ -91,94 +91,96 @@ class _AccountDetailsState extends State<AccountDetails> {
         ? Center(
             child: AppCircularProgressIndicatorWidget()
           )
-        : Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Fill in account details",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-
-                Text("Bank", style: TextStyle(color: Colors.grey[600])),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F6F7),
-                    borderRadius: BorderRadius.circular(8),
+        : SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Fill in account details",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  child: Text(widget.bank, style: const TextStyle(fontWeight: FontWeight.bold)),
-                ),
-
-                const SizedBox(height: 20),
-                TextField(
-                  controller: accountNumberController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Account Number',
-                    filled: true,
-                    fillColor: const Color(0xFFF0F6F7),
-                    border: OutlineInputBorder(
+                  const SizedBox(height: 20),
+          
+                  Text("Bank", style: TextStyle(color: Colors.grey[600])),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF0F6F7),
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
                     ),
+                    child: Text(widget.bank, style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-                TextField(
-                  controller: accountNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Account Name',
-                    filled: true,
-                    fillColor: const Color(0xFFF0F6F7),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Icon(Icons.info_outline, size: 18, color: Colors.orange),
-                    SizedBox(width: 6),
-                    widget.totalFee != 0
-                      ? Expanded(
-                          child: Text(
-                            'A total of PHP ${addCommaToAmount(widget.totalFee)} transfer fee shall be deducted from your account.',
-                            style: TextStyle(color: Colors.orange, fontSize: 12),
-                          ),
-                        )
-                      : Container()
-                  ],
-                ),
-
-                const Spacer(),
-
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _handleContinue(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF58D1CB),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
+          
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: accountNumberController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Account Number',
+                      filled: true,
+                      fillColor: const Color(0xFFF0F6F7),
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
                       ),
                     ),
-                    child: const Text("Continue", style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
-                ),
-              ],
+          
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: accountNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Account Name',
+                      filled: true,
+                      fillColor: const Color(0xFFF0F6F7),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+          
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Icon(Icons.info_outline, size: 18, color: Colors.orange),
+                      SizedBox(width: 6),
+                      widget.totalFee != 0
+                        ? Expanded(
+                            child: Text(
+                              'A total of PHP ${addCommaToAmount(widget.totalFee)} transfer fee shall be deducted from your account.',
+                              style: TextStyle(color: Colors.orange, fontSize: 12),
+                            ),
+                          )
+                        : Container()
+                    ],
+                  ),
+          
+                  const Spacer(),
+          
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _handleContinue(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF58D1CB),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text("Continue", style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+        ),
     );
   }
 }

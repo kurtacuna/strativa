@@ -106,47 +106,49 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> with WidgetsB
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Back')),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              "Opening your Camera...",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: _initializeControllerFuture != null
-                  ? FutureBuilder(
-                      future: _initializeControllerFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done && _controller != null) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CameraPreview(_controller!),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(child: Text('Error loading camera'));
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    )
-                  : const Center(child: CircularProgressIndicator()),
-            ),
-            const SizedBox(height: 25),
-            const Text(
-              "Make sure your government-issued ID is clear and readable; otherwise, it will be considered invalid.",
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 20),
-            AppButtonWidget(text: 'Take Picture', onTap: _takePicture),
-            const SizedBox(height: 20),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                "Opening your Camera...",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: _initializeControllerFuture != null
+                    ? FutureBuilder(
+                        future: _initializeControllerFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done && _controller != null) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: CameraPreview(_controller!),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text('Error loading camera'));
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                    : const Center(child: CircularProgressIndicator()),
+              ),
+              const SizedBox(height: 25),
+              const Text(
+                "Make sure your government-issued ID is clear and readable; otherwise, it will be considered invalid.",
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 20),
+              AppButtonWidget(text: 'Take Picture', onTap: _takePicture),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

@@ -49,88 +49,90 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: AppConstants.kAppPadding,
-        child: Form(
-          key: _formKey,
-          child:  SingleChildScrollView(
-            child: Column(
-              spacing: 20,
-              children: [
-                SizedBox(height: 20.h),
-                
-                Align(
-                  alignment: Alignment.center,
-                  child: AppLogoWidget(
-                    logoHeight: 150,
-                    fontSize: 35,
-                    spacing: 35,
+      body: SafeArea(
+        child: Padding(
+          padding: AppConstants.kAppPadding,
+          child: Form(
+            key: _formKey,
+            child:  SingleChildScrollView(
+              child: Column(
+                spacing: 20,
+                children: [
+                  SizedBox(height: 20.h),
+                  
+                  Align(
+                    alignment: Alignment.center,
+                    child: AppLogoWidget(
+                      logoHeight: 150,
+                      fontSize: 35,
+                      spacing: 35,
+                    ),
                   ),
-                ),
-
-                SizedBox(height:20.h),
-                    
-                UserIdFieldWidget(
-                  controller: _userIdController,
-                  onEditingComplete: () {
-                    FocusScope.of(context).requestFocus(_passwordNode);
-                  },
-                ),
-                
-                PasswordFieldWidget(
-                  controller: _passwordController,
-                  focusNode: _passwordNode,
-                ),
-            
-                context.watch<JwtNotifier>().getIsLoading
-                  ? AppCircularProgressIndicatorWidget()
-                  : AppButtonWidget(
-                    text: AppText.kLoginButtonText,
-                    onTap: () async {
-                      FocusScope.of(context).unfocus();
-                      if (_formKey.currentState!.validate()) {
-                        LoginModel model = LoginModel(
-                          password: _passwordController.text,
-                          username: _userIdController.text,
-                        );
-                        String data = loginModelToJson(model);
-            
-                        int statusCode = await context.read<JwtNotifier>().login(
-                          context: context,
-                          data: data,
-                        );
-            
-                        if (context.mounted) {
-                          if (statusCode != -1) {
-                            context.go(AppRoutes.kEntrypoint);
+        
+                  SizedBox(height:20.h),
+                      
+                  UserIdFieldWidget(
+                    controller: _userIdController,
+                    onEditingComplete: () {
+                      FocusScope.of(context).requestFocus(_passwordNode);
+                    },
+                  ),
+                  
+                  PasswordFieldWidget(
+                    controller: _passwordController,
+                    focusNode: _passwordNode,
+                  ),
+              
+                  context.watch<JwtNotifier>().getIsLoading
+                    ? AppCircularProgressIndicatorWidget()
+                    : AppButtonWidget(
+                      text: AppText.kLoginButtonText,
+                      onTap: () async {
+                        FocusScope.of(context).unfocus();
+                        if (_formKey.currentState!.validate()) {
+                          LoginModel model = LoginModel(
+                            password: _passwordController.text,
+                            username: _userIdController.text,
+                          );
+                          String data = loginModelToJson(model);
+              
+                          int statusCode = await context.read<JwtNotifier>().login(
+                            context: context,
+                            data: data,
+                          );
+              
+                          if (context.mounted) {
+                            if (statusCode != -1) {
+                              context.go(AppRoutes.kEntrypoint);
+                            }
                           }
                         }
-                      }
-                    },
-                    firstColor: ColorsCommon.kPrimaryL1,
-                    secondColor: ColorsCommon.kPrimaryL4,
-                    radius: AppConstants.kAppBorderRadius,
+                      },
+                      firstColor: ColorsCommon.kPrimaryL1,
+                      secondColor: ColorsCommon.kPrimaryL4,
+                      radius: AppConstants.kAppBorderRadius,
+                    ),
+                      
+                  AppTextButtonWidget(
+                    text: AppText.kForgotMyUserIdOrPassword,
+                    style: CustomTextStyles(context).textButtonStyle.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: ColorsCommon.kPrimaryL4,
+                    ),
+                    onPressed: () {
+                      // TODO: handle forgot password
+                    }
                   ),
-                    
-                AppTextButtonWidget(
-                  text: AppText.kForgotMyUserIdOrPassword,
-                  style: CustomTextStyles(context).textButtonStyle.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: ColorsCommon.kPrimaryL4,
+              
+                  SizedBox(
+                    height: 40,
                   ),
-                  onPressed: () {
-                    // TODO: handle forgot password
-                  }
-                ),
-            
-                SizedBox(
-                  height: 40,
-                ),
-            
-                PeekBalanceWidget(),
-            
-                // TODO: add fingerprint login?
-              ]
+              
+                  PeekBalanceWidget(),
+              
+                  // TODO: add fingerprint login?
+                ]
+              ),
             ),
           ),
         ),

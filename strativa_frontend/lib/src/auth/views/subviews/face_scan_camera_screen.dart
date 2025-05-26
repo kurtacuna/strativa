@@ -117,65 +117,67 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> with Widget
         elevation: 0,
       ),
       backgroundColor: Colors.grey[50],
-      body: Column(
-        children: [
-          Expanded(
-            child:
-                _initializeControllerFuture != null && _controller != null
-                    ? FutureBuilder(
-                      future: _initializeControllerFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: CameraPreview(_controller!),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Center(
-                            child: Text('Error loading camera'),
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    )
-                    : const Center(child: CircularProgressIndicator()),
-          ),
-          const SizedBox(height: 20),
-          AppButtonWidget(text: 'Capture', onTap: _takeSelfie),
-          const SizedBox(height: 10),
-          AppButtonWidget(
-            text: 'Next',
-            onTap: () {
-              if (capturedImagePath != null) {
-                final updatedUserData = {
-                  ...widget.userData,
-                  'selfie_image_path': capturedImagePath,
-                  // Ensure id_image_path is preserved if it exists
-                  'id_image_path': widget.userData['id_image_path'],
-                };
-
-                // 🟨 Debug output
-                print('--- Proceeding with User Data ---');
-                updatedUserData.forEach((key, value) {
-                  print('$key: $value');
-                });
-                print('----------------------------------');
-
-                context.push(AppRoutes.kGenderMarital, extra: updatedUserData);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Please capture a selfie first!'),
-                  ),
-                );
-              }
-            },
-          ),
-          const SizedBox(height: 20),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child:
+                  _initializeControllerFuture != null && _controller != null
+                      ? FutureBuilder(
+                        future: _initializeControllerFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: CameraPreview(_controller!),
+                            );
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text('Error loading camera'),
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                      : const Center(child: CircularProgressIndicator()),
+            ),
+            const SizedBox(height: 20),
+            AppButtonWidget(text: 'Capture', onTap: _takeSelfie),
+            const SizedBox(height: 10),
+            AppButtonWidget(
+              text: 'Next',
+              onTap: () {
+                if (capturedImagePath != null) {
+                  final updatedUserData = {
+                    ...widget.userData,
+                    'selfie_image_path': capturedImagePath,
+                    // Ensure id_image_path is preserved if it exists
+                    'id_image_path': widget.userData['id_image_path'],
+                  };
+        
+                  // 🟨 Debug output
+                  print('--- Proceeding with User Data ---');
+                  updatedUserData.forEach((key, value) {
+                    print('$key: $value');
+                  });
+                  print('----------------------------------');
+        
+                  context.push(AppRoutes.kGenderMarital, extra: updatedUserData);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please capture a selfie first!'),
+                    ),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

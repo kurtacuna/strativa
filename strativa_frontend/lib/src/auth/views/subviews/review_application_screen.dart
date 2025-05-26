@@ -102,65 +102,67 @@ class _ReviewApplicationScreenState extends State<ReviewApplicationScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Review your application',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 24),
-
-            _buildSectionTitle('Personal Details'),
-            _buildEditableInfoSection([
-              {'label': 'Name', 'controller': fullNameController},
-              {'label': 'Birthday', 'controller': birthdayController},
-              {'label': 'Gender', 'controller': genderController},
-              {
-                'label': 'Marital Status',
-                'controller': maritalStatusController,
-              },
-            ]),
-
-            const SizedBox(height: 24),
-
-            _buildSectionTitle('Contact Details'),
-            _buildEditableInfoSection([
-              {'label': 'Email', 'controller': emailController},
-              {'label': 'Phone number', 'controller': phoneController},
-              {'label': 'Address', 'controller': addressController},
-            ]),
-
-            const SizedBox(height: 39),
-            _buildDeclaration(),
-
-            const SizedBox(height: 24),
-            AppButtonWidget(
-              text: 'Confirm and Continue',
-              onTap: () {
-                print('--- User Application Data ---');
-                print('Full Name: ${fullNameController.text}');
-                print('Birthday: ${birthdayController.text}');
-                print('Gender: ${genderController.text}');
-                print('Marital Status: ${maritalStatusController.text}');
-                print('Email: ${emailController.text}');
-                print('Phone Number: ${phoneController.text}');
-                print('Address: ${addressController.text}');
-
-                // 🟧 New debug prints for image paths
-                print(
-                  'Selfie Image Path: ${widget.userData['selfie_image_path']}',
-                );
-                print('ID Image Path: ${widget.userData['id_image_path']}');
-                print('-----------------------------');
-
-                // Navigate to next screen or handle data submission here.
-                context.push(AppRoutes.kAccountNumber);
-              },
-            ),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Review your application',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 24),
+        
+              _buildSectionTitle('Personal Details'),
+              _buildEditableInfoSection([
+                {'label': 'Name', 'controller': fullNameController},
+                {'label': 'Birthday', 'controller': birthdayController},
+                {'label': 'Gender', 'controller': genderController},
+                {
+                  'label': 'Marital Status',
+                  'controller': maritalStatusController,
+                },
+              ]),
+        
+              const SizedBox(height: 24),
+        
+              _buildSectionTitle('Contact Details'),
+              _buildEditableInfoSection([
+                {'label': 'Email', 'controller': emailController},
+                {'label': 'Phone number', 'controller': phoneController},
+                {'label': 'Address', 'controller': addressController},
+              ]),
+        
+              const SizedBox(height: 39),
+              _buildDeclaration(),
+        
+              const SizedBox(height: 24),
+              AppButtonWidget(
+                text: 'Confirm and Continue',
+                onTap: () {
+                  print('--- User Application Data ---');
+                  print('Full Name: ${fullNameController.text}');
+                  print('Birthday: ${birthdayController.text}');
+                  print('Gender: ${genderController.text}');
+                  print('Marital Status: ${maritalStatusController.text}');
+                  print('Email: ${emailController.text}');
+                  print('Phone Number: ${phoneController.text}');
+                  print('Address: ${addressController.text}');
+        
+                  // 🟧 New debug prints for image paths
+                  print(
+                    'Selfie Image Path: ${widget.userData['selfie_image_path']}',
+                  );
+                  print('ID Image Path: ${widget.userData['id_image_path']}');
+                  print('-----------------------------');
+        
+                  // Navigate to next screen or handle data submission here.
+                  context.push(AppRoutes.kAccountNumber);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

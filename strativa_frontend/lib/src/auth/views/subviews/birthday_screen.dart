@@ -71,73 +71,75 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Back')),
-      body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'What is your birthday?',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 30),
-              const Text("Date of Birth (MM/DD/YYYY)"),
-              const SizedBox(height: 5),
-              GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: TextFormField(
-                    controller: dateOfBirthController,
-                    decoration: _inputDecoration("(MM/DD/YYYY)"),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Birthdate is required';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {},
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'What is your birthday?',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 30),
+                const Text("Date of Birth (MM/DD/YYYY)"),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: () => _selectDate(context),
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: dateOfBirthController,
+                      decoration: _inputDecoration("(MM/DD/YYYY)"),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Birthdate is required';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {},
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text("City of Birth"),
-              const SizedBox(height: 5),
-              TextFormField(
-                controller: cityOfBirthController,
-                decoration: _inputDecoration("Enter your City of Birth"),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'City of birth is required';
-                  }
-                  return null;
-                },
-                onSaved: (value) {},
-              ),
-              const Spacer(),
-              AppButtonWidget(
-                text: 'Confirm',
-                onTap: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    _formKey.currentState?.save();
-
-                    final updatedData = {
-                      ...widget.userData, // keep old data
-                      'date_of_birth': dateOfBirthController.text.trim(),
-                      'city_of_birth': cityOfBirthController.text.trim(),
-                    };
-
-                    debugPrint('Saved Full JSON: $updatedData');
-
-                    context.push(
-                      AppRoutes.kInitialComplete,
-                      extra: updatedData,
-                    );
-                  }
-                },
-              ),
-            ],
+                const SizedBox(height: 20),
+                const Text("City of Birth"),
+                const SizedBox(height: 5),
+                TextFormField(
+                  controller: cityOfBirthController,
+                  decoration: _inputDecoration("Enter your City of Birth"),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'City of birth is required';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const Spacer(),
+                AppButtonWidget(
+                  text: 'Confirm',
+                  onTap: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      _formKey.currentState?.save();
+        
+                      final updatedData = {
+                        ...widget.userData, // keep old data
+                        'date_of_birth': dateOfBirthController.text.trim(),
+                        'city_of_birth': cityOfBirthController.text.trim(),
+                      };
+        
+                      debugPrint('Saved Full JSON: $updatedData');
+        
+                      context.push(
+                        AppRoutes.kInitialComplete,
+                        extra: updatedData,
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

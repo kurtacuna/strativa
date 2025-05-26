@@ -35,160 +35,164 @@ class WalletCardsWidget extends StatelessWidget {
             
                 SizedBox(height: 10.h),
             
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CardWidget(
-                              width: 180.w,
-                              height: 120.h,
-                              secondColor: ColorsCommon.kDark,
-                            ),
-                            
-                            Positioned(
-                              child: Image.asset(
-                                R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    spacing: 10, 
+                    children: [
+                      Column(
+                        children: [
+                          Stack(
+                            children: [
+                              CardWidget(
                                 width: 180.w,
                                 height: 120.h,
+                                secondColor: ColorsCommon.kDark,
                               ),
-                            ),
-                            
-                            Positioned(
-                              top: (120.h / 2) - (AppIcons.kSimIcon.height! / 2),
-                              left: AppConstants.kCardPadding.left,
-                              child: AppIcons.kSimIcon,
-                            ),
-            
-                            Positioned(
-                              left: AppConstants.kCardPadding.left,
-                              bottom: AppConstants.kCardPadding.bottom,
-                              child: Text(
-                                balanceNotifier.getShowBalance
-                                  ? "@${userDataNotifier.getUserData!.user.username}"
-                                  : "••••",
-                                style: CustomTextStyles(context).smallerStyle.copyWith(
-                                  color: ColorsCommon.kWhite,
-                                  fontWeight: FontWeight.w900,
+                              
+                              Positioned(
+                                child: Image.asset(
+                                  R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                                  width: 180.w,
+                                  height: 120.h,
                                 ),
                               ),
-                            ),
-                          ]
-                        ),
-            
-                        SizedBox(
-                          height: 5.h,
-                        ),
-            
-                        Text(
-                          AppText.kMyStrativaCard,
-                          style: CustomTextStyles(context).smallStyle,
-                        ),
-                      ],
-                    ),
-            
-                    Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CardWidget(
-                              width: 180.w,
-                              height: 120.h,
-                              firstColor: ColorsCommon.kAccentL2,
-                              secondColor: ColorsCommon.kDark,
-                            ),
-            
-                           Image.asset(
-                                R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                              
+                              Positioned(
+                                top: (120.h / 2) - (AppIcons.kSimIcon.height! / 2),
+                                left: AppConstants.kCardPadding.left,
+                                child: AppIcons.kSimIcon,
+                              ),
+                              
+                              Positioned(
+                                left: AppConstants.kCardPadding.left,
+                                bottom: AppConstants.kCardPadding.bottom,
+                                child: Text(
+                                  balanceNotifier.getShowBalance
+                                    ? "@${userDataNotifier.getUserData!.user.username}"
+                                    : "••••",
+                                  style: CustomTextStyles(context).smallerStyle.copyWith(
+                                    color: ColorsCommon.kWhite,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ),
+                            ]
+                          ),
+                              
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                              
+                          Text(
+                            AppText.kMyStrativaCard,
+                            style: CustomTextStyles(context).smallStyle,
+                          ),
+                        ],
+                      ),
+                              
+                      Column(
+                        children: [
+                          Stack(
+                            children: [
+                              CardWidget(
                                 width: 180.w,
                                 height: 120.h,
+                                firstColor: ColorsCommon.kAccentL2,
+                                secondColor: ColorsCommon.kDark,
                               ),
-                           
-                            
-                            userCardDetails.isOnlineCardActive == false
-                              ? Stack(
-                                clipBehavior: Clip.none,
-                                children: [    
-                                  Positioned(
-                                    child: Container(
-                                      width: 180.w,
-                                      height: 120.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppConstants.kCardRadius),
-                                        color: ColorsCommon.kWhite.withValues(alpha: 0.5),
-                                      ),
-                                      child: Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // TODO: handle activate online card
-                                          },
-                                          style: ButtonStyle(
-                                            backgroundColor: WidgetStatePropertyAll(ColorsCommon.kAccentL2),
-                                          ),
-                                          child: Text(
-                                            AppText.kActivateNow,
-                                            style: CustomTextStyles(context).smallerStyle.copyWith(
-                                              color: ColorsCommon.kWhite,
-                                              fontWeight: FontWeight.w900,
+                              
+                             Image.asset(
+                                  R.ASSETS_IMAGES_CARD_BACKGROUND_PNG,
+                                  width: 180.w,
+                                  height: 120.h,
+                                ),
+                             
+                              
+                              userCardDetails.isOnlineCardActive == false
+                                ? Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [    
+                                    Positioned(
+                                      child: Container(
+                                        width: 180.w,
+                                        height: 120.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(AppConstants.kCardRadius),
+                                          color: ColorsCommon.kWhite.withValues(alpha: 0.5),
+                                        ),
+                                        child: Center(
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              // TODO: handle activate online card
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor: WidgetStatePropertyAll(ColorsCommon.kAccentL2),
+                                            ),
+                                            child: Text(
+                                              AppText.kActivateNow,
+                                              style: CustomTextStyles(context).smallerStyle.copyWith(
+                                                color: ColorsCommon.kWhite,
+                                                fontWeight: FontWeight.w900,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-              
-                                  Positioned(
-                                    left: -3,
-                                    top: -3,
-                                    child: AppIcons.kFreeIcon,
-                                  ),
-                                ],
-                              )
-                              : Positioned(
-                                left: AppConstants.kCardPadding.left,
-                                bottom: AppConstants.kCardPadding.bottom,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      balanceNotifier.getShowBalance
-                                        // ? "${userCardDetails.onlineCardNumber}"
-                                        ? formatCardNumber("${userCardDetails.onlineCardNumber}")
-                                        : "•••• •••• •••• ••••",
-                                        style: CustomTextStyles(context).smallerStyle.copyWith(
-                                          color: ColorsCommon.kWhite,
-                                          fontWeight: FontWeight.w900,
-                                        ),
+                                
+                                    Positioned(
+                                      left: -3,
+                                      top: -3,
+                                      child: AppIcons.kFreeIcon,
                                     ),
-              
-                                    Text(
-                                      balanceNotifier.getShowBalance
-                                        ? "@${userDataNotifier.getUserData?.user.username}"
-                                        : "••••",
-                                        style: CustomTextStyles(context).smallerStyle.copyWith(
-                                          color: ColorsCommon.kWhite,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                    ),
-                                  ]
+                                  ],
+                                )
+                                : Positioned(
+                                  left: AppConstants.kCardPadding.left,
+                                  bottom: AppConstants.kCardPadding.bottom,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        balanceNotifier.getShowBalance
+                                          // ? "${userCardDetails.onlineCardNumber}"
+                                          ? formatCardNumber("${userCardDetails.onlineCardNumber}")
+                                          : "•••• •••• •••• ••••",
+                                          style: CustomTextStyles(context).smallerStyle.copyWith(
+                                            color: ColorsCommon.kWhite,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                      ),
+                                
+                                      Text(
+                                        balanceNotifier.getShowBalance
+                                          ? "@${userDataNotifier.getUserData?.user.username}"
+                                          : "••••",
+                                          style: CustomTextStyles(context).smallerStyle.copyWith(
+                                            color: ColorsCommon.kWhite,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                      ),
+                                    ]
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-            
-                        SizedBox(
-                          height: 5.h,
-                        ),
-            
-                        Text(
-                          AppText.kMyOnlineCard,
-                          style: CustomTextStyles(context).smallStyle,
-                        ),
-                      ],
-                    ),
-                  ]
+                            ],
+                          ),
+                              
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                              
+                          Text(
+                            AppText.kMyOnlineCard,
+                            style: CustomTextStyles(context).smallStyle,
+                          ),
+                        ],
+                      ),
+                    ]
+                  ),
                 ),
               ]
             );

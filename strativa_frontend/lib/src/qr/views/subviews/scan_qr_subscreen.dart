@@ -103,7 +103,7 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
             // Upload QR Button
             Positioned(
               child: Align(
-                alignment: Alignment(0, 0.9),
+                alignment: Alignment(0, 0.8),
                 child: ElevatedButton(
                   onPressed: () async {
                     _debouncer.run(() async {

@@ -118,6 +118,7 @@ class _TransferToAccountSubscreenState
                   },
                 );
               }),
+              SizedBox(height: 50)
             ],
           ),
         );
@@ -271,132 +272,134 @@ class _TransferToAccountSubscreenState
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _TransferTile(
-                      label: 'Transfer from',
-                      title: selectedFromAccount?.accountType.accountType ?? 'Select account',
-                      subtitle:
-                          selectedFromAccount != null
-                              ? '•••${selectedFromAccount!.accountNumber.substring(selectedFromAccount!.accountNumber.length - 4)} • PHP ${selectedFromAccount!.balance}'
-                              : null,
-                      onTap: () => _showAccountSelector(context),
-                    ),
-                    const SizedBox(height: 12),
-                    _TransferTile(
-                      label: 'Transfer to',
-                      title:
-                          toOtherBankAccount?.bank != null
-                              ? '${toOtherBankAccount?.bank} - ${toOtherBankAccount?.fullName}'
-                              : 'Select bank',
-                      subtitle:
-                          toOtherBankAccount?.accountNumber != null
-                              ? 'Account #: ${toOtherBankAccount?.accountNumber}'
-                              : null,
-                      onTap: () => _showBankSelector(context),
-                    ),
-                    const SizedBox(height: 24),
-                    Form(
-                      key: _formKey,
-                      child: AppLabeledAmountNoteFieldWidget(
-                        text: AppText.kTransferAmount, 
-                        amountController: _amountController,
-                        addNote: true,
-                        addNoteController: _noteController,
-                      )
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Icon(Icons.info_outline, color: Colors.orange, size: 18),
-                        SizedBox(width: 8),
-                        totalFee != 0
-                          ? Expanded(
-                              child: Text(
-                                'A total of PHP ${addCommaToAmount(totalFee!)} transfer fee shall be deducted from your account.',
-                                style: TextStyle(fontSize: 13, color: Colors.black87),
-                              ),
-                            )
-                          : Container()
-                      ],
-                    ),
-                  ]
-                ),
-              ),
-            ),
-            
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[300],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _TransferTile(
+                        label: 'Transfer from',
+                        title: selectedFromAccount?.accountType.accountType ?? 'Select account',
+                        subtitle:
+                            selectedFromAccount != null
+                                ? '•••${selectedFromAccount!.accountNumber.substring(selectedFromAccount!.accountNumber.length - 4)} • PHP ${selectedFromAccount!.balance}'
+                                : null,
+                        onTap: () => _showAccountSelector(context),
+                      ),
+                      const SizedBox(height: 12),
+                      _TransferTile(
+                        label: 'Transfer to',
+                        title:
+                            toOtherBankAccount?.bank != null
+                                ? '${toOtherBankAccount?.bank} - ${toOtherBankAccount?.fullName}'
+                                : 'Select bank',
+                        subtitle:
+                            toOtherBankAccount?.accountNumber != null
+                                ? 'Account #: ${toOtherBankAccount?.accountNumber}'
+                                : null,
+                        onTap: () => _showBankSelector(context),
+                      ),
+                      const SizedBox(height: 24),
+                      Form(
+                        key: _formKey,
+                        child: AppLabeledAmountNoteFieldWidget(
+                          text: AppText.kTransferAmount, 
+                          amountController: _amountController,
+                          addNote: true,
+                          addNoteController: _noteController,
+                        )
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Icon(Icons.info_outline, color: Colors.orange, size: 18),
+                          SizedBox(width: 8),
+                          totalFee != 0
+                            ? Expanded(
+                                child: Text(
+                                  'A total of PHP ${addCommaToAmount(totalFee!)} transfer fee shall be deducted from your account.',
+                                  style: TextStyle(fontSize: 13, color: Colors.black87),
+                                ),
+                              )
+                            : Container()
+                        ],
+                      ),
+                    ]
                   ),
                 ),
-                onPressed: () {
-                  if (selectedFromAccount == null) {
-                    _showMessage(
-                      context,
-                      "Please select an account to transfer from.",
-                    );
-                    return;
-                  }
-      
-                  if (toOtherBankAccount?.bank == null ||
-                      toOtherBankAccount?.accountNumber == null ||
-                      toOtherBankAccount?.fullName == null) {
-                    _showMessage(
-                      context,
-                      "Please complete bank and account details.",
-                    );
-                    return;
-                  }
-      
-                  int statusCode = checkTransferDetails(
-                    context: context, 
-                    fromAccount: selectedFromAccount, 
-                    toAccount: toOtherBankAccount, 
-                    amount: _amountController.text, 
-                    formKey: _formKey,
-                    totalFee: totalFee!
-                  );
-                  if (statusCode == -1) {
-                    return;
-                  }
-
-                  _showMessage(
-                    context,
-                    "Transfer info saved:\nFrom: ${selectedFromAccount!.accountType.accountType}\n"
-                    "To: ${toOtherBankAccount?.fullName} (${toOtherBankAccount?.accountNumber}) at ${toOtherBankAccount?.bank}",
-                  );
-                  
-                  context.push(
-                    AppRoutes.kReviewTransferBankAccount,
-                    extra: {
-                      "fromAccount": selectedFromAccount,
-                      "toAccount": toOtherBankAccount,
-                      "amount": _amountController.text,
-                      "note": _noteController.text
+              ),
+              
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    if (selectedFromAccount == null) {
+                      _showMessage(
+                        context,
+                        "Please select an account to transfer from.",
+                      );
+                      return;
                     }
-                  );
-                },
-                child: const Text(
-                  'Continue',
-                  style: TextStyle(color: Colors.white),
+        
+                    if (toOtherBankAccount?.bank == null ||
+                        toOtherBankAccount?.accountNumber == null ||
+                        toOtherBankAccount?.fullName == null) {
+                      _showMessage(
+                        context,
+                        "Please complete bank and account details.",
+                      );
+                      return;
+                    }
+        
+                    int statusCode = checkTransferDetails(
+                      context: context, 
+                      fromAccount: selectedFromAccount, 
+                      toAccount: toOtherBankAccount, 
+                      amount: _amountController.text, 
+                      formKey: _formKey,
+                      totalFee: totalFee!
+                    );
+                    if (statusCode == -1) {
+                      return;
+                    }
+        
+                    _showMessage(
+                      context,
+                      "Transfer info saved:\nFrom: ${selectedFromAccount!.accountType.accountType}\n"
+                      "To: ${toOtherBankAccount?.fullName} (${toOtherBankAccount?.accountNumber}) at ${toOtherBankAccount?.bank}",
+                    );
+                    
+                    context.push(
+                      AppRoutes.kReviewTransferBankAccount,
+                      extra: {
+                        "fromAccount": selectedFromAccount,
+                        "toAccount": toOtherBankAccount,
+                        "amount": _amountController.text,
+                        "note": _noteController.text
+                      }
+                    );
+                  },
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

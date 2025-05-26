@@ -49,32 +49,37 @@ class _TransferToStrativaaccAccnumberSubscreenState
             ? Center(
                child: AppCircularProgressIndicatorWidget() 
               )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    AppAccountNumberInputField(controller: _accountNumberController),
-                    const Spacer(),
-                    ConfirmButton(
-                      onTap: () async {
-                        await context.read<TransferNotifier>().checkIfAccountExists(
-                          context,
-                          _accountNumberController.text
-                        );
-
-                        if (context.mounted) {
-                          if (context.read<TransferNotifier>().getStatusCode == 200) {
-                            context.pop();
-                          }
-                        }
-                      },
+            : SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        AppAccountNumberInputField(controller: _accountNumberController),
+                        // const Spacer(),
+                        SizedBox(height: 600),
+                        ConfirmButton(
+                          onTap: () async {
+                            await context.read<TransferNotifier>().checkIfAccountExists(
+                              context,
+                              _accountNumberController.text
+                            );
+                
+                            if (context.mounted) {
+                              if (context.read<TransferNotifier>().getStatusCode == 200) {
+                                context.pop();
+                              }
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  ),
               ),
+            ),
         );
       }
     );

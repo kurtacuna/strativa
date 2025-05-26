@@ -71,52 +71,55 @@ class _OtpAccountNumberFieldWidgetState extends State<OtpAccountNumberFieldWidge
               : ColorsCommon.kDark,
             borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius)
           ),
-          child: Row(
-            spacing: 5,
-            children: [
-              SizedBox(
-                width: 270.w,
-                child: UserIdFieldWidget(
-                  focusNode: widget.accountNumberNode,
-                  controller: widget.accountNumberController,
-                  showPrefixIcon: false,
-                  hintText: AppText.kAccountNumber,
-                  initialValue: widget.initialValue,
-                  validatorText: AppText.kPleaseEnterAValidAccountNumber,
-                  enabled: widget.enabled,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: 5,
+              children: [
+                SizedBox(
+                  width: 270.w,
+                  child: UserIdFieldWidget(
+                    focusNode: widget.accountNumberNode,
+                    controller: widget.accountNumberController,
+                    showPrefixIcon: false,
+                    hintText: AppText.kAccountNumber,
+                    initialValue: widget.initialValue,
+                    validatorText: AppText.kPleaseEnterAValidAccountNumber,
+                    enabled: widget.enabled,
+                  ),
                 ),
-              ),
-  
-              // Send OTP Button
-              otpNotifier.getIsLoading
-                ? SizedBox(
-                  width: 90.w,
-                  height: 40.sp,
-                  child: Center(child: AppCircularProgressIndicatorWidget())
-                )
-                : otpNotifier.getIsDisabled
+              
+                // Send OTP Button
+                otpNotifier.getIsLoading
                   ? SizedBox(
                     width: 90.w,
-                    child: AppTextButtonWidget(
-                      text: "Resend ${otpNotifier.getDuration}s",
-                      style: CustomTextStyles(context).textButtonStyle.copyWith(
-                        color: ColorsCommon.kAccentL3,
-                        fontSize: 12.sp,
+                    height: 40.sp,
+                    child: Center(child: AppCircularProgressIndicatorWidget())
+                  )
+                  : otpNotifier.getIsDisabled
+                    ? SizedBox(
+                      width: 90.w,
+                      child: AppTextButtonWidget(
+                        text: "Resend ${otpNotifier.getDuration}s",
+                        style: CustomTextStyles(context).textButtonStyle.copyWith(
+                          color: ColorsCommon.kAccentL3,
+                          fontSize: 12.sp,
+                        ),
+                        onPressed: null,
                       ),
-                      onPressed: null,
-                    ),
-                  )
-                  : AppTextButtonWidget(
-                    text: AppText.kSendOtp,
-                    style: CustomTextStyles(context).textButtonStyle.copyWith(
-                      color: ColorsCommon.kPrimaryL4,
-                      fontSize: 14.sp,
-                    ),
-                    onPressed: () {
-                      _sendOtp(context, otpNotifier);
-                    }
-                  )
-            ],
+                    )
+                    : AppTextButtonWidget(
+                      text: AppText.kSendOtp,
+                      style: CustomTextStyles(context).textButtonStyle.copyWith(
+                        color: ColorsCommon.kPrimaryL4,
+                        fontSize: 14.sp,
+                      ),
+                      onPressed: () {
+                        _sendOtp(context, otpNotifier);
+                      }
+                    )
+              ],
+            ),
           )
         );
       },

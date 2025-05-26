@@ -162,7 +162,9 @@ class _AccountsModalBottomSheetState extends State<AccountsModalBottomSheet> {
                 : SizedBox(
                   height: 100.h,
                   child: AppEmptyWidget()
-                )
+                ),
+
+              SizedBox(height: 50)
             ],
           )
         )

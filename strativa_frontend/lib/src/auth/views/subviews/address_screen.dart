@@ -72,96 +72,98 @@ class _AddressFormState extends State<AddressForm> {
         elevation: 0,
       ),
       backgroundColor: Colors.grey[50],
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'What is your address?',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 20),
-
-                const Text('Region'),
-                PhilippineRegionDropdownView(
-                  value: _region,
-                  onChanged: (Region? value) {
-                    setState(() {
-                      if (_region != value) {
-                        _province = null;
-                        _municipality = null;
-                        _barangay = null;
-                      }
-                      _region = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 12),
-
-                const Text('Province'),
-                PhilippineProvinceDropdownView(
-                  value: _province,
-                  provinces: _region?.provinces ?? [],
-                  onChanged: (Province? value) {
-                    setState(() {
-                      if (_province != value) {
-                        _municipality = null;
-                        _barangay = null;
-                      }
-                      _province = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 12),
-
-                const Text('City/Municipality'),
-                PhilippineMunicipalityDropdownView(
-                  value: _municipality,
-                  municipalities: _province?.municipalities ?? [],
-                  onChanged: (Municipality? value) {
-                    setState(() {
-                      if (_municipality != value) {
-                        _barangay = null;
-                      }
-                      _municipality = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 12),
-
-                const Text('Barangay'),
-                PhilippineBarangayDropdownView(
-                  barangays: _municipality?.barangays ?? [],
-                  onChanged: (String? value) {
-                    setState(() {
-                      _barangay = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20),
-
-                const Text('Unit / House / Lot No.'),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: _inputDecoration("Enter unit/house/lot number"),
-                  onSaved: (value) => _unit = value,
-                ),
-                const SizedBox(height: 12),
-
-                const Text('Street'),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: _inputDecoration("Enter street name"),
-                  onSaved: (value) => _street = value,
-                ),
-                const SizedBox(height: 24),
-
-                AppButtonWidget(text: 'Confirm', onTap: _saveForm),
-              ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'What is your address?',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 20),
+        
+                  const Text('Region'),
+                  PhilippineRegionDropdownView(
+                    value: _region,
+                    onChanged: (Region? value) {
+                      setState(() {
+                        if (_region != value) {
+                          _province = null;
+                          _municipality = null;
+                          _barangay = null;
+                        }
+                        _region = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+        
+                  const Text('Province'),
+                  PhilippineProvinceDropdownView(
+                    value: _province,
+                    provinces: _region?.provinces ?? [],
+                    onChanged: (Province? value) {
+                      setState(() {
+                        if (_province != value) {
+                          _municipality = null;
+                          _barangay = null;
+                        }
+                        _province = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+        
+                  const Text('City/Municipality'),
+                  PhilippineMunicipalityDropdownView(
+                    value: _municipality,
+                    municipalities: _province?.municipalities ?? [],
+                    onChanged: (Municipality? value) {
+                      setState(() {
+                        if (_municipality != value) {
+                          _barangay = null;
+                        }
+                        _municipality = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+        
+                  const Text('Barangay'),
+                  PhilippineBarangayDropdownView(
+                    barangays: _municipality?.barangays ?? [],
+                    onChanged: (String? value) {
+                      setState(() {
+                        _barangay = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+        
+                  const Text('Unit / House / Lot No.'),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    decoration: _inputDecoration("Enter unit/house/lot number"),
+                    onSaved: (value) => _unit = value,
+                  ),
+                  const SizedBox(height: 12),
+        
+                  const Text('Street'),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    decoration: _inputDecoration("Enter street name"),
+                    onSaved: (value) => _street = value,
+                  ),
+                  const SizedBox(height: 24),
+        
+                  AppButtonWidget(text: 'Confirm', onTap: _saveForm),
+                ],
+              ),
             ),
           ),
         ),

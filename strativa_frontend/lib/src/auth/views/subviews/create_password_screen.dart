@@ -55,7 +55,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
         ...widget.mergedData,
         'password': _passwordCtrl.text,
       };
-      context.go(
+      context.push(
         AppRoutes.kLoginScreen, 
         extra: mergedData
       );
@@ -78,60 +78,65 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Back')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          onChanged: () => setState(() {}), // rebuild to enable/disable button
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              const Center(
-                child: Text('Make a strong password',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Form(
+              key: _formKey,
+              onChanged: () => setState(() {}), // rebuild to enable/disable button
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  const Center(
+                    child: Text('Make a strong password',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('• At least 8 characters'),
+                  const Text('• At least one uppercase letter'),
+                  const Text('• At least one lowercase letter'),
+                  const Text('• At least one number'),
+                  const Text('• At least one special character (!@#\$%^&*)'),
+                  const SizedBox(height: 24),
+          
+                  const Text('Password', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  _decoratedField(
+                    child: TextFormField(
+                      controller: _passwordCtrl,
+                      obscureText: _obscure1,
+                      decoration: _decoration('Enter a password', _obscure1,
+                          () => setState(() => _obscure1 = !_obscure1)),
+                      validator: _passwordValidator,
+                    ),
+                  ),
+          
+                  const SizedBox(height: 24),
+          
+                  const Text('Confirm password',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  _decoratedField(
+                    child: TextFormField(
+                      controller: _confirmPasswordCtrl,
+                      obscureText: _obscure2,
+                      decoration: _decoration('Re‑enter password', _obscure2,
+                          () => setState(() => _obscure2 = !_obscure2)),
+                      validator: _confirmValidator,
+                    ),
+                  ),
+          
+                  // const Spacer(),
+                  SizedBox(height: 300),
+                  AppButtonWidget(
+                    text: 'Confirm',
+                    onTap: _isValid ? _submit : null,      // disabled until valid
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              const Text('• At least 8 characters'),
-              const Text('• At least one uppercase letter'),
-              const Text('• At least one lowercase letter'),
-              const Text('• At least one number'),
-              const Text('• At least one special character (!@#\$%^&*)'),
-              const SizedBox(height: 24),
-
-              const Text('Password', style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              _decoratedField(
-                child: TextFormField(
-                  controller: _passwordCtrl,
-                  obscureText: _obscure1,
-                  decoration: _decoration('Enter a password', _obscure1,
-                      () => setState(() => _obscure1 = !_obscure1)),
-                  validator: _passwordValidator,
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              const Text('Confirm password',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              _decoratedField(
-                child: TextFormField(
-                  controller: _confirmPasswordCtrl,
-                  obscureText: _obscure2,
-                  decoration: _decoration('Re‑enter password', _obscure2,
-                      () => setState(() => _obscure2 = !_obscure2)),
-                  validator: _confirmValidator,
-                ),
-              ),
-
-              const Spacer(),
-              AppButtonWidget(
-                text: 'Confirm',
-                onTap: _isValid ? _submit : null,      // disabled until valid
-              ),
-            ],
+            ),
           ),
         ),
       ),

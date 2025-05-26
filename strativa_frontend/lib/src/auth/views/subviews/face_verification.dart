@@ -18,50 +18,52 @@ class FaceVerification extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 24),
-            Text(
-              'Face Verification',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'We need to take a scan of your face to verify that you are a real person.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
-            const SizedBox(height: 32),
-            Center(child: AppIcons.kFaceID),
-            const SizedBox(height: 32),
-            const InstructionItem(
-              text:
-                  'Ensure your face is well-lit and clearly visible against the background.',
-            ),
-            const InstructionItem(text: 'Hold your device at eye level.'),
-            const InstructionItem(
-              text:
-                  'Align your face within the frame and follow the on-screen instructions.',
-            ),
-            const Spacer(),
-            AppButtonWidget(
-              text: 'Start',
-              onTap: () {
-                context.push(
-                  AppRoutes.kFaceScanVerification,
-                  extra: {
-                    ...userData,
-                    if (userData['id_image_path'] != null)
-                      'id_image_path': userData['id_image_path'],
-                    // Don't overwrite with null!
-                  },
-                );
-              },
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                'Face Verification',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'We need to take a scan of your face to verify that you are a real person.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
+              const SizedBox(height: 32),
+              Center(child: AppIcons.kFaceID),
+              const SizedBox(height: 32),
+              const InstructionItem(
+                text:
+                    'Ensure your face is well-lit and clearly visible against the background.',
+              ),
+              const InstructionItem(text: 'Hold your device at eye level.'),
+              const InstructionItem(
+                text:
+                    'Align your face within the frame and follow the on-screen instructions.',
+              ),
+              const Spacer(),
+              AppButtonWidget(
+                text: 'Start',
+                onTap: () {
+                  context.push(
+                    AppRoutes.kFaceScanVerification,
+                    extra: {
+                      ...userData,
+                      if (userData['id_image_path'] != null)
+                        'id_image_path': userData['id_image_path'],
+                      // Don't overwrite with null!
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -123,7 +123,9 @@ class _TransferToAccountSubscreenState
                     Navigator.pop(context);
                   },
                 );
-              })
+              }),
+
+              SizedBox(height: 50)
             ],
           ),
         );
@@ -149,70 +151,75 @@ class _TransferToAccountSubscreenState
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _TransferTile(
-              label: 'Transfer from',
-              title: selectedFromAccount?.accountType.accountType ?? 'Select account',
-              subtitle:
-                  selectedFromAccount != null
-                      ? '•••${selectedFromAccount!.accountNumber.substring(selectedFromAccount!.accountNumber.length - 4)} • PHP ${selectedFromAccount!.balance}'
-                      : null,
-              onTap: () => _showAccountSelector(context, true),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TransferTile(
+                  label: 'Transfer from',
+                  title: selectedFromAccount?.accountType.accountType ?? 'Select account',
+                  subtitle:
+                      selectedFromAccount != null
+                          ? '•••${selectedFromAccount!.accountNumber.substring(selectedFromAccount!.accountNumber.length - 4)} • PHP ${selectedFromAccount!.balance}'
+                          : null,
+                  onTap: () => _showAccountSelector(context, true),
+                ),
+                const SizedBox(height: 12),
+                _TransferTile(
+                  label: 'Transfer to',
+                  title: selectedToAccount?.accountType.accountType ?? 'Select account',
+                  subtitle:
+                      selectedToAccount != null
+                          ? '•••${selectedToAccount!.accountNumber.substring(selectedToAccount!.accountNumber.length - 4)}'
+                          : null,
+                  onTap: () {
+                    context.push(AppRoutes.kTransferToAnotherStrativaAccNumber);
+                  },
+                ),
+                const SizedBox(height: 24),
+                Form(
+                  key: _formKey,
+                  child: AppLabeledAmountNoteFieldWidget(
+                    text: AppText.kTransferAmount, 
+                    amountController: _amountController,
+                    addNote: true,
+                    addNoteController: _noteController,
+                  ),
+                ),
+                // const Spacer(),
+                SizedBox(height: 300),
+                AppButtonWidget(
+                  onTap: () {
+                    int statusCode = checkTransferDetails(
+                      context: context, 
+                      fromAccount: selectedFromAccount, 
+                      toAccount: selectedToAccount, 
+                      amount: _amountController.text, 
+                      formKey: _formKey
+                    );
+                    // Fail
+                    if (statusCode == -1) {
+                      return;
+                    }
+          
+                    context.push(
+                      AppRoutes.kReviewTransferStrativaAccount,
+                      extra: {
+                        "fromAccount": selectedFromAccount,
+                        "toAccount": selectedToAccount,
+                        "amount": _amountController.text,
+                        "note": _noteController.text
+                      }
+                    );
+                  }, 
+                  text: 'Continue'
+                )
+              ],
             ),
-            const SizedBox(height: 12),
-            _TransferTile(
-              label: 'Transfer to',
-              title: selectedToAccount?.accountType.accountType ?? 'Select account',
-              subtitle:
-                  selectedToAccount != null
-                      ? '•••${selectedToAccount!.accountNumber.substring(selectedToAccount!.accountNumber.length - 4)}'
-                      : null,
-              onTap: () {
-                context.push(AppRoutes.kTransferToAnotherStrativaAccNumber);
-              },
-            ),
-            const SizedBox(height: 24),
-            Form(
-              key: _formKey,
-              child: AppLabeledAmountNoteFieldWidget(
-                text: AppText.kTransferAmount, 
-                amountController: _amountController,
-                addNote: true,
-                addNoteController: _noteController,
-              ),
-            ),
-            const Spacer(),
-            AppButtonWidget(
-              onTap: () {
-                int statusCode = checkTransferDetails(
-                  context: context, 
-                  fromAccount: selectedFromAccount, 
-                  toAccount: selectedToAccount, 
-                  amount: _amountController.text, 
-                  formKey: _formKey
-                );
-                // Fail
-                if (statusCode == -1) {
-                  return;
-                }
-
-                context.push(
-                  AppRoutes.kReviewTransferStrativaAccount,
-                  extra: {
-                    "fromAccount": selectedFromAccount,
-                    "toAccount": selectedToAccount,
-                    "amount": _amountController.text,
-                    "note": _noteController.text
-                  }
-                );
-              }, 
-              text: 'Continue'
-            )
-          ],
+          ),
         ),
       ),
     );
