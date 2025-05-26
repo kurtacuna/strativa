@@ -55,7 +55,7 @@ class _FaceScanCameraScreenState extends State<FaceScanCameraScreen> with Widget
   Future<void> _disposeCameraSafely() async {
     await Future.delayed(Duration(milliseconds: 300)); // Short delay
     if (_controller != null && _controller!.value.isInitialized) {
-      await _controller!.dispose();
+      _controller!.dispose();
     }
   }
 

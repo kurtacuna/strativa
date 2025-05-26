@@ -39,7 +39,7 @@ class _ScanQrSubScreenState extends State<ScanQrSubScreen> {
 
   @override
   void dispose() {
-    _scannerController.dispose();
+    _scannerController.stop();
 
     super.dispose();
   }

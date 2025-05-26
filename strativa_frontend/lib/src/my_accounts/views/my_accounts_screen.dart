@@ -59,91 +59,97 @@ class MyAccountsScreen extends StatelessWidget {
         return Padding(
           padding: AppConstants.kAppPadding,
           child: Scaffold(
-            body: Column(
-              children: [
-                SizedBox(height: 10.h),
-          
-                TopBarWidget(),
-          
-                SizedBox(height: 10.h),
-        
-                DetailedCardWidget(),
-                
-                SizedBox(height: 30.h),
-                
-                WalletCardsWidget(),
-          
-                SizedBox(height: 20.h),
-          
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Column(
+                    SizedBox(height: 10.h),
+                          
+                    TopBarWidget(),
+                          
+                    SizedBox(height: 10.h),
+                        
+                    DetailedCardWidget(),
+                    
+                    SizedBox(height: 30.h),
+                    
+                    WalletCardsWidget(),
+                          
+                    SizedBox(height: 20.h),
+                          
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          AppText.kTransactionHeader,
-                          style: CustomTextStyles(context).defaultStyle.copyWith(
-                            fontWeight: FontWeight.w900,
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppText.kTransactionHeader,
+                              style: CustomTextStyles(context).defaultStyle.copyWith(
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          
+                            SizedBox(height: 5.h),
+                          
+                            Text(
+                              transactionTabNotifier.getUserTransactions!.transactions.isEmpty
+                                ? AppText.kNoTransactionsYet
+                                : daysPastSinceDate(transactionTabNotifier.getUserTransactions!.transactions[0].transaction.datetime),
+                              style: CustomTextStyles(context).defaultStyle.copyWith(
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ]
                         ),
-          
-                        SizedBox(height: 5.h),
-          
-                        Text(
-                          transactionTabNotifier.getUserTransactions!.transactions.isEmpty
-                            ? AppText.kNoTransactionsYet
-                            : daysPastSinceDate(transactionTabNotifier.getUserTransactions!.transactions[0].transaction.datetime),
-                          style: CustomTextStyles(context).defaultStyle.copyWith(
-                            fontWeight: FontWeight.w900,
+                          
+                        InkWell(
+                          onTap: () {
+                            context.push(AppRoutes.kTransactionHistoryScreen);
+                          },
+                          borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
+                          child: Ink(
+                            padding: AppConstants.kSmallPadding,
+                            child: Theme.of(context).brightness == Brightness.dark
+                              ? Image(
+                                image: AppIcons.kExpandIcon.image,
+                                height: AppIcons.kExpandIcon.height,
+                                color: ColorsCommon.kWhite,
+                              )
+                              : AppIcons.kExpandIcon,
                           ),
                         ),
                       ]
                     ),
-          
-                    InkWell(
-                      onTap: () {
-                        context.push(AppRoutes.kTransactionHistoryScreen);
-                      },
-                      borderRadius: BorderRadius.circular(AppConstants.kAppBorderRadius),
-                      child: Ink(
-                        padding: AppConstants.kSmallPadding,
-                        child: Theme.of(context).brightness == Brightness.dark
-                          ? Image(
-                            image: AppIcons.kExpandIcon.image,
-                            height: AppIcons.kExpandIcon.height,
-                            color: ColorsCommon.kWhite,
-                          )
-                          : AppIcons.kExpandIcon,
-                      ),
+                          
+                    SizedBox(height: 10.h),
+                          
+                    Consumer<TransactionTabNotifier>(
+                      builder: (context, transactionTabNotifier, child) {
+                        if (transactionTabNotifier.getUserTransactions!.transactions.isNotEmpty) {
+                          return TransactionHistoryWidget(
+                            length: transactionTabNotifier.getUserTransactions!.transactions.length < 3
+                              ? transactionTabNotifier.getUserTransactions!.transactions.length
+                              : 3
+                          );
+                        } else {
+                          return Expanded(
+                            child: Column(
+                              children: [
+                                SizedBox(height: 100.h),
+                                AppEmptyWidget(),
+                              ],
+                            ),
+                          );
+                        }
+                      }
                     ),
-                  ]
+
+                    SizedBox(height: 50)
+                  ],
                 ),
-          
-                SizedBox(height: 10.h),
-          
-                Consumer<TransactionTabNotifier>(
-                  builder: (context, transactionTabNotifier, child) {
-                    if (transactionTabNotifier.getUserTransactions!.transactions.isNotEmpty) {
-                      return TransactionHistoryWidget(
-                        length: transactionTabNotifier.getUserTransactions!.transactions.length < 3
-                          ? transactionTabNotifier.getUserTransactions!.transactions.length
-                          : 3
-                      );
-                    } else {
-                      return Expanded(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 100.h),
-                            AppEmptyWidget(),
-                          ],
-                        ),
-                      );
-                    }
-                  }
-                ),
-              ],
+              ),
             ),
           ),
         );

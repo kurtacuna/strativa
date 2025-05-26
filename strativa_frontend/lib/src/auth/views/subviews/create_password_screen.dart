@@ -55,7 +55,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
         ...widget.mergedData,
         'password': _passwordCtrl.text,
       };
-      context.push(
+      context.go(
         AppRoutes.kLoginScreen, 
         extra: mergedData
       );

@@ -53,7 +53,7 @@ class _CameraOpeningScreenState extends State<CameraOpeningScreen> with WidgetsB
   Future<void> _disposeCameraSafely() async {
     await Future.delayed(Duration(milliseconds: 300)); // Short delay
     if (_controller != null && _controller!.value.isInitialized) {
-      await _controller!.dispose();
+      _controller!.dispose();
     }
   }
 
