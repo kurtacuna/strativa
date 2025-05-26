@@ -24,7 +24,6 @@ class UserTransactionsSerializer(serializers.ModelSerializer):
 
 class TransactionsSerializer(serializers.ModelSerializer):
     transaction_type = serializers.SerializerMethodField()
-    datetime = serializers.SerializerMethodField()
     amount = serializers.SerializerMethodField()
     sender = serializers.SerializerMethodField()
     sender_account_number = serializers.SerializerMethodField()
@@ -35,9 +34,6 @@ class TransactionsSerializer(serializers.ModelSerializer):
     def get_transaction_type(self, obj):
         serializer = TransactionTypesSerializer(obj.transaction_type)
         return serializer.data
-    
-    def get_datetime(self, obj):
-        return aes.decrypt(obj.datetime)
     
     def get_amount(self, obj):
         return aes.decrypt(obj.amount)

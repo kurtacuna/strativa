@@ -27,7 +27,7 @@ class UserTransactions(models.Model):
 
 class Transactions(models.Model):
     reference_id = models.CharField(max_length=32, unique=True)
-    datetime = models.TextField()
+    datetime = models.DateTimeField()
     amount = models.TextField()
     transaction_type = models.ForeignKey('TransactionTypes', on_delete=models.SET_DEFAULT, default=1)
     sender = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1, related_name='sender_transactions_set')
@@ -44,7 +44,7 @@ class Transactions(models.Model):
     
     def save(self, *args, **kwargs):
         self.reference_id = BackendConstants.get_uuid()
-        self.datetime = aes.encrypt(timezone.now())
+        self.datetime = timezone.now()
 
         super().save(*args, **kwargs)
         
