@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
   Offset position = Offset(350, 750);
 
   Widget _buildDraggableButton(BuildContext context) {
-    return Positioned(
+    return Positioned( //
       left: position.dx,
       top: position.dy,
       child: Draggable(
